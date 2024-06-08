@@ -1,15 +1,4 @@
-:root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    color: #23395d;
-    background-color: #713838;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    width: 100%;
-  }
+
   
   a {
     font-weight: 500;
@@ -44,27 +33,39 @@
   }
   
   .logo{
+    height: fit-content;
     width: auto;
+  }
+
+  .logoImg{
+    justify-content: center;
+    width: 100%;
     height: auto;
+    max-width: 400px;
   }
   
   .loginHeader {
-    text-align: center;
+    text-align: left;
     display: flex;
-    margin-bottom: 3vh;
+    margin-bottom: 1vh;
+  }
+
+  h1{
+    margin-left: 1%;
+    font-size: 2em;
   }
   
   .loginArea {
-    margin-top: 15%;
+    margin-top: 5%;
   }
   
   .loginField{
-    padding-bottom: 10%;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-bottom: 3%;
+    padding-left: 1%;
+    padding-right: 1%;
   }
   
   .loginButtonDiv{
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 1%;
+    padding-right: 1%;
   }
