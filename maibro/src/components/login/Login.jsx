@@ -1,5 +1,5 @@
 import './Login.css'
-import {Button,TextField } from '@mui/material';
+import {Button,TextField, colors } from '@mui/material';
 import { React, useState } from 'react';
 import { Link} from 'react-router-dom';
 
@@ -31,12 +31,12 @@ function Login() {
             </div>
             
             <div className='loginField'>
-                <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} variant="outlined" margin="normal" color="grey" InputProps={{style: {borderRadius: "25px",backgroundColor: '#e1e1e1'}}} focused/>
-                <TextField fullWidth id="outlined-basic" placeholder="OTP" value={otp} onChange={handleOtpChange} type="password" variant="outlined" color="grey" InputProps={{style: {borderRadius: "25px",backgroundColor: '#e1e1e1',}}} focused/>
+                <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined" margin="normal" InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3'}}} focused/>
+                <TextField fullWidth id="outlined-basic" placeholder="OTP" value={otp} onChange={handleOtpChange} color="grey" type="password" variant="outlined" InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',}}} focused/>
             </div>
 
             <div className="loginButtonDiv">
-                <Button className="loginButton"  disableRipple fullWidth variant='contained' style={{borderRadius: "25px", fontSize:"0.7em",marginBottom:"15px",padding:"12px",backgroundColor:"#C6252E",}}>
+                <Button className="loginButton"  disableRipple fullWidth variant='contained' style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em"}} >
                     Login
                 </Button>
             </div>
