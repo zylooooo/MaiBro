@@ -2,7 +2,7 @@ import "./Settings.css";
 import React from "react";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import BackButton from "../common/top Tab/backButton/backbutton";
+import BackButton from "../common/topTab/backButton/backbutton";
 import BottomTab from "../common/bottomTab/bottomTab";
 
 
@@ -13,12 +13,12 @@ export default function Settings() {
         boxShadow: 'none',
         textTransform: 'none',
         fontSize: 16,
-        padding: '6px 12px',
+        padding: '6px 30px',
         border: '1px solid',
         lineHeight: 1.5,
         color: '#000000',
         textalign: 'left',
-        backgroundColor: '#E2E2E2',
+        backgroundColor: '#F4F4F4',
         borderColor: '#000000',
         fontFamily: [
           'Poppins', 'sans-serif'

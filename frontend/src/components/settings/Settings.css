@@ -1,23 +1,21 @@
 .settingsArea{
     font-family: "Poppins", sans-serif;
-    background-color: #F4F4F4;
+    background-color: #E2E2E2;
     height: 100%;
     width: 100%;
 }
 
 .profile{
     display: flex;
-    border: 1px solid black;
     text-align: left;
     align-items: center;
     justify-content: center;
-    padding-top: 5px;
+    margin-top: 20px;
 }
 
 .profilePicImg{
-    width: 60px;
-    margin-right: 0px;
-    border: 1px solid black;
+    width: 80px;
+    margin-left: 20px;
 }
 
 .socialScore{

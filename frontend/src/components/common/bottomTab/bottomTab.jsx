@@ -1,20 +1,29 @@
 import React from "react";
-import BottomNavigation from "@mui/material/core/BottomNavigation";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import RestoreIcon from "@mui/icons-material/Restore";
-import BottomNavigationAction from "@mui/material/core/BottomNavigationAction";
+import BottomNavigation from '@mui/material/BottomNavigation'
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
  
-const bottomTab = () => {
+const BottomTab = () => {
     const [value, setValue] = React.useState(0);
  
     return (
         <div
             style={{
+                display: "flex",
                 margin: "auto",
+                width: "100%",
                 display: "table",
+                boxShadow: "0px -2px 4px rgba(0, 0, 0, 0.1)",
+                position: "fixed",
+                bottom: "0",
+                left: "0",
+                right: "0",
+                zIndex: "5",
             }}
         >
-            <h4>How to use BottomNavigation in ReactJS?</h4>
+
             <BottomNavigation
                 showLabels
                 value={value}
@@ -23,17 +32,21 @@ const bottomTab = () => {
                 }}
             >
                 <BottomNavigationAction
-                    label="Recents"
-                    icon={<RestoreIcon />}
+                    label="Order"
+                    icon={<RestaurantIcon />}
                 />
                 <BottomNavigationAction
-                    label="Nearby"
-                    icon={<LocationOnIcon />}
+                    label="All Trasactions"
+                    icon={<AssignmentOutlinedIcon />}
+                />
+                <BottomNavigationAction
+                    label="Delivery"
+                    icon={<DeliveryDiningOutlinedIcon />}
                 />
             </BottomNavigation>
-            
+
         </div>
     );
 };
  
-export default bottomTab;
+export default BottomTab;
