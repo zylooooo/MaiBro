@@ -1,10 +1,13 @@
 import './Login.css'
-import {Button,TextField, colors } from '@mui/material';
-import { React, useState } from 'react';
-import { Link} from 'react-router-dom';
+import {Button,TextField, InputAdornment} from '@mui/material';
+import {React, useState } from 'react';
+import {Link} from 'react-router-dom';
+
 
 function Login() {
-  // controlled buttons
+  //States for TextFields
+  
+  //Phone Number
   const [phone, setPhone] = useState('');
   const handlePhoneChange = (event) => {
     setPhone(event.target.value);
@@ -13,6 +16,7 @@ function Login() {
     setPhone('');
   }
 
+  //OTP
   const [otp, setOtp] = useState('');
   const handleOtpChange = (event) => {
       setOtp(event.target.value);
@@ -20,23 +24,32 @@ function Login() {
   const resetOtp = () => {
       setOtp('');
   }
+
+  //Authenticate OTP
+  const [auth, setAuth] = useState(false);
+  const getAuth= () => {
+    setAuth(true);
+    //Insert Function to call and obtain OTP HERE
+  }
   return (
-    <>
+    <> 
         <div className='logo'>
         <img src='src/assets/icon.png' className='logoImg'/>
         </div>
         <div className='loginArea'>
             <div className='loginHeader'>
-                <h1>Login 🔒</h1>
+                <h1>Login</h1>
+                <Button disableRipple variant='contained' style={{borderRadius: "20px", fontSize:"0.7em",backgroundColor:"#133851",height:"3em",marginRight:"1%"}}>Sign Up</Button>
             </div>
             
             <div className='loginField'>
-                <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined" margin="normal" InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3'}}} focused/>
+                <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined"  InputProps={{endAdornment:<InputAdornment position="end"><div onClick={{getAuth}}>Get OTP</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",
+                }}} focused/>
                 <TextField fullWidth id="outlined-basic" placeholder="OTP" value={otp} onChange={handleOtpChange} color="grey" type="password" variant="outlined" InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',}}} focused/>
             </div>
 
             <div className="loginButtonDiv">
-                <Button className="loginButton"  disableRipple fullWidth variant='contained' style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em"}} >
+                <Button disableRipple fullWidth variant='contained' style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em"}} >
                     Login
                 </Button>
             </div>
