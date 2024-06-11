@@ -53,15 +53,27 @@ app.get('/', (req, res) => {
 
 
 
+/* Firebase terminology:
+   1) Collection: A collection is a group of documents. SQL equivalent of a table. The key is the collecton ID and the value is the documents.
+   2) Document: A document is a set of key-value pairs. SQL equivalent of a row.
+      - Documents cannot contain another document, but they can contain sub collections.
+*/
 
 // Testing the database
-
 // Creating a new collection and a new document
 // const docRef = db.collection("test").doc("students");
 // docRef.set({
 //     first: "ada",
 //     last: "LoveLace",
 //     age: 30
+// });
+
+// // Add instances of data to firebase
+// const collectionRef = db.collection("test");
+// collectionRef.add({
+//     first: "alan",
+//     last: "turing",
+//     age: 22
 // });
 
 // // Add another document to the test collection
