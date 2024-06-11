@@ -26,7 +26,10 @@ export default function App() {
             onChange={inputHandler}
             variant="outlined"
             fullWidth
-            label="Search"
+            placeholder="Search"
+            color="grey"
+            InputProps={{ style: { borderRadius: "25px",backgroundColor: "#D3D3D3",} }}
+            focused
           />
         </div>
         <Restaurant input={inputText} />
