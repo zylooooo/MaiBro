@@ -3,27 +3,20 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import Login from './components/login/Login.jsx'
 import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Settings from './components/settings/Settings.jsx';
 import Home from './components/home/home.jsx';
+import Transaction from './components/transaction/transaction.jsx'
+import Delivery from './components/delivery/delivery.jsx'
 
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#3f50b5',
-      dark: '#002884',
-      contrastText: '#fff',
+      main: '#C6252E',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000',
+      main: '#133851',
     },
     grey: {
       main: '#D3D3D3',
@@ -42,16 +35,20 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
-    path: "/signup",
-    element: <App/>,
-  },
-  {
     path: "/settings",
     element: <Settings/>,
   },
   {
     path: "/home",
     element: <Home/>,
+  },
+  {
+    path: "/transaction",
+    element: <Transaction/>,
+  },
+  {
+    path: "/delivery",
+    element: <Delivery/>,
   },
 ]);
 
