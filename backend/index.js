@@ -1,23 +1,7 @@
-// // Import firebase into backend
-// import firebase from "firebase/app";
-// import "firebase/database";
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyD4kPTTjC5c5ZtNmmKnQGKHOKO5gsk6dbI",
-//     authDomain: "maibro.firebaseapp.com",
-//     projectId: "maibro",
-//     storageBucket: "maibro.appspot.com",
-//     messagingSenderId: "627669864890",
-//     appId: "1:627669864890:web:19dcdcbe7df79b7c1b8d83",
-//     measurementId: "G-X7CLMEKLRQ"
-// };
-
-// firebase.initializeApp(firebaseConfig); // Initialize firebase with the firebaseConfig object
-
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { initializeApp, cert } = require("firebase-admin/app");
-const { getFirestore } = require("firebase-admin/firestore");
+const { initializeApp, cert } = require("firebase-admin/app"); // Import the initializeApp and cert functions from the firebase-admin/app module, allow secure connection with firebase
+const { getFirestore } = require("firebase-admin/firestore"); // Import the getFirestore function from the firebase-admin/firestore module, to connect to the firestore database
 const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
 
 // Server settings
@@ -67,3 +51,31 @@ app.get('/', (req, res) => {
     });
 });
 
+
+
+
+// Testing the database
+
+// Creating a new collection and a new document
+// const docRef = db.collection("test").doc("students");
+// docRef.set({
+//     first: "ada",
+//     last: "LoveLace",
+//     age: 30
+// });
+
+// // Add another document to the test collection
+// const aClassRef = db.collection("test").doc("classes");
+// aClassRef.set({
+//     code: "CS101",
+//     name: "Introduction to Computer Science",
+//     section: "G1"
+// });
+
+// db.collection('test').get().then((snapshot) => {
+//     snapshot.forEach((doc) => {
+//         console.log(doc.id, '=>', doc.data());
+//     });
+// }).catch((error) => {
+//     console.error("Error getting documents: ", error);
+// });
