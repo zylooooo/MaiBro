@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import data from "./home_test"
 import Restaurant from "./home_components/restaurantDetails"
 import BottomTab from "../common/bottomTab/bottomTab"
 import "./home.css"
@@ -17,6 +16,7 @@ export default function App() {
   
     return (
         <>
+        {/* Search bar */}
         <ProfileTopBar />
         <OrderTopBar />
       <div className="main">
@@ -34,30 +34,20 @@ export default function App() {
         </div>
         <Restaurant input={inputText} />
       </div>
+      {/* Bring in bottom Tab */}
         <Home></Home>
       </>
     );
   }
 
 
-
+//Bottom Tab
 export function Home() {
-    // const restaurant = data.map(item => {
-    //     return (
-    //         <div>
-    //             <Restaurant
-    //                 key={item.id}
-    //                 {...item}
-    //             />
-    //         </div>
-    //     )
-    // })        
     
     return (
         <div>
             <div>
                 <section className="restaurant-list">
-                    {/* {restaurant} */}
                 </section>
             </div>
             <div>
