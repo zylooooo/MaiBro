@@ -22,20 +22,20 @@ export default function Restaurant(detail) {
             {filteredData.map((item) => {
                 
                 return (
-                    <>
-                    <img 
-                        src={`${item.coverImg}`}
-                        className="restaurant-image" 
-                    />
-                    <div className="restaurant-stats">
-                        <span className='name'>{item.name}</span>
-                        <div className='restaurant-info'>
-                            <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
-                            <span className='price'>{item.price} • </span>
-                            <span className="desc">{item.description}</span>
+                    <div className="restaurant-overall">
+                        <img 
+                            src={`${item.coverImg}`}
+                            className="restaurant-image" 
+                        />
+                        <div className="restaurant-stats">
+                            <span className='name'>{item.name}</span>
+                            <div className='restaurant-info'>
+                                <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
+                                <span className='price'>{item.price} • </span>
+                                <span className="desc">{item.description}</span>
+                            </div>
                         </div>
                     </div>
-                    </>
                 )
             })}
         </div>

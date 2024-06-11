@@ -5,7 +5,7 @@ export default [
         "location": "35 Selegie Rd, B1-38 Parklane Shopping Mall, Singapore 188307",
         "description": "Burger",
         "price": 2,
-        "coverImg": "src/components/home/home_test_images/mcdonalds.png"
+        "coverImg": "src/components/home/home_test_images/mcdonalds.jpg"
     }, {
         "id": 2,
         "name": "Zhang Liang Malatang - Dhoby Ghaut",

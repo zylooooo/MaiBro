@@ -21,42 +21,61 @@ ul li {
     font-size: 20px;
 } 
 
-.restaurant{
+
+.restaurant-overall{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
 }
 
 
 .restaurant-stats{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .name{
-    font-size: 20px;
+    font-size: 17px;
     margin-left: 10px;
 }
 
 .restaurant-info{
     display: flex;
     flex-direction: row;
+
 }
 
 .money{
     margin-left: 10px;
-    border: 1px solid black;
-    font-size: 5px;
+    font-size: 1px;
+    padding-right: 0px;
 }
 
 .restaurant-image{
-    border: 1px solid black;
+
     width: 20%;
 }   
 
 
+.search{
+    width: 80%;
+}
 
-/* <div className="restaurant-stats">
-                <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
-                <span className='price'>{detail.price} • </span>
-                <span className="desc">{detail.description}</span>
-            </div> */
+
+/* <img 
+    src={`${item.coverImg}`}
+    className="restaurant-image" 
+/>
+<div className="restaurant-stats">
+    <span className='name'>{item.name}</span>
+    <div className='restaurant-info'>
+        <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
+        <span className='price'>{item.price} • </span>
+        <span className="desc">{item.description}</span>
+    </div>
+</div>
+</> */
