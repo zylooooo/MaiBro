@@ -8,7 +8,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Settings from './components/settings/Settings.jsx'
+import Settings from './components/settings/Settings.jsx';
+import Home from './components/home/home.jsx';
 
 const theme = createTheme({
   palette: {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/settings",
     element: <Settings/>,
+  },
+  {
+    path: "/home",
+    element: <Home/>,
   },
 ]);
 
