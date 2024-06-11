@@ -1,5 +1,4 @@
 import { React, useState } from "react";
-import data from "./home_test"
 import Restaurant from "./home_components/restaurantDetails"
 import BottomTab from "../common/bottomTab/bottomTab"
 import "./home.css"
@@ -19,6 +18,7 @@ export default function App() {
   {/* Search bar */}
     return (
         <>
+        {/* Search bar */}
         <ProfileTopBar />
         <OrderTopBar />
       <div className="main">
@@ -48,7 +48,7 @@ export default function App() {
 
 
 //Bottom Tab
-export function Home() {     
+export function Home() {
     
     return (
         <div>
