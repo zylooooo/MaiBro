@@ -8,7 +8,6 @@ import BottomTab from "../common/bottomTab/bottomTab";
 
 
 export default function Settings() {
-
     const SettingsButton = styled(Button)({
         boxShadow: 'none',
         textTransform: 'none',
@@ -26,7 +25,6 @@ export default function Settings() {
       });
 
     return (
-        
         <div className="settingsArea">
             <div className="settingsHeader">
                 <BackButton></BackButton>
