@@ -3,13 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import Login from './components/login/Login.jsx'
 import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider} from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Settings from './components/settings/Settings.jsx';
 import Home from './components/home/home.jsx';
+import Transaction from './components/transaction/transaction.jsx'
+import Delivery from './components/delivery/delivery.jsx'
 
 const theme = createTheme({
   palette: {
@@ -36,16 +35,20 @@ const router = createBrowserRouter([
     element: <Login/>,
   },
   {
-    path: "/signup",
-    element: <App/>,
-  },
-  {
     path: "/settings",
     element: <Settings/>,
   },
   {
     path: "/home",
     element: <Home/>,
+  },
+  {
+    path: "/transaction",
+    element: <Transaction/>,
+  },
+  {
+    path: "/delivery",
+    element: <Delivery/>,
   },
 ]);
 

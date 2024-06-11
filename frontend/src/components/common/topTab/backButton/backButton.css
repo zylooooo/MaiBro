@@ -1,8 +1,0 @@
-.back{
-    display: flex;
-    align-items: left;
-    position: "fixed";
-    top: 0;
-    width: 20px;
-    z-index: 100;
-}

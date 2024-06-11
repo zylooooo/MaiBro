@@ -9,6 +9,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   padding: 0px;
 }
 

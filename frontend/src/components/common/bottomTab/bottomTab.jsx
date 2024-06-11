@@ -4,18 +4,17 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
+import { Link } from 'react-router-dom';
  
 
-const BottomTab = () => {
-    const [value, setValue] = React.useState(0);
- 
+const BottomTab = (prop) => {
+    const [value, setValue] = React.useState(prop.value);
+    
     return (
         <div
             style={{
-                display: "flex",
                 margin: "auto",
                 width: "100%",
-                display: "table",
                 boxShadow: "0px -2px 4px rgba(0, 0, 0, 0.1)",
                 position: "fixed",
                 bottom: "0",
@@ -43,16 +42,25 @@ const BottomTab = () => {
                 <BottomNavigationAction
                     disableRipple
                     label="Order"
+                    value = "Order"
+                    component={Link}
+                    to="/home"
                     icon={<RestaurantIcon />}
                 />
                 <BottomNavigationAction
                     disableRipple
                     label="All Trasactions"
+                    value = "Transaction"
+                    component={Link}
+                    to="/transaction"
                     icon={<AssignmentOutlinedIcon />}
                 />
                 <BottomNavigationAction
                     disableRipple
                     label="Delivery"
+                    value = "Delivery"
+                    component={Link}
+                    to="/delivery"
                     icon={<DeliveryDiningOutlinedIcon />}
                 />
             </BottomNavigation>
