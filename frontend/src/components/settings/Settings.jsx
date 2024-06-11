@@ -2,13 +2,12 @@ import "./Settings.css";
 import React from "react";
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import BackButton from "../common/topTab/backButton/backbutton";
+import BackButton, { ProfileTopBar } from "../common/topTab/topTab.jsx";
 import BottomTab from "../common/bottomTab/bottomTab";
 
 
 
 export default function Settings() {
-
     const SettingsButton = styled(Button)({
         boxShadow: 'none',
         textTransform: 'none',
@@ -26,10 +25,9 @@ export default function Settings() {
       });
 
     return (
-        
         <div className="settingsArea">
             <div className="settingsHeader">
-                <BackButton></BackButton>
+                <ProfileTopBar/>
             </div>
             <div className="profile">
                 <div className="settingsFieldItem">
