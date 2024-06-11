@@ -68,6 +68,57 @@ app.get('/', (req, res) => {
 //     age: 30
 // });
 
+// template to create a collection and document in firebase
+const userRef = db.collection("AvailableOrders").doc("testOrder");
+userRef.set({
+    orderID: 123,
+    orderCompleted: false,
+    orderAccepted: true,
+    restaurant: "McDonalds",
+    buyerID: "buyer123",
+    broID: "MaiBro",
+    earnings: 2.00
+});
+
+
+// Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
+let restaurantName = "";
+(async () => {
+    try {
+        const availableOrdersRef = db.collection("AvailableOrders").doc("testOrder");
+        const doc = await availableOrdersRef.get();
+        if (doc.exists) {
+            restaurantName = doc.data().restaurant;
+            console.log(restaurantName); // Now logs the updated name after fetching from the database
+
+            // Assuming you want to fetch more data based on the updated restaurantName
+            const restaurantRef = db.collection("Restaurants").doc(restaurantName);
+            const restaurantDoc = await restaurantRef.get();
+            if (restaurantDoc.exists) {
+                console.log(restaurantDoc.data());
+            } else {
+                console.log("No such document!");
+            }
+        } else {
+            console.log("No such document!");
+        }
+    } catch (error) {
+        console.error("Error getting document:", error);
+    }
+})();
+
+console.log(restaurantName);
+
+// console.log(db.collection("Restaurants").doc(restaurantName).get().then((doc) => {
+//     if (doc.exists) {
+//         console.log(doc.data());
+//     } else {
+//         console.log("No such document!");
+//     }
+// }).catch((error) => {
+//     console.error("Error getting document:", error);
+// }));
+
 // // Add instances of data to firebase
 // const collectionRef = db.collection("test");
 // collectionRef.add({
@@ -84,7 +135,7 @@ app.get('/', (req, res) => {
 //     section: "G1"
 // });
 
-// db.collection('test').get().then((snapshot) => {
+// db.collection("Restaurant").doc(restaurantName).get().then((snapshot) => {
 //     snapshot.forEach((doc) => {
 //         console.log(doc.id, '=>', doc.data());
 //     });
