@@ -5,6 +5,8 @@ import BottomTab from "../common/bottomTab/bottomTab"
 import "./home.css"
 import TextField from "@mui/material/TextField";
 import { OrderTopBar, ProfileTopBar } from "../common/topTab/topTab";
+import { Icon, InputAdornment } from "@mui/material";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 
 export default function App() {
@@ -14,7 +16,7 @@ export default function App() {
       var lowerCase = e.target.value.toLowerCase();
       setInputText(lowerCase);
     };
-  
+  {/* Search bar */}
     return (
         <>
         <ProfileTopBar />
@@ -28,36 +30,30 @@ export default function App() {
             fullWidth
             placeholder="Search"
             color="grey"
-            InputProps={{ style: { borderRadius: "25px",backgroundColor: "#D3D3D3",} }}
+            InputProps={{ style: { borderRadius: "25px",backgroundColor: "#D3D3D3",}, 
+            endAdornment: 
+              <InputAdornment position="end">
+                <SearchRoundedIcon/>
+              </InputAdornment>}}
             focused
           />
         </div>
         <Restaurant input={inputText} />
       </div>
+      {/* Bring in bottom Tab */}
         <Home></Home>
       </>
     );
   }
 
 
-
-export function Home() {
-    // const restaurant = data.map(item => {
-    //     return (
-    //         <div>
-    //             <Restaurant
-    //                 key={item.id}
-    //                 {...item}
-    //             />
-    //         </div>
-    //     )
-    // })        
+//Bottom Tab
+export function Home() {     
     
     return (
         <div>
             <div>
                 <section className="restaurant-list">
-                    {/* {restaurant} */}
                 </section>
             </div>
             <div>
