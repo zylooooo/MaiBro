@@ -4,6 +4,7 @@ import Restaurant from "./home_components/restaurantDetails"
 import BottomTab from "../common/bottomTab/bottomTab"
 import "./home.css"
 import TextField from "@mui/material/TextField";
+import { OrderTopBar, ProfileTopBar } from "../common/topTab/topTab";
 
 
 export default function App() {
@@ -16,8 +17,9 @@ export default function App() {
   
     return (
         <>
+        <ProfileTopBar />
+        <OrderTopBar />
       <div className="main">
-        <h1>React Search</h1>
         <div className="search">
           <TextField
             id="outlined-basic"
@@ -56,7 +58,7 @@ export function Home() {
                 </section>
             </div>
             <div>
-                <BottomTab></BottomTab>
+              <BottomTab value="Order"></BottomTab>
             </div>
         </div>
     )

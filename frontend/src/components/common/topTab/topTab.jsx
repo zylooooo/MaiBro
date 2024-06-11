@@ -15,7 +15,7 @@ const BackButton = () => {
         .join('/');
     return (
         <div className='backDiv'>
-            <Link to={parentPath}>{<img style={{height:"30px"}} src='src/assets/back.png'></img>}</Link>
+            <Link to={parentPath}>{<img style={{height:"1.5em"}} src='src/assets/back.png'></img>}</Link>
         </div>
     )
     
@@ -37,7 +37,7 @@ export function OrderTopBar() {
             <div className='header'>
                 Order
             </div>
-            <div style={{marginTop:"35px"}}>
+            <div style={{marginTop:"15px"}}>
             <Button disableRipple fullWidth variant='contained' 
                 style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",lineHeight:"100%"}} >
                     + Custom Order
@@ -60,7 +60,7 @@ export function ProfileTopBar() {
             <>
             <div className='profileTopBar'>
                 <BackButton />
-                <img src='src/assets/profile_pic.png' className='profilePicImg'/>
+                <img style={{height:"3em",width:"3em"}}src='src/assets/profile_pic.png' className='profilePicImg'/>
             </div>
             
             </>

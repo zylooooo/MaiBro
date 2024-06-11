@@ -1,5 +1,6 @@
 import { React, useState } from 'react'
 import data from "../home_test"
+import "../home.css"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 export default function Restaurant(detail) {
@@ -14,25 +15,29 @@ export default function Restaurant(detail) {
         // }
         return el.name.toLowerCase().includes(detail.input)
     })
+
     return (
         
         <div className="restaurant">
-            {filteredData.map((item) => (
-                <>
-                <img 
-                    src={`${detail.coverImg}`}
-                    className="restaurant-image" 
-                />
-                <div className="restaurant-stats">
-                    <span className='name'>{item.name}</span>
-                    <div className='restaurant-info'>
-                        <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
-                        <span className='price'>{item.price} • </span>
-                        <span className="desc">{item.description}</span>
+            {filteredData.map((item) => {
+                
+                return (
+                    <>
+                    <img 
+                        src={`${item.coverImg}`}
+                        className="restaurant-image" 
+                    />
+                    <div className="restaurant-stats">
+                        <span className='name'>{item.name}</span>
+                        <div className='restaurant-info'>
+                            <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
+                            <span className='price'>{item.price} • </span>
+                            <span className="desc">{item.description}</span>
+                        </div>
                     </div>
-                </div>
-                </>
-            ))}
+                    </>
+                )
+            })}
         </div>
         
     )

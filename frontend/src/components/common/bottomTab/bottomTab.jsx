@@ -42,7 +42,7 @@ const BottomTab = (prop) => {
                 <BottomNavigationAction
                     disableRipple
                     label="Order"
-                    value = "Order"
+                    value="Order"
                     component={Link}
                     to="/home"
                     icon={<RestaurantIcon />}
