@@ -1,5 +1,5 @@
 :root {
-  font-family: Lato, Inter, sans-serif;
+  font-family: Inter, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color: #153448;
@@ -10,4 +10,18 @@
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   padding: 0px;
+}
+
+/* Header */
+.header {
+ font-family: "Poppins";
+}
+
+/* Font Classes (Default is Inter) */
+.inter {
+  font-family: Inter, sans-serif;
+}
+
+.lato {
+  font-family: Lato, sans-serif;
 }

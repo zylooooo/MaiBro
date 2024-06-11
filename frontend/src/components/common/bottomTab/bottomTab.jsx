@@ -5,6 +5,7 @@ import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
  
+
 const BottomTab = () => {
     const [value, setValue] = React.useState(0);
  
@@ -30,21 +31,31 @@ const BottomTab = () => {
                 onChange={(e, newValue) => {
                     setValue(newValue);
                 }}
+                sx={{
+                    '& .MuiBottomNavigationAction-root': {
+                      color: '#133851', // Unselected color
+                    },
+                    '& .Mui-selected': {
+                      color: '#C6252E', // Selected color
+                    },
+                  }}
             >
                 <BottomNavigationAction
+                    disableRipple
                     label="Order"
                     icon={<RestaurantIcon />}
                 />
                 <BottomNavigationAction
+                    disableRipple
                     label="All Trasactions"
                     icon={<AssignmentOutlinedIcon />}
                 />
                 <BottomNavigationAction
+                    disableRipple
                     label="Delivery"
                     icon={<DeliveryDiningOutlinedIcon />}
                 />
             </BottomNavigation>
-
         </div>
     );
 };
