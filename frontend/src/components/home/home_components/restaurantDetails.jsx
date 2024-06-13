@@ -2,6 +2,8 @@ import { React, useState } from 'react'
 import data from "../home_test"
 import "../home.css"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import Home from '../home';
+import { useNavigate } from 'react-router-dom';
 
 export default function Restaurant(detail) {
     // Filter the data based on the input on the search bar in home.jsx
@@ -9,14 +11,20 @@ export default function Restaurant(detail) {
         return el.name.toLowerCase().includes(detail.input)
     })
 
+    // Handle Routing from button click
+    const navigate = useNavigate();
+    const restaurantClick = () => {
+        // Redirect to restaurant page via Home prop
+        navigate("/home/restaurant");
+    }
+
     return (
-        
         <div className="restaurant">
             {/* return the details of restaurant based on what is in filteredData array */}
             {filteredData.map((item) => {
                 
                 return (
-                    <div className="restaurant-overall">
+                    <div className="restaurant-overall" key={item.id} onClick={restaurantClick} >
                         {/* restaurant image */}
                         <img 
                             src={`${item.coverImg}`}

@@ -35,7 +35,7 @@ export default function Settings() {
                     <h3 className='socialScore'>Social Score - 100 (insert link to social score page)</h3>
                 </div>
                 <div className="profilePic">
-                    <img src='src/assets/profile_pic.png' className='profilePicImg'/>
+                    <img src='/src/assets/profile_pic.png' className='profilePicImg'/>
                 </div>
             </div>
             <div className='settingsOptions'>
