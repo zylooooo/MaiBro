@@ -9,6 +9,8 @@ import Settings from './components/settings/Settings.jsx';
 import Home from './components/home/home.jsx';
 import Transaction from './components/transaction/transaction.jsx'
 import Delivery from './components/delivery/delivery.jsx'
+import CustomOrder from './components/order/customOrder/customOrder.jsx'
+import Page from './components/order/customOrder/geocoding.jsx'
 
 const theme = createTheme({
   palette: {
@@ -50,6 +52,14 @@ const router = createBrowserRouter([
     path: "/delivery",
     element: <Delivery/>,
   },
+  {
+    path: "/customOrder",
+    element: <CustomOrder/>,
+  },
+  {
+    path: "/geocoding",
+    element: <Page/>,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
