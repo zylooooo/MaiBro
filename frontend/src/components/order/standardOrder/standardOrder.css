@@ -1,0 +1,10 @@
+.main{
+    margin-top: 5%;
+}
+
+.restaurantTitle{
+    display: flex;
+    justify-content: space-around;
+    font-weight: Bold;
+    font-size: 1.2em;
+}

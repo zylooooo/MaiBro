@@ -9,6 +9,7 @@
   .logo{
     height: fit-content;
     width: auto;
+    justify-content: center;
   }
 
   .logoImg{

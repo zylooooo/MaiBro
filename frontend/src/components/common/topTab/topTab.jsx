@@ -21,7 +21,7 @@ const BackButton = () => {
     }
     return (
         <div className='backDiv'>
-            <img onClick={handleBackPress} style={{height:"1.5em"}} src='src/assets/back.png'></img>
+            <img onClick={handleBackPress} style={{height:"1.5em"}} src='/src/assets/back.png'></img>
         </div>
     )
     
@@ -57,7 +57,7 @@ export function ProfileTopBar() {
             <>
             <div className='profileTopBar'>
                 <BackButton />
-                <img style={{height:"3em",width:"3em"}}src='src/assets/profile_pic.png' className='profilePicImg'/>
+                <img style={{height:"3em",width:"3em"}}src='/src/assets/profile_pic.png' className='profilePicImg'/>
             </div>
             
             </>
