@@ -4,6 +4,7 @@ import Transaction from './components/transaction/transaction.jsx'
 import Delivery from './components/delivery/delivery.jsx'
 import Login from './components/login/Login.jsx'
 import StandardOrder from './components/order/standardOrder/standardOrder.jsx';
+import CustomOrder from './components/order/customOrder/customOrder.jsx';
 import Penalty from './components/penalty/penalty.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 
@@ -15,7 +16,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path="/home" element={<HomeMain />}/>
     <Route path="/home/restaurant" element={<Settings />}/>
     <Route path="/home/standardorder" element={<StandardOrder />}/>
-
+    <Route path="/home/customorder" element={<CustomOrder />}/>
     <Route path="/transaction" element={<Transaction />} />
 
     <Route path="/delivery" element={<Delivery />} />

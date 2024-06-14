@@ -6,7 +6,7 @@ export default [
         "description": "Burger",
         "price": 2, //
         "custom": false, 
-        "coverImg": "src/components/home/home_test_images/mcdonalds.jpg" // logo of restauarant resource
+        "coverImg": "/src/components/home/home_test_images/mcdonalds.jpg" // logo of restauarant resource
     }, {
         "id": 2,
         "name": "Zhang Liang Malatang - Dhoby Ghaut",
@@ -14,7 +14,7 @@ export default [
         "description": "Chinese",
         "price": 3,
         "custom": true,
-        "coverImg": "src/components/home/home_test_images/zhangliang.png"
+        "coverImg": "/src/components/home/home_test_images/zhangliang.png"
     }, {
         "id": 3,
         "name": "Mixed Veg Rice - Parklane",
@@ -22,6 +22,6 @@ export default [
         "description": "Economical",
         "price": 1,
         "custom": true,
-        "coverImg": "src/components/home/home_test_images/caifan.jpg"
+        "coverImg": "/src/components/home/home_test_images/caifan.jpg"
     }
 ]
