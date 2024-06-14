@@ -1,13 +1,13 @@
 import React from "react"
 import BottomTab from "../common/bottomTab/bottomTab"
-import { ProfileTopBar, StandardTopBar } from "../common/topTab/topTab"
+import { ProfileTopBar, StandardHeader } from "../common/topTab/topTab"
 
 export default function Delivery() {
     return (
         <>
         <div>
             <ProfileTopBar/>
-            <StandardTopBar headerName="Delivery"/>
+            <StandardHeader headerName="Delivery"/>
         </div>
         <div>
             <BottomTab value="Delivery"></BottomTab>
