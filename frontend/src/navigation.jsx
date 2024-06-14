@@ -3,6 +3,7 @@ import HomeMain from './components/home/home.jsx';
 import Transaction from './components/transaction/transaction.jsx'
 import Delivery from './components/delivery/delivery.jsx'
 import Login from './components/login/Login.jsx'
+import Penalty from './components/penalty/penalty.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 
 // UPDATE NAVIGATION HERE
@@ -16,6 +17,8 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path="/transaction" element={<Transaction />} />
 
     <Route path="/delivery" element={<Delivery />} />
+
+    <Route path= "/penalty" element= {<Penalty/>} />
 
   </>
 ));
