@@ -28,13 +28,14 @@ export default function StandardOrder(){
         <div className='fixed'>
         <ProfileTopBar />
         <StandardHeader headerName="Order"/>
+        </div>
         <div className='main'>
             <div className="restaurantTitle">
                 <img src={restaurantLogo} style={{height:"3em"}}/>
                 <div className='restaurantName'>{restaurantName}</div>
             </div>
-        </div>
-        </div>
+        
+       
         <form onSubmit={{}}>
             <div className='menuDetails'>
                     {
@@ -74,7 +75,50 @@ export default function StandardOrder(){
                 </Button>
             </div> 
         </form>
+        </div>
             <BottomTab value="Order" />
+        </>
+    )
+}
+
+export function StandardOrderCustom() {
+    const location = useLocation();
+    //Obtain prop from history
+    const restaurantObj = location.state.restaurant;
+
+    const restaurantName = restaurantObj.name;
+    const restaurantLogo = restaurantObj.coverImg;
+
+
+    //handle Button press
+    //do nothing now
+    return (
+        <>
+        <ProfileTopBar />
+        <StandardHeader headerName="Order"/>
+        <div className='main'>
+            <div className="restaurantTitle">
+                <img src={restaurantLogo} style={{height:"3em"}}/>
+                <div className='restaurantName'>{restaurantName}</div>
+            </div>
+            <div className='customOrderDetails'>
+            <TextField
+            fullWidth placeholder="Input Order Here"
+            multiline rows={15} maxRows={Infinity}
+            color='grey' variant="outlined"
+            InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3'}}}
+            focused
+            />
+            </div>
+            <div className='confirmOrder'>
+            <Button disableRipple fullWidth variant='contained' 
+                style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",}}
+                onClick={{}}>
+            Confirm Order</Button>
+            </div>
+        </div>
+        
+        <BottomTab value="Order" />
         </>
     )
 }

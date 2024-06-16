@@ -3,7 +3,7 @@ import HomeMain from './components/home/home.jsx';
 import Transaction from './components/transaction/transaction.jsx'
 import Delivery from './components/delivery/delivery.jsx'
 import Login from './components/login/Login.jsx'
-import StandardOrder from './components/order/standardOrder/standardOrder.jsx';
+import StandardOrder, {StandardOrderCustom} from './components/order/standardOrder/standardOrder.jsx';
 import CustomOrder from './components/order/customOrder/customOrder.jsx';
 import Penalty from './components/penalty/penalty.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
@@ -11,12 +11,19 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 // UPDATE NAVIGATION HERE
 const browserRouter = createBrowserRouter(createRoutesFromElements(
   <>
+    {/* Home */}
     <Route path="/" element={<HomeMain />} />
-    <Route path="/login" element={<Login />} />
     <Route path="/home" element={<HomeMain />}/>
+
+    <Route path="/login" element={<Login />} />
+
     <Route path="/home/restaurant" element={<Settings />}/>
+
+    {/* Order */}
     <Route path="/home/standardorder" element={<StandardOrder />}/>
+    <Route path="/home/standardordercustom" element={<StandardOrderCustom />}/>
     <Route path="/home/customorder" element={<CustomOrder />}/>
+    
     <Route path="/transaction" element={<Transaction />} />
 
     <Route path="/delivery" element={<Delivery />} />

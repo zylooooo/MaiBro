@@ -4,7 +4,7 @@ import "../home.css"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import Home from '../home';
 import { useNavigate } from 'react-router-dom';
-import StandardOrder from '../../order/standardOrder/standardOrder';
+import StandardOrder, {StandardOrderCustom} from '../../order/standardOrder/standardOrder';
 
 export default function Restaurant(detail) {
     // Filter the data based on the input on the search bar in home.jsx
@@ -18,7 +18,7 @@ export default function Restaurant(detail) {
         //Check if restaurant requires standard/custom order page
         if (item.custom) {
             // Redirect to custom order page and pass the restaurant id to list the menu
-            //do nothing now
+            navigate("/home/standardordercustom", {state: {restaurant: item}});
         } else{
             // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
             navigate("/home/standardorder", {state: {restaurant: item}});
