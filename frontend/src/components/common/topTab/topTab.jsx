@@ -38,13 +38,17 @@ export function StandardHeader(prop) {
     )};
 
 export function OrderHeader() {
+    const navigate = useNavigate();
+    const handleCustomOrderClick = () => {
+        navigate("/home/customOrder")
+    }
     return (
         <div className='orderHeader'>
             <div className='header'>
                 Order
             </div>
             <div style={{marginTop:"15px"}}>
-            <Button disableRipple fullWidth variant='contained' 
+            <Button disableRipple fullWidth variant='contained' onClick={handleCustomOrderClick}
                 style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",lineHeight:"100%"}} >
                     + Custom Order
             </Button>

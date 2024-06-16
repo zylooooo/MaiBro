@@ -29,9 +29,7 @@ export default function HomeMain() {
   };
 
   const navigate = useNavigate();
-  const handleCustomOrderClick = () => {
-      navigate("/settings")
-  }
+  
 
   return (
     <>
