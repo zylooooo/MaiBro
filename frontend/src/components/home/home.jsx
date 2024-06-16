@@ -38,7 +38,7 @@ export default function HomeMain() {
       {/* Search bar */}
       <OrderTopBar />
       <OrderHeader />
-      <div className="main">
+      <div className="mainHome">
         <div className="search">
           <TextField
             id="outlined-basic"
