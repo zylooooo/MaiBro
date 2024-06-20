@@ -1,63 +1,69 @@
 import { React, useState } from "react";
-import data from "./home_test"
 import Restaurant from "./home_components/restaurantDetails"
 import BottomTab from "../common/bottomTab/bottomTab"
 import "./home.css"
 import TextField from "@mui/material/TextField";
+import { OrderHeader, OrderTopBar } from "../common/topTab/topTab";
+import { InputAdornment } from "@mui/material";
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import {RouterProvider, useNavigate } from "react-router-dom";
+import browserRouter from "../../navigation";
 
+// App Initialization
+// Starts the router for routing
+export function App() {
+  return (
+    <>
+    <RouterProvider router={browserRouter} />
+    </>
+  );
+}
 
-export default function App() {
-    const [inputText, setInputText] = useState("");
-    let inputHandler = (e) => {
-      //convert input text to lower case
-      var lowerCase = e.target.value.toLowerCase();
-      setInputText(lowerCase);
-    };
+//Main Home Page
+export default function HomeMain() {
+  const [inputText, setInputText] = useState("");
+  let inputHandler = (e) => {
+    //convert input text to lower case
+    var lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
+  };
+
+  const navigate = useNavigate();
   
-    return (
-        <>
-      <div className="main">
-        <h1>React Search</h1>
+
+  return (
+    <>
+      {/* Search bar */}
+      <OrderTopBar />
+      <OrderHeader />
+      <div className="mainHome">
         <div className="search">
           <TextField
             id="outlined-basic"
             onChange={inputHandler}
             variant="outlined"
             fullWidth
-            label="Search"
+            placeholder="Search"
+            color="grey"
+            InputProps={{
+              style: { borderRadius: "25px", backgroundColor: "#D3D3D3", },
+              endAdornment:
+                <InputAdornment position="end">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+            }}
+            focused
           />
         </div>
         <Restaurant input={inputText} />
       </div>
-        <Home></Home>
-      </>
-    );
-  }
-
-
-
-export function Home() {
-    // const restaurant = data.map(item => {
-    //     return (
-    //         <div>
-    //             <Restaurant
-    //                 key={item.id}
-    //                 {...item}
-    //             />
-    //         </div>
-    //     )
-    // })        
-    
-    return (
-        <div>
-            <div>
-                <section className="restaurant-list">
-                    {/* {restaurant} */}
-                </section>
-            </div>
-            <div>
-                <BottomTab></BottomTab>
-            </div>
-        </div>
-    )
+      <div>
+        <section className="restaurant-list">
+        </section>
+      </div>
+      <div>
+        <BottomTab value="Order"></BottomTab>
+      </div>
+    </>
+  )
 }

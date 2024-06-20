@@ -6,7 +6,6 @@ import {Link} from 'react-router-dom';
 
 function Login() {
   //States for TextFields
-  
   //Phone Number
   const [phone, setPhone] = useState('');
   const handlePhoneChange = (event) => {

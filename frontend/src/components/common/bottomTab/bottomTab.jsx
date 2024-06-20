@@ -1,6 +1,6 @@
 import React from "react";
 import BottomNavigation from '@mui/material/BottomNavigation'
-import RestaurantIcon from '@mui/icons-material/Restaurant';
+import RestaurantRoundedIcon from '@mui/icons-material/RestaurantRounded';
 import AssignmentOutlinedIcon from '@mui/icons-material/AssignmentOutlined';
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import DeliveryDiningOutlinedIcon from '@mui/icons-material/DeliveryDiningOutlined';
@@ -32,28 +32,33 @@ const BottomTab = (prop) => {
                 }}
                 sx={{
                     '& .MuiBottomNavigationAction-root': {
-                      color: '#133851', // Unselected color
+                        color: '#133851', // Unselected color
                     },
                     '& .Mui-selected': {
-                      color: '#C6252E', // Selected color
+                        color: '#C6252E', // Selected color
+                        fontFamily: 'Lato',
+                    },
+                    '& .MuiBottomNavigationAction-label': {
+                        fontFamily: 'Lato',
+                        fontWeight: '600',
                     },
                   }}
             >
                 <BottomNavigationAction
                     disableRipple
                     label="Order"
-                    value = "Order"
+                    value="Order"
                     component={Link}
                     to="/home"
-                    icon={<RestaurantIcon />}
+                    icon={<RestaurantRoundedIcon sx={{ fontSize: '1.8em' }} />}
                 />
                 <BottomNavigationAction
                     disableRipple
-                    label="All Trasactions"
+                    label="Transactions"
                     value = "Transaction"
                     component={Link}
                     to="/transaction"
-                    icon={<AssignmentOutlinedIcon />}
+                    icon={<AssignmentOutlinedIcon sx={{ fontSize: '1.8em' }} />}
                 />
                 <BottomNavigationAction
                     disableRipple
@@ -61,7 +66,7 @@ const BottomTab = (prop) => {
                     value = "Delivery"
                     component={Link}
                     to="/delivery"
-                    icon={<DeliveryDiningOutlinedIcon />}
+                    icon={<DeliveryDiningOutlinedIcon sx={{ fontSize: '1.8em' }}/>}
                 />
             </BottomNavigation>
         </div>

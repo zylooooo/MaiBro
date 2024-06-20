@@ -1,11 +1,11 @@
 
 .backDiv{
-    width: 15%;
+    padding-left:3%
 }
 
 .header{
     font-weight: 600;
-    font-size: 4em;
+    font-size: 3.5em;
     font-weight: bold;
     text-align: left;
     padding-left: 2%;
@@ -26,6 +26,7 @@
 
 .profileTopBar{
     display: flex;
+    height: 4em;
     justify-content: space-between;
     align-items: center;
 }
