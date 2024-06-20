@@ -1,8 +1,6 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { initializeApp, cert } = require("firebase-admin/app"); // Import the initializeApp and cert functions from the firebase-admin/app module, allow secure connection with firebase
-const { getFirestore } = require("firebase-admin/firestore"); // Import the getFirestore function from the firebase-admin/firestore module, to connect to the firestore database
-const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
+const { db } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
 const { getAuth, RecaptachVerifier, signInWithPhoneNumber } = require("firebase-admin/auth"); // Import the getAuth function from the firebase-admin/auth module, to authenticate users
 
 // Server settings
@@ -14,28 +12,6 @@ app.use(express.json()); // So that express can understand json
    It is important when we need to pull data from external APIs and allow authorised servers to access our data.
 */
 app.use(cors()); // Allow cross- origin requests
-// Initialise app with admin privileges
-initializeApp({
-    credential: cert(serviceAccount),
-    databaseURL: process.env.databaseURL
-});
-
-
-/* Connect to the firebase database
-    The getFirestore() function returns a Firestore instance that is associated with the specified Firebase app.
-    The databaseURL is the URL to the Firebase Realtime Database.
-    Also included how to verify the connection to firebase database.
-*/
-const db = getFirestore();
-// Check the connection to the firebase database using async/await
-(async () => {
-    try {
-        await db.doc("test/doc").get();
-        console.log("Connected to the firebase database");
-    } catch (error) {
-        console.error("Failed to connect to the firebase database", error);
-    }
-})();
 
 // Start the application
 app.listen(PORT, () => {
@@ -82,7 +58,7 @@ app.get('/', (req, res) => {
 // });
 
 // Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
-// let restaurantName = "";
+// let restaurantName = "55";
 // (async () => {
 //     try {
 //         const availableOrdersRef = db.collection("AvailableOrders").doc("testOrder");
@@ -107,25 +83,23 @@ app.get('/', (req, res) => {
 //     }
 // })();
 
-// console.log(restaurantName);
-
 // Create the authentication middleware
-const auth = getAuth();
-window.RecaptachVerifier = new RecaptachVerifier(auth, "recaptcha-container", {
-    "size": "invisible",
-    "callback": (response) => {
-        onSignInSubmit();
-    }
-});
+// const auth = getAuth();
+// window.RecaptachVerifier = new RecaptachVerifier(auth, "recaptcha-container", {
+//     "size": "invisible",
+//     "callback": (response) => {
+//         onSignInSubmit();
+//     }
+// });
 
-const phoneNumber = getPhoneNumberFromUserInput();
-const appVerifier = window.RecaptachVerifier;
+// const phoneNumber = getPhoneNumberFromUserInput();
+// const appVerifier = window.RecaptachVerifier;
 
-signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-    .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
-    }).catch((error) => {
-        // Error: SMS not sent
-        console.error("Error signing in with phone number", error);
-    });
+// signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+//     .then((confirmationResult) => {
+//         // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult.confirm(code).
+//         window.confirmationResult = confirmationResult;
+//     }).catch((error) => {
+//         // Error: SMS not sent
+//         console.error("Error signing in with phone number", error);
+//     });
