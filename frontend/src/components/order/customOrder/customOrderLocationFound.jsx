@@ -8,7 +8,7 @@ import BottomTab from "../../common/bottomTab/bottomTab";
 
 
 const CustomMap = ({lati,longt}) => {
-    // shows marker on chosen location by default
+    // create markerLocation using coordinates of chosen location
   const [markerLocation, setMarkerLocation] = useState({
     lat: Number(lati),
     lng: Number(longt),
@@ -16,6 +16,7 @@ const CustomMap = ({lati,longt}) => {
   
 
   return (
+    // shows map with marker on chosen location
     <div className="map-container">
       <Map
         style={{ borderRadius: "20px" }}
@@ -31,6 +32,7 @@ const CustomMap = ({lati,longt}) => {
 }
 
 const Info = () => {
+    //getting data from local storage that was inputted in customOrderInput
     let address = localStorage.getItem('address')
     let latitude = localStorage.getItem('latitude')
     let longitude = localStorage.getItem('longitude')
@@ -40,6 +42,7 @@ const Info = () => {
         <div className="app">
             {name}
             <></>
+          {/* calling CustomMap function */}
           <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
             <CustomMap lati={latitude} longt={longitude}    />
           </APIProvider>
@@ -48,7 +51,7 @@ const Info = () => {
 
 }
 
-
+//creation of input fields to create rows to order food
 const AddFn = ({ addInputPair }) => {
     return (
       <button className="add-button" onClick={addInputPair} disableRipple fullWidth variant='contained'style={{width:"100%", borderRadius: "25px", border: "none", fontSize:"0.8em",marginTop:"15px",backgroundColor:"#133851",height:"3.5em",textTransform:"none",fontWeight:"600", color:"white"}}>
@@ -96,7 +99,7 @@ return (
 );
 };
   
-
+//Initialise the Page
 const Order = () => {
     return (
         <div>
