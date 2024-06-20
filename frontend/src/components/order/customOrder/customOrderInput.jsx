@@ -9,11 +9,7 @@ import BottomTab from "../../common/bottomTab/bottomTab";
 
 
 const CustomMap = ({latitude,longtitude}) => {
-  // shows marker on London by default (removed this useState idk why it didnt work with it so i just indiv used the variables passed in)
-  // const [markerLocation, setMarkerLocation] = useState({
-  //   lat: latitude,
-  //   lng: longtitude,
-  // });
+  // shows marker on chosen location
 
   return (
     <div className="map-container">
@@ -114,7 +110,7 @@ const CustomOrder = () => {
 
 export default CustomOrder;
 
-
+//inputting information of location into local storage
 const NewInformation = (address, name, longitude, latitude) => {
   localStorage.setItem('address', address);
   localStorage.setItem('name', name);
