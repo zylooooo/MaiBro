@@ -1,7 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { db } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
-const { getAuth, RecaptachVerifier, signInWithPhoneNumber } = require("firebase-admin/auth"); // Import the getAuth function from the firebase-admin/auth module, to authenticate users
+const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
+
 
 // Server settings
 const PORT = 8000;
@@ -56,22 +56,3 @@ app.get('/', (req, res) => {
 // })();
 
 // Create the authentication middleware
-// const auth = getAuth();
-// window.RecaptachVerifier = new RecaptachVerifier(auth, "recaptcha-container", {
-//     "size": "invisible",
-//     "callback": (response) => {
-//         onSignInSubmit();
-//     }
-// });
-
-// const phoneNumber = getPhoneNumberFromUserInput();
-// const appVerifier = window.RecaptachVerifier;
-
-// signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-//     .then((confirmationResult) => {
-//         // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult.confirm(code).
-//         window.confirmationResult = confirmationResult;
-//     }).catch((error) => {
-//         // Error: SMS not sent
-//         console.error("Error signing in with phone number", error);
-//     });

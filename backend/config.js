@@ -1,10 +1,9 @@
-const { initializeApp, cert } = require("firebase-admin/app"); // Import the initializeApp and cert functions from the firebase-admin/app module, allow secure connection with firebase
-const { getFirestore } = require("firebase-admin/firestore"); // Import the getFirestore function from the firebase-admin/firestore module, to connect to the firestore database
+const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
 const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
 
 // Initialise app with admin privileges
-initializeApp({
-    credential: cert(serviceAccount),
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
     databaseURL: process.env.databaseURL
 });
 
@@ -13,19 +12,25 @@ initializeApp({
     The databaseURL is the URL to the Firebase Realtime Database.
     Also included how to verify the connection to firebase database.
 */
-const db = getFirestore();
-// Check the connection to the firebase database using async/await
-(async () => {
+const db = admin.firestore();
+
+// Function to check the connectionn to the Firebase database
+async function checkFirebaseConnection() {
     try {
         await db.doc("test/doc").get();
-        console.log("Connected to the firebase database");
+        console.log("Connected to the database successfully!");
     } catch (error) {
-        console.error("Failed to connect to the firebase database", error);
+        console.error("Faied to connect to the data base", error);
     }
-})();
+}
+
+checkFirebaseConnection();
+
+// Create a Firebase auth instance
+const auth = admin.auth();
 
 // Export the db to be used in other files
-module.exports = { db };
+module.exports = { db, auth };
 
 
 
