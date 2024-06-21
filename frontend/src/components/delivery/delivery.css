@@ -1,0 +1,31 @@
+.deliveryListings{
+    margin-bottom: 35vh;
+}
+.deliveryItem{
+    margin-top: 30px;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.deliveryInfo{
+
+}
+
+.deliveryLocation{
+    margin-top: 15px;
+
+}
+
+.deliveryOrderDetails{
+    margin-top: 15px;
+}
+
+.orderDetails{
+    word-wrap: break-word;
+}
+
+.deliveryMap{
+    margin-top: 15px;
+    height: 300px;
+    width: 100%;
+}

@@ -25,7 +25,6 @@
     padding-left: 5%;
     padding-right: 5%;
     height: 150px;
-    background-color: #e1e1e1;
 }
 
 .menuDetails{
@@ -39,7 +38,6 @@
 .menuItem {
     display: flex;
     justify-content: space-between;
-    background-color: #e1e1e1;
     margin-bottom: 1%;
 
 }
