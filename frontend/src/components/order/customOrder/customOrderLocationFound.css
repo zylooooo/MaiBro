@@ -1,0 +1,26 @@
+.app{
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+    font-weight:bold;
+    margin-top: 10px;
+  }
+
+.title{
+    display: flex;
+    font-weight: bold;
+}
+
+.qty{
+    margin-left: 66%
+}
+
+.input-field1, .input-field2{
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.input-field2{
+    margin-left: 40%;
+    width: 10%
+}

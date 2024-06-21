@@ -1,8 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { initializeApp, cert } = require("firebase-admin/app"); // Import the initializeApp and cert functions from the firebase-admin/app module, allow secure connection with firebase
-const { getFirestore } = require("firebase-admin/firestore"); // Import the getFirestore function from the firebase-admin/firestore module, to connect to the firestore database
-const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
+const { db } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
+const { getAuth, RecaptachVerifier, signInWithPhoneNumber } = require("firebase-admin/auth"); // Import the getAuth function from the firebase-admin/auth module, to authenticate users
 
 // Server settings
 const PORT = 8000;
@@ -13,28 +12,6 @@ app.use(express.json()); // So that express can understand json
    It is important when we need to pull data from external APIs and allow authorised servers to access our data.
 */
 app.use(cors()); // Allow cross- origin requests
-// Initialise app with admin privileges
-initializeApp({
-    credential: cert(serviceAccount),
-    databaseURL: process.env.databaseURL
-});
-
-
-/* Connect to the firebase database
-    The getFirestore() function returns a Firestore instance that is associated with the specified Firebase app.
-    The databaseURL is the URL to the Firebase Realtime Database.
-    Also included how to verify the connection to firebase database.
-*/
-const db = getFirestore();
-// Check the connection to the firebase database using async/await
-(async () => {
-    try {
-        await db.doc("test/doc").get();
-        console.log("Connected to the firebase database");
-    } catch (error) {
-        console.error("Failed to connect to the firebase database", error);
-    }
-})();
 
 // Start the application
 app.listen(PORT, () => {
@@ -69,76 +46,60 @@ app.get('/', (req, res) => {
 // });
 
 // template to create a collection and document in firebase
-const userRef = db.collection("AvailableOrders").doc("testOrder");
-userRef.set({
-    orderID: 123,
-    orderCompleted: false,
-    orderAccepted: true,
-    restaurant: "McDonalds",
-    buyerID: "buyer123",
-    broID: "MaiBro",
-    earnings: 2.00
-});
-
+// const userRef = db.collection("AvailableOrders").doc("testOrder");
+// userRef.set({
+//     orderID: 123,
+//     orderCompleted: false,
+//     orderAccepted: true,
+//     restaurant: "McDonalds",
+//     buyerID: "buyer123",
+//     broID: "MaiBro",
+//     earnings: 2.00
+// });
 
 // Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
-let restaurantName = "";
-(async () => {
-    try {
-        const availableOrdersRef = db.collection("AvailableOrders").doc("testOrder");
-        const doc = await availableOrdersRef.get();
-        if (doc.exists) {
-            restaurantName = doc.data().restaurant;
-            console.log(restaurantName); // Now logs the updated name after fetching from the database
+// let restaurantName = "55";
+// (async () => {
+//     try {
+//         const availableOrdersRef = db.collection("AvailableOrders").doc("testOrder");
+//         const doc = await availableOrdersRef.get();
+//         if (doc.exists) {
+//             restaurantName = doc.data().restaurant;
+//             console.log(restaurantName); // Now logs the updated name after fetching from the database
 
-            // Assuming you want to fetch more data based on the updated restaurantName
-            const restaurantRef = db.collection("Restaurants").doc(restaurantName);
-            const restaurantDoc = await restaurantRef.get();
-            if (restaurantDoc.exists) {
-                console.log(restaurantDoc.data());
-            } else {
-                console.log("No such document!");
-            }
-        } else {
-            console.log("No such document!");
-        }
-    } catch (error) {
-        console.error("Error getting document:", error);
-    }
-})();
-
-console.log(restaurantName);
-
-// console.log(db.collection("Restaurants").doc(restaurantName).get().then((doc) => {
-//     if (doc.exists) {
-//         console.log(doc.data());
-//     } else {
-//         console.log("No such document!");
+//             // Assuming you want to fetch more data based on the updated restaurantName
+//             const restaurantRef = db.collection("Restaurants").doc(restaurantName);
+//             const restaurantDoc = await restaurantRef.get();
+//             if (restaurantDoc.exists) {
+//                 console.log(restaurantDoc.data());
+//             } else {
+//                 console.log("No such document!");
+//             }
+//         } else {
+//             console.log("No such document!");
+//         }
+//     } catch (error) {
+//         console.error("Error getting document:", error);
 //     }
-// }).catch((error) => {
-//     console.error("Error getting document:", error);
-// }));
+// })();
 
-// // Add instances of data to firebase
-// const collectionRef = db.collection("test");
-// collectionRef.add({
-//     first: "alan",
-//     last: "turing",
-//     age: 22
+// Create the authentication middleware
+// const auth = getAuth();
+// window.RecaptachVerifier = new RecaptachVerifier(auth, "recaptcha-container", {
+//     "size": "invisible",
+//     "callback": (response) => {
+//         onSignInSubmit();
+//     }
 // });
 
-// // Add another document to the test collection
-// const aClassRef = db.collection("test").doc("classes");
-// aClassRef.set({
-//     code: "CS101",
-//     name: "Introduction to Computer Science",
-//     section: "G1"
-// });
+// const phoneNumber = getPhoneNumberFromUserInput();
+// const appVerifier = window.RecaptachVerifier;
 
-// db.collection("Restaurant").doc(restaurantName).get().then((snapshot) => {
-//     snapshot.forEach((doc) => {
-//         console.log(doc.id, '=>', doc.data());
+// signInWithPhoneNumber(auth, phoneNumber, appVerifier)
+//     .then((confirmationResult) => {
+//         // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult.confirm(code).
+//         window.confirmationResult = confirmationResult;
+//     }).catch((error) => {
+//         // Error: SMS not sent
+//         console.error("Error signing in with phone number", error);
 //     });
-// }).catch((error) => {
-//     console.error("Error getting documents: ", error);
-// });
