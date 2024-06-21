@@ -8,8 +8,6 @@
   .map-container {
     height: 300px;
     width: 100%;
-    border: 2px solid black;
-    border-radius: 20px;
   }
 
 .app{

@@ -27,8 +27,6 @@ export default function HomeMain() {
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-
-  const navigate = useNavigate();
   
 
   return (
