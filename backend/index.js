@@ -1,7 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { db } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
-const { getAuth, RecaptachVerifier, signInWithPhoneNumber } = require("firebase-admin/auth"); // Import the getAuth function from the firebase-admin/auth module, to authenticate users
+const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
+
 
 // Server settings
 const PORT = 8000;
@@ -28,34 +28,6 @@ app.get('/', (req, res) => {
     });
 });
 
-
-
-/* Firebase terminology:
-   1) Collection: A collection is a group of documents. SQL equivalent of a table. The key is the collecton ID and the value is the documents.
-   2) Document: A document is a set of key-value pairs. SQL equivalent of a row.
-      - Documents cannot contain another document, but they can contain sub collections.
-*/
-
-// Testing the database
-// Creating a new collection and a new document
-// const docRef = db.collection("test").doc("students");
-// docRef.set({
-//     first: "ada",
-//     last: "LoveLace",
-//     age: 30
-// });
-
-// template to create a collection and document in firebase
-// const userRef = db.collection("AvailableOrders").doc("testOrder");
-// userRef.set({
-//     orderID: 123,
-//     orderCompleted: false,
-//     orderAccepted: true,
-//     restaurant: "McDonalds",
-//     buyerID: "buyer123",
-//     broID: "MaiBro",
-//     earnings: 2.00
-// });
 
 // Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
 // let restaurantName = "55";
@@ -84,22 +56,3 @@ app.get('/', (req, res) => {
 // })();
 
 // Create the authentication middleware
-// const auth = getAuth();
-// window.RecaptachVerifier = new RecaptachVerifier(auth, "recaptcha-container", {
-//     "size": "invisible",
-//     "callback": (response) => {
-//         onSignInSubmit();
-//     }
-// });
-
-// const phoneNumber = getPhoneNumberFromUserInput();
-// const appVerifier = window.RecaptachVerifier;
-
-// signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-//     .then((confirmationResult) => {
-//         // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult.confirm(code).
-//         window.confirmationResult = confirmationResult;
-//     }).catch((error) => {
-//         // Error: SMS not sent
-//         console.error("Error signing in with phone number", error);
-//     });
