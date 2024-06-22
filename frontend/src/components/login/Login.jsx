@@ -1,12 +1,12 @@
 import './Login.css'
-import {Button,TextField, InputAdornment} from '@mui/material';
+import {Button,TextField, InputAdornment, Container} from '@mui/material';
 import {React, useState } from 'react';
-import {Link} from 'react-router-dom';
-
+import { RecaptchaVerifier, signInWithPhoneNumber} from "firebase/auth";
+import {firebaseAuth} from "../../service/firebaseConfig";
 
 function Login() {
   //States for TextFields
-  //Phone Number
+  //Phone Number Text Field
   const [phone, setPhone] = useState('');
   const handlePhoneChange = (event) => {
     setPhone(event.target.value);
@@ -15,7 +15,7 @@ function Login() {
     setPhone('');
   }
 
-  //OTP
+  //OTP Text Field
   const [otp, setOtp] = useState('');
   const handleOtpChange = (event) => {
       setOtp(event.target.value);
@@ -24,12 +24,50 @@ function Login() {
       setOtp('');
   }
 
-  //Authenticate OTP
+  //Get OTP Button
   const [auth, setAuth] = useState(false);
-  const getAuth= () => {
-    setAuth(true);
+  const getAuth = () => {
     //Insert Function to call and obtain OTP HERE
+    sendOtp(phone);
   }
+
+  // Get OTP Function
+  const sendOtp = async (phoneNumber) => {
+    // Initialise invisible reCaptcha for Firebase Phone Auth if not already initialised
+    if (!window.reCaptcha) {
+      window.reCaptcha = new RecaptchaVerifier(firebaseAuth, 'recaptcha', {
+        'size': 'invisible',
+        });
+    }
+    
+    // Send OTP
+    signInWithPhoneNumber(firebaseAuth, phoneNumber, window.reCaptcha)
+        .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult
+        window.confirmationResult = confirmationResult;
+        alert("OTP sent successfully. Please check your phone for the OTP.");
+        }).catch(() => {
+        // Reset reCaptcha
+        grecaptcha.reset(window.recaptchaWidgetId);
+        // Error. SMS not sent
+        alert("Error: SMS not sent. Please check your phone number and try again.");
+        });
+  }
+
+  //Sign In Function
+  const signIn = async () => {
+      //Check if OTP is valid
+      window.confirmationResult.confirm(otp).then((result) => {
+        // User signed in successfully. Obtain object with user information
+        const user = result.user;
+        //Navigate to the appropriate page (Undone)
+    }).catch(() => {
+        // User couldn't sign in (bad verification code)
+        alert("Wrong OTP Received. Please try again.")
+        resetOtp();
+    });
+  }
+
   return (
     <> 
         <div className='logo'>
@@ -45,18 +83,21 @@ function Login() {
             
             <div className='loginField'>
                 <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined"  
-                InputProps={{endAdornment:<InputAdornment position="end"><div onClick={{getAuth}}>Get OTP</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",fontFamily:"Inter",
+                InputProps={{endAdornment:<InputAdornment position="end"><div onClick={getAuth}>Get OTP</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",fontFamily:"Inter",
                 }}} focused/>
                 <TextField fullWidth id="outlined-basic" placeholder="OTP" value={otp} onChange={handleOtpChange} color="grey" type="password" variant="outlined" 
                 InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter"}}} focused/>
             </div>
 
             <div className="loginButtonDiv">
-                <Button disableRipple fullWidth variant='contained' 
+                <Button disableRipple fullWidth variant='contained' onClick={signIn}
                 style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
                     Login
                 </Button>
             </div>
+        </div>
+        <div className='recaptcha' id='recaptcha'>
+
         </div>
         </>
   )
