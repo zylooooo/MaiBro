@@ -1,24 +1,32 @@
-import './Login.css'
+import './login.css'
 import {Button,TextField, InputAdornment, Container} from '@mui/material';
 import {React, useState } from 'react';
 import { RecaptchaVerifier, signInWithPhoneNumber} from "firebase/auth";
 import {firebaseAuth} from "../../service/firebaseConfig";
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
+  //Initialise react router navigate function
+  const navigate = useNavigate();
+
   //States for TextFields
   //Phone Number Text Field
   const [phone, setPhone] = useState('');
   const handlePhoneChange = (event) => {
-    setPhone(event.target.value);
-  };
-  const resetPhone = () => {
-    setPhone('');
+    // Check if input is a number
+    if (event.target.value === '' || /^[0-9\b]+$/.test(event.target.value)){
+      setPhone(event.target.value);
   }
+  };
 
   //OTP Text Field
   const [otp, setOtp] = useState('');
   const handleOtpChange = (event) => {
+    // Check if input is a number
+    if (event.target.value === '' || /^[0-9\b]+$/.test(event.target.value)){
       setOtp(event.target.value);
+  }
+      ;
   };
   const resetOtp = () => {
       setOtp('');
@@ -40,6 +48,9 @@ function Login() {
         });
     }
     
+    // Add country code to phone number
+    phoneNumber = "+65" + phoneNumber;
+
     // Send OTP
     signInWithPhoneNumber(firebaseAuth, phoneNumber, window.reCaptcha)
         .then((confirmationResult) => {
@@ -60,9 +71,27 @@ function Login() {
       window.confirmationResult.confirm(otp).then((result) => {
         // User signed in successfully. Obtain object with user information
         const user = result.user;
-        //Navigate to the appropriate page (Undone)
-    }).catch(() => {
+        alert("Login Successful")
+
+        //Store user tokenID in session for future use
+        const idToken = user.accessToken;
+        sessionStorage.setItem('idToken', idToken);
+
+        //Navigate to the appropriate page
+        const userName = user.displayName;
+        
+        //If display name is null, navigate to signup page
+        if (userName === null){
+          //Navigate to signup page
+          navigate('/signup'); 
+        } else {
+          //Navigate to home page
+          navigate('/home');
+        }
+
+    }).catch((error) => {
         // User couldn't sign in (bad verification code)
+        console.log(error)
         alert("Wrong OTP Received. Please try again.")
         resetOtp();
     });
@@ -75,15 +104,12 @@ function Login() {
         </div>
         <div className='loginArea'>
             <div className='loginHeader'>
-                <h1 className='lato'>Login</h1>
-                <Button disableRipple variant='contained' 
-                style={{borderRadius: "20px", fontSize:"0.7em",backgroundColor:"#133851",height:"3em",marginRight:"1%",textTransform:"none",fontWeight:"600"}}>
-                  Sign Up</Button>
+                <h1 className='lato'>Login / Sign Up</h1>
             </div>
             
             <div className='loginField'>
                 <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined"  
-                InputProps={{endAdornment:<InputAdornment position="end"><div onClick={getAuth}>Get OTP</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",fontFamily:"Inter",
+                InputProps={{startAdornment:<InputAdornment position='start'>+65</InputAdornment>,endAdornment:<InputAdornment position="end"><div onClick={getAuth}>Get OTP</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",fontFamily:"Inter",
                 }}} focused/>
                 <TextField fullWidth id="outlined-basic" placeholder="OTP" value={otp} onChange={handleOtpChange} color="grey" type="password" variant="outlined" 
                 InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter"}}} focused/>
@@ -92,7 +118,7 @@ function Login() {
             <div className="loginButtonDiv">
                 <Button disableRipple fullWidth variant='contained' onClick={signIn}
                 style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
-                    Login
+                    Login/Sign Up
                 </Button>
             </div>
         </div>

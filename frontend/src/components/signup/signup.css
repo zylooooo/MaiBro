@@ -19,7 +19,7 @@
     max-width: 400px;
   }
   
-  .loginHeader {
+  .signupHeader {
     text-align: left;
     display: flex;
     margin-bottom: 1vh;
@@ -33,19 +33,19 @@
   }
 
 
-  .loginArea {
+  .signupArea {
     margin-top: 5%;
     margin-left: 5%;
     margin-right: 5%;
   }
   
-  .loginField{
+  .signupField{
     padding-bottom: 3%;
     padding-left: 1%;
     padding-right: 1%;
   }
   
-  .loginButtonDiv{
+  .signupButtonDiv{
     padding-left: 1%;
     padding-right: 1%;
   }

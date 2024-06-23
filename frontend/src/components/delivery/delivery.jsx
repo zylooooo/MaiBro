@@ -40,9 +40,9 @@ export default function Delivery() {
         </div>
         <div className="deliveryListings">
             {
-                deliveryObjList.map((item) => {
+                deliveryObjList.map((item,index) => {
                     return(
-                            <div className="deliveryItem" key={item.number}>
+                            <div key={index} className="deliveryItem">
                                 <div className="deliveryInfo">
                                     <div style={{fontWeight:"700",fontSize:"1.1em"}}>{item.restaurantName}</div>
                                     <div className="deliveryName">{item.name}</div>
