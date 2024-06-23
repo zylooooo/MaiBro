@@ -6,9 +6,9 @@ const createNewUser = async (req, res) => {
 
     try {
         await auth.createUser({
-            "phoneNumber": phoneNumber,
-            "password": password,
-            "userId" : userId
+            phoneNumber: phoneNumber,
+            password: password,
+            userId: userId
         }).then((userRecord) => {
             console.log("Successfully created new user:", userRecord.uid);;
             res.status(200).json({
