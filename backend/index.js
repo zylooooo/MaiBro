@@ -13,11 +13,6 @@ app.use(express.json()); // So that express can understand json
 */
 app.use(cors()); // Allow cross- origin requests
 
-// Start the application
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}...`);
-});
-
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
    The '/' in the hyperlink will return a message to the user that the server is up and running.
@@ -30,6 +25,13 @@ app.get('/', (req, res) => {
 
 // Connect to the login router
 app.use("/login", require("./routers/loginRouter"));
+app.use("/signup", require("./routers/signupRouter"));
+
+// Start the application
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}...`);
+});
+
 
 
 // Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
