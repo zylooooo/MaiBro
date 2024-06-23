@@ -28,6 +28,9 @@ app.get('/', (req, res) => {
     });
 });
 
+// Connect to the login router
+app.use("/login", require("./routers/loginRouter"));
+
 
 // Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
 // let restaurantName = "55";
@@ -54,5 +57,3 @@ app.get('/', (req, res) => {
 //         console.error("Error getting document:", error);
 //     }
 // })();
-
-// Create the authentication middleware
