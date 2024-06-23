@@ -1,10 +1,12 @@
 const { auth } = require("../config");
 
 async function verifyLogin(req, res, next) {
-    let idToken = req.headers.idtoken;
+    // Retrieve the idToken key from the request body
+    let idToken = req.body.idToken;
 
+    // Return 200 if the idToken is correct and 401 if it is incorrect
     return auth
-        .verifyLogin(idToken)
+        .verifyIdToken(idToken)
         .then((decodedToken) => {
             const uid = decodedToken.uid;
             console.log("decoded token", decodedToken);
