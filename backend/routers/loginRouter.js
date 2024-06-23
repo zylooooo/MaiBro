@@ -8,6 +8,6 @@ loginRouter.get("/", (req, res) => {
     console.log("Login route hit");
     return res.status(200).json({ message: "Login route hit" });
 });
-loginRouter.post("/login", verifyLogin);
+loginRouter.post("/", verifyLogin);
 
 module.exports = loginRouter;

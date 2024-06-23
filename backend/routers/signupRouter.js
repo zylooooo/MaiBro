@@ -8,6 +8,6 @@ signupRouter.get("/", (req, res) => {
     console.log("Signup route hit");
     return res.status(200).json({ message: "Signup route hit" });
 });
-signupRouter.post("/signup", createNewUser);
+signupRouter.post("/", createNewUser);
 
 module.exports = signupRouter;
