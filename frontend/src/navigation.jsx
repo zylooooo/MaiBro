@@ -2,7 +2,8 @@ import Settings from './components/settings/Settings.jsx';
 import HomeMain from './components/home/home.jsx';
 import Transaction from './components/transaction/transaction.jsx'
 import Delivery from './components/delivery/delivery.jsx'
-import Login from './components/login/Login.jsx'
+import Login from './components/login/login.jsx'
+import SignUp from './components/signup/signup.jsx'
 import StandardOrder, {StandardOrderCustom} from './components/order/standardOrder/standardOrder.jsx';
 import CustomOrder from './components/order/customOrder/customOrderInput.jsx';
 import Penalty from './components/penalty/penalty.jsx';
@@ -17,7 +18,9 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<HomeMain />} />
     <Route path="/home" element={<HomeMain />}/>
 
+    {/* Authentication Pages */}
     <Route path="/login" element={<Login />} />
+    <Route path="/signup" element={<SignUp />} />
 
     <Route path="/home/restaurant" element={<Settings />}/>
 

@@ -8,6 +8,7 @@ import { InputAdornment } from "@mui/material";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {RouterProvider, useNavigate } from "react-router-dom";
 import browserRouter from "../../navigation";
+import { firebaseAuth } from "../../service/firebaseConfig";
 
 // App Initialization
 // Starts the router for routing
@@ -27,8 +28,6 @@ export default function HomeMain() {
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-
-  const navigate = useNavigate();
   
 
   return (
