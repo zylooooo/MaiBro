@@ -1,10 +1,12 @@
-import "./customOrderLocationFound.css";
+import "./customOrderConfirmation.css";
 import React, { useEffect, useState } from "react";
 import { Map, Marker, APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 import {Button,TextField, InputAdornment} from '@mui/material';
 import {ProfileTopBar, StandardHeader } from "../../common/topTab/topTab";
+import { LocationStore } from "./customOrderInput";
 import "../../common/topTab/topTab.css";
 import BottomTab from "../../common/bottomTab/bottomTab";
+import LocationStore from "./customOrderInput";
 
 
 const CustomMap = ({lati,longt}) => {
@@ -33,14 +35,12 @@ const CustomMap = ({lati,longt}) => {
 
 const Info = () => {
     //getting data from local storage that was inputted in customOrderInput
-    let address = localStorage.getItem('address')
+    
     let latitude = localStorage.getItem('latitude')
     let longitude = localStorage.getItem('longitude')
-    let name = localStorage.getItem('name')
     
     return (
         <div className="app">
-            {name}
             <></>
           {/* calling CustomMap function */}
           <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
@@ -49,37 +49,38 @@ const Info = () => {
         </div>
       );
 }
-  
-//Initialise the Page
-const Order = () => {
+
+const LocationGetter = ({ LocationStore }) => {
+    console.log(LocationStore)
+}
+const Confirmation = () => {
+    let name = localStorage.getItem('name')
+    let address = localStorage.getItem('address')
+    let delivery = localStorage.getItem('delivery')
+    LocationGetter({ LocationStore })
+
     return (
-      <div>
-        <ProfileTopBar />
-        <StandardHeader headerName="Custom Order"/>
-        <Info />
-        <div className='customOrderDetails'>
-          <TextField
-            fullWidth placeholder="Input Order Here"
-            multiline rows={10} maxRows={Infinity}
-            color='grey' variant="outlined"
-            InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3'}}}
-            focused
-          />
+        <div>
+            <ProfileTopBar />
+            <StandardHeader headerName="Order Details"/>
+            <Info />
+            <div className='confirmation'>
+                <div className='confirmation-location'>
+                    <div className='confirmation-title'>{name}</div>
+                    <div className='confirmationText'>{address}</div>
+                </div>
+                <div className='delivery-location'>
+                    <div className='delivery-title'>Delivery Location</div>
+                    <div className='delivery-place'>{delivery}</div>
+                </div>
+                <div className='order'>
+                    <div className='order-details'>Order Details</div>
+                    <div className='order-list'></div>
+                </div>
+            </div>
+            <BottomTab />
         </div>
-        <div className='customOrderButton'>
-          <Button disableRipple fullWidth variant='contained' 
-          style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}
-          onClick={() => {
-            alert("Button Clicked");
-          }}>
-          Confirm Order
-        </Button>
-        </div>
-        <div className='bottomTab'>
-          <BottomTab  />
-        </div>
-      </div>
-    );
+    )
 }
 
-export default Order;
+export default Confirmation;

@@ -1,0 +1,4 @@
+.confirmation-title, .delivery-title, .order-details{
+    font-weight: bold;
+    margin-top: 10px;
+}

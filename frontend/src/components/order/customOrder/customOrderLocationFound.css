@@ -15,12 +15,15 @@
     margin-left: 66%
 }
 
-.input-field1, .input-field2{
-    border-radius: 10px;
-    border: 1px solid black;
+
+.customOrderDetails{
+    margin: 5%;
+    height: fit-content;
+    scrollbar-color: rgb(201, 201, 201) #e1e1e1;
 }
 
-.input-field2{
-    margin-left: 40%;
-    width: 10%
+.bottomTab{
+    display: flex;
+    justify-content: space-between;
+    margin: 15%;
 }
