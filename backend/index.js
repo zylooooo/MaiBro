@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 // Connect to the login router
 app.use("/login", require("./routers/loginRouter"));
 app.use("/signup", require("./routers/signupRouter"));
+app.use("/restaurant-list", require("./routers/restaurantListRouter"));
 
 // Start the application
 app.listen(PORT, () => {
