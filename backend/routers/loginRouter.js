@@ -1,5 +1,5 @@
 const express = require("express");
-const { verifyLogin } = require("../controllers/loginController");
+const { authLogin } = require("../controllers/loginController");
 
 const loginRouter = express.Router();
 
@@ -8,6 +8,6 @@ loginRouter.get("/", (req, res) => {
     console.log("Login route hit");
     return res.status(200).json({ message: "Login route hit" });
 });
-loginRouter.post("/", verifyLogin);
+loginRouter.post("/", authLogin);
 
 module.exports = loginRouter;

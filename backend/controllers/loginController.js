@@ -1,6 +1,6 @@
 const { auth } = require("../config");
 
-async function verifyLogin(req, res, next) {
+async function authLogin(req, res, next) {
     // Retrieve the idToken key from the request body
     let idToken = req.body.idToken;
 
@@ -27,4 +27,4 @@ async function verifyLogin(req, res, next) {
         });
 }
 
-module.exports = { verifyLogin };
+module.exports = { authLogin };
