@@ -2,3 +2,17 @@
     font-weight: bold;
     margin-top: 10px;
 }
+
+.confirmation-location, .delivery-location, .order{
+    display: flex;
+    align-items: center;
+}
+
+.confirmation-title, .delivery-title,.order-list{
+    padding-left: 2%;
+    margin-top: 0.8%
+}
+
+.order-list{
+    margin-bottom: 5%
+}

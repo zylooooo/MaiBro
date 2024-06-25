@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Map, Marker, APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 import {Button,TextField, InputAdornment} from '@mui/material';
 import {ProfileTopBar, StandardHeader } from "../../common/topTab/topTab";
-import { LocationStore } from "./customOrderInput";
+import OrderStore from "./customOrderInput";
 import "../../common/topTab/topTab.css";
 import BottomTab from "../../common/bottomTab/bottomTab";
-import LocationStore from "./customOrderInput";
+import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 
 
 const CustomMap = ({lati,longt}) => {
@@ -50,37 +52,45 @@ const Info = () => {
       );
 }
 
-const LocationGetter = ({ LocationStore }) => {
-    console.log(LocationStore)
-}
-const Confirmation = () => {
-    let name = localStorage.getItem('name')
-    let address = localStorage.getItem('address')
-    let delivery = localStorage.getItem('delivery')
-    LocationGetter({ LocationStore })
 
-    return (
-        <div>
-            <ProfileTopBar />
-            <StandardHeader headerName="Order Details"/>
-            <Info />
-            <div className='confirmation'>
-                <div className='confirmation-location'>
-                    <div className='confirmation-title'>{name}</div>
-                    <div className='confirmationText'>{address}</div>
-                </div>
-                <div className='delivery-location'>
-                    <div className='delivery-title'>Delivery Location</div>
-                    <div className='delivery-place'>{delivery}</div>
-                </div>
-                <div className='order'>
-                    <div className='order-details'>Order Details</div>
-                    <div className='order-list'></div>
-                </div>
-            </div>
-            <BottomTab />
+
+export default function Confirmation() {
+  let name = localStorage.getItem('name')
+  let address = localStorage.getItem('address')
+  let delivery = localStorage.getItem('delivery')
+  let order = localStorage.getItem('order')
+
+  return (
+    <div>
+      <ProfileTopBar />
+      <StandardHeader headerName="Order Details"/>
+      <Info />
+      <div className='confirmation'>
+        <div className='confirmation-location'>
+          <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
+          <div className='confirmation-title'>{name}</div>
         </div>
-    )
-}
+        <div className='confirmationText'>{address}</div>
+        <div className='delivery-location'>
+          <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
+          <div className='delivery-title'>Delivery Location</div>
+        </div>
+        <div className='delivery-place'>{delivery}</div>
+        <div className='order'>
+          <ArticleOutlinedIcon></ArticleOutlinedIcon> 
+          <div className='order-details'>Order Details</div>
+        </div>
+        <div className='order-list'>{order}</div>
 
-export default Confirmation;
+        <Button disableRipple fullWidth variant='contained' className='confirm-button'
+          style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}
+          onClick={""}>
+          Confirm Order
+        </Button>
+
+      </div>
+
+      <BottomTab />
+    </div>
+  )
+}
