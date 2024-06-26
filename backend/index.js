@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
     });
 });
 
-// Connect to the login router
+// Connect to the all the routers
 app.use("/login", require("./routers/loginRouter"));
 app.use("/signup", require("./routers/signupRouter"));
 app.use("/restaurant-list", require("./routers/restaurantListRouter"));
