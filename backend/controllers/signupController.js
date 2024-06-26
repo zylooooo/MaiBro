@@ -17,19 +17,32 @@ const createNewUser = async (req, res) => {
             console.log("Creating new user...");
         }
 
+        // Check if the userId already exists in firestore
+        try {
+            const userDoc = await db.collection("Users").doc(userId).get();
+            if (userDoc.exists) {
+                console.log("Username already exists in Firestore:", userDoc.data());
+                return res.status(400).json({
+                    message: "Username is already taken, please choose another username!"
+                });
+            }
+        } catch (error) {
+            console.error("Error checking if user exists in Firestore:", error);
+        }
+
+        // Create a new account for the user
         const userRecord = await auth.createUser({
             phoneNumber: phoneNumber,
             password: password,
             userId: userId
         });
-
         console.log("Successfully created new user:", userRecord.uid);
 
         // Create a record in Firestore for the new user
-        await db.collection("Users").doc(userRecord.uid).set({
+        await db.collection("Users").doc(userId).set({
             phoneNumber: phoneNumber,
             password: password,
-            userId: userRecord.uid
+            userId: userId
         });
 
         return res.status(200).json({
