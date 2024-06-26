@@ -7,8 +7,6 @@ const restaurantListRouter = express.Router();
 restaurantListRouter.get("/", async (req, res) => {
     console.log("Restaurant list route hit!");
 
-    // Testing code to get all the restaurants
-
     return res.status(200).json({
         message: "Restaurant list route hit!"
     });
