@@ -42,6 +42,7 @@ async function submitOrder(req, res) {
 module.exports = { submitOrder };
 
 // Helper function to generate a random order ID. Returns a 32 character long string
+// This function will create 2^128 possible orderIds so it is not impossible but the chances of duplicates is very low
 function generateOrderId() {
     return crypto.randomBytes(16).toString("hex");
 }
