@@ -52,6 +52,13 @@ const Info = () => {
   
 //Initialise the Page
 const Order = () => {
+    const [order, setOrder] = useState('');
+    const handleOrderChange = (event) => {
+      setOrder(event.target.value);
+    }
+    const handleSave = () => {
+      localStorage.setItem('order', order);
+    }
     return (
       <div>
         <ProfileTopBar />
@@ -60,7 +67,7 @@ const Order = () => {
         <div className='customOrderDetails'>
           <TextField
             fullWidth placeholder="Input Order Here"
-            multiline rows={10} maxRows={Infinity}
+            multiline rows={10} maxRows={Infinity} onChange={handleOrderChange}
             color='grey' variant="outlined"
             InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3'}}}
             focused
@@ -69,9 +76,7 @@ const Order = () => {
         <div className='customOrderButton'>
           <Button disableRipple fullWidth variant='contained' 
           style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}
-          onClick={() => {
-            alert("Button Clicked");
-          }}>
+          onClick={handleSave}>
           Confirm Order
         </Button>
         </div>

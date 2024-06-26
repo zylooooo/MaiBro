@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Map, Marker, APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 import {Button,TextField, InputAdornment} from '@mui/material';
 import {ProfileTopBar, StandardHeader } from "../../common/topTab/topTab";
-import LocationGetter from "./customOrderConfirmation";
+import Confirmation from "./customOrderConfirmation";
 import "../../common/topTab/topTab.css";
 import "../../common/bottomTab/bottomTab.css"
 import BottomTab from "../../common/bottomTab/bottomTab";
@@ -80,6 +80,7 @@ const LocationSearch = () => {
 
   return (
         <>
+        <div className="delivery-location">Restaurant Name </div>
         <TextField fullWidth id="outlined-basic" color="grey" variant="outlined" value={location} onChange={handleLocationChange} placeholder="Location"
                     InputProps={{endAdornment:<InputAdornment position="end"><div onClick={handleLocationPress}>Search</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",fontFamily:"Inter",
                     }}} focused/>
@@ -92,26 +93,34 @@ const LocationSearch = () => {
 }
 
 
-const Delivery = () => {
-  const [location, setLocation] = useState("");
-  const handleLocationChange = (event) => {
-    setLocation(event.target.value);
+function DeliveryLocationStore() {
+  const [delivery, setDelivery] = useState("");
+  
+  const handleInputChange = (event) => {
+    setDelivery(event.target.value);
   }
+
+  const handleSave = () => {
+    NewInfo(delivery);
+  }
+  
 
   return (
     <>
       
       <div className="delivery-location">Delivery Location </div>
+      
       <TextField
         fullWidth
         id="outlined-basic"
         color="grey"
         variant="outlined"
         placeholder="Input Delivery Location Here"
+        onChange={handleInputChange}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <div onClick={() => handleLocationChange()}>Save</div>
+              <div onClick={handleSave}>Save</div>
             </InputAdornment>
           ),
           style: {
@@ -127,6 +136,7 @@ const Delivery = () => {
   );
 };
 
+
 const CustomOrder = () => {
   //Initialise the Page
   return (
@@ -134,15 +144,12 @@ const CustomOrder = () => {
         <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
         <ProfileTopBar/>
         <StandardHeader headerName="Custom Order"/>
-        <Delivery/>
-        <LocationGetter data={location} />
-        <div className="delivery-location">Restaurant Name </div>
+        
+        
         {/* //Created a new component for location search as i need to use useMap() which needs to be inside <APIProvider> */}     
+        <DeliveryLocationStore/>
         <LocationSearch />
-        <Button disableRipple fullWidth variant='contained' 
-                    style={{borderRadius: "25px", fontSize:"0.8em",marginTop:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",}} >
-                        +Add Food
-        </Button>
+
         <BottomTab></BottomTab>
         </APIProvider>
         
@@ -158,4 +165,8 @@ const NewInformation = (address, name, longitude, latitude) => {
   localStorage.setItem('name', name);
   localStorage.setItem('longitude', longitude);
   localStorage.setItem('latitude', latitude);
+}
+
+const NewInfo = (delivery) => {
+  localStorage.setItem('delivery', delivery);
 }
