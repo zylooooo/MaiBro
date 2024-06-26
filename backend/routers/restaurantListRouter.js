@@ -1,6 +1,5 @@
 const express = require("express");
 const { restaurantList } = require("../controllers/restaurantListController");
-const { db } = require("../config");
 
 const restaurantListRouter = express.Router();
 
