@@ -17,7 +17,7 @@ async function submitOrder(req, res) {
         const orderId = generateOrderId();
 
         // Create a new order in the database
-        await db.collection("AvailableOrders").doc(orderId).set({
+        await db.collection("AvailableOrders").doc(orderId).set({ 
             broId: null,
             buyerId: buyerId,
             deliveryLocation: deliveryLocation,
