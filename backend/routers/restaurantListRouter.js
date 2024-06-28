@@ -4,13 +4,13 @@ const { restaurantList } = require("../controllers/restaurantListController");
 const restaurantListRouter = express.Router();
 
 // Check if the route is working
-restaurantListRouter.get("/", async (req, res) => {
+restaurantListRouter.get("/health", async (req, res) => {
     console.log("Restaurant list route hit!");
 
     return res.status(200).json({
         message: "Restaurant list route hit!"
     });
 });
-restaurantListRouter.post("/", restaurantList);
+restaurantListRouter.get("/", restaurantList);
 
 module.exports = restaurantListRouter;
