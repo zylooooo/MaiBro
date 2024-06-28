@@ -4,7 +4,7 @@ async function restaurantList(req, res) {
     // Get the current day and convert into a string
     const currentDateTime = new Date();
     let currentDayNum = currentDateTime.getDay();
-    const days = ["sun", "mon", "tues", "wed", "thurs", "fri", "sat"];
+    const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
     let currentDay = days[currentDayNum];
 
     try {
@@ -22,28 +22,44 @@ async function restaurantList(req, res) {
 
             // Helper function to check if the restaurant is open
             function isOpen(operatingHoursData, currentDateTime) {
-                // Check if the restaurant is cosed for the day
                 if (operatingHoursData.openTime === "closed") {
+                    console.error("Error: Restaurant is closed for the day:", doc.id);
                     return false;
                 }
 
                 let openTime = operatingHoursData.openTime;
                 let closeTime = operatingHoursData.closeTime;
-                const openHours = parseInt(openTime.substring(0, 2));
-                const openMinutes = parseInt(openTime.substring(3));
-                const closeHours = parseInt(closeTime.substring(0, 2));
-                const closeMinutes = parseInt(closeTime.substring(3));
-                const currentHours = parseInt(currentDateTime.getHours());
-                const currentMinutes = parseInt(currentDateTime.getMinutes());
 
-                // Comparison logic to check if the restaurant is open
-                if (currentHours < openHours || currentHours > closeHours) {
-                    return false;
-                } else if (currentHours === openHours && currentMinutes < openMinutes) {
-                    return false;
-                } else if (currentHours === closeHours && currentMinutes > closeMinutes) {
+                if (!openTime || !closeTime) {
+                    console.error("Error: Missing operating hours data for restaurant:", doc.id);
                     return false;
                 }
+
+                // Convert times to minutes since the start of the day for easier comparison
+                const toMinutes = (time) => {
+                    const [hours, minutes] = time.split(':').map(Number);
+                    return hours * 60 + minutes;
+                };
+
+                const openMinutes = toMinutes(openTime);
+                const closeMinutes = toMinutes(closeTime);
+                const currentMinutes = currentDateTime.getHours() * 60 + currentDateTime.getMinutes();
+
+                // Handle the case where the restaurant closes after midnight
+                if (closeMinutes < openMinutes) {
+                    // If current time is after midnight but before opening time, it's closed
+                    if (currentMinutes < openMinutes && currentMinutes > closeMinutes) {
+                        console.error("Error: Restaurant is closed for the day:", doc.id);
+                        return false;
+                    }
+                } else {
+                    // Standard case: open and close on the same day
+                    if (currentMinutes < openMinutes || currentMinutes > closeMinutes) {
+                        console.error("Error: Restaurant is closed for the day:", doc.id);
+                        return false;
+                    }
+                }
+
                 return true;
             }
             
