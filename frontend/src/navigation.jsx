@@ -9,6 +9,8 @@ import CustomOrder from './components/order/customOrder/customOrderInput.jsx';
 import Penalty from './components/penalty/penalty.jsx';
 import Order from './components/order/customOrder/customOrderLocationFound.jsx';
 import Confirmation from './components/order/customOrder/customOrderConfirmation.jsx';
+import SearchingForBros from './components/searching/searchingForBros.jsx';
+import BroFound from './components/searching/broFound.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 
 // UPDATE NAVIGATION HERE
@@ -38,6 +40,9 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path= "/customOrder" element= {<CustomOrder/>} />
     <Route path= "/customOrdering" element= {<Order/>} />
     <Route path= "/customOrderConfirmation" element= {<Confirmation/>} />
+
+    <Route path= "/searchingForBros" element= {<SearchingForBros/>} />
+    <Route path= "/broFound" element= {<BroFound/>} />
   </>
 ));
 
