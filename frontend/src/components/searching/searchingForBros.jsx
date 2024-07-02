@@ -6,6 +6,7 @@ import BottomTab from "../common/bottomTab/bottomTab";
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import Searching from './images/Searching.png'
 
 export default function SearchingForBros() {
 
@@ -18,6 +19,7 @@ export default function SearchingForBros() {
         <div className="searchingForBros">
             <div className="searchingForBrosHeader">
                 <h2 className="searchingForBrosTitle">Searching...</h2>
+                <img src={Searching} className='pic_time' alt=''></img>
             </div>
             <div className="searchingForBrosBody">
                 <div className="searchingForBrosBodyText">

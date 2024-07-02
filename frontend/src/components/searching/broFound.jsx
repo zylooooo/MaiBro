@@ -6,6 +6,7 @@ import BottomTab from "../common/bottomTab/bottomTab";
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import Purchasing from './images/Purchasing.png'
 
 export default function BroFound(){
 
@@ -17,6 +18,7 @@ export default function BroFound(){
         <div className="searchingForBros">
             <div className="searchingForBrosHeader">
                 <h2 className="searchingForBrosTitle">Purchasing Your Food...</h2>
+                <img src={Purchasing} className='pic_time' alt=''></img>
             </div>
             <div className='broContact'>
                 <div className='broContactTitle'>Bro's Contact</div>
