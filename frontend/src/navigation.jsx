@@ -37,12 +37,11 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
 
     <Route path= "/penalty" element= {<Penalty/>} />
 
-    <Route path= "/customOrder" element= {<CustomOrder/>} />
-    <Route path= "/customOrdering" element= {<Order/>} />
-    <Route path= "/customOrderConfirmation" element= {<Confirmation/>} />
+    <Route path= "/home/customordering" element= {<Order/>} />
+    <Route path= "/home/customOrderConfirmation" element= {<Confirmation/>} />
 
-    <Route path= "/searchingForBros" element= {<SearchingForBros/>} />
-    <Route path= "/broFound" element= {<BroFound/>} />
+    <Route path= "/home/searchingForBros" element= {<SearchingForBros/>} />
+    <Route path= "/home/broFound" element= {<BroFound/>} />
   </>
 ));
 

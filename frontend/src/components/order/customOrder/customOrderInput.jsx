@@ -141,6 +141,7 @@ const CustomOrder = () => {
   //Initialise the Page
   return (
     <>
+      <form>
         <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
         <ProfileTopBar/>
         <StandardHeader headerName="Custom Order"/>
@@ -149,10 +150,17 @@ const CustomOrder = () => {
         {/* //Created a new component for location search as i need to use useMap() which needs to be inside <APIProvider> */}     
         <DeliveryLocationStore/>
         <LocationSearch />
-
-        <BottomTab></BottomTab>
+        <div style={{ marginBottom: "5em" }}>
+          <Button disableRipple fullWidth variant='contained' onClick={""}
+                  style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
+                    Login/Sign Up
+          </Button>
+        </div>
         </APIProvider>
-        
+      </form>
+      <div>
+      <BottomTab  />
+      </div>
     </>
   );
 };
@@ -165,6 +173,7 @@ const NewInformation = (address, name, longitude, latitude) => {
   localStorage.setItem('name', name);
   localStorage.setItem('longitude', longitude);
   localStorage.setItem('latitude', latitude);
+  console.log(localStorage.getItem('address'));
 }
 
 const NewInfo = (delivery) => {
