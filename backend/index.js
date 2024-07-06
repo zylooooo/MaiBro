@@ -30,6 +30,8 @@ app.use("/restaurant-list", require("./routers/restaurantListRouter"));
 app.use("/submit-order", require("./routers/submitOrderRouter"));
 app.use("/history", require("./routers/historyRouter"));
 app.use("/order-list", require("./routers/orderListRouter"));
+app.use("/order-accepted", require("./routers/orderAcceptedRouter"));
+app.use("/order-completed", require("./routers/orderCompletedRouter"));
 
 // Start the application
 app.listen(PORT, () => {
