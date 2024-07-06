@@ -153,7 +153,7 @@ const CustomOrder = () => {
         <div style={{ marginBottom: "5em" }}>
           <Button disableRipple fullWidth variant='contained' onClick={""}
                   style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
-                    Login/Sign Up
+                    Order Now!
           </Button>
         </div>
         </APIProvider>

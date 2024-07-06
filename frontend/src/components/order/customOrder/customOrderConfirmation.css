@@ -9,10 +9,16 @@
 }
 
 .confirmation-title, .delivery-title,.order-list{
-    padding-left: 2%;
+    padding-left: 4px;
     margin-top: 0.8%
 }
 
 .order-list{
-    margin-bottom: 5%
+    margin-bottom: 3%
+}
+
+.bottomTab{
+    display: flex;
+    justify-content: space-between;
+    margin: 5%;
 }
