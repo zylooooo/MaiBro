@@ -1,0 +1,18 @@
+import axiosInstance from "../utils/axiosInstance";
+
+//Functions to send requests to backend
+
+async function getAllRestaurant() {
+  // Send request to the backend to get a list of tasks
+  const res = await axiosInstance({
+    method: "get",
+    url: "/restaurant-list/",
+  });
+
+  // Return the list of tasks
+  return res.data;
+}
+
+export {
+    getAllRestaurant,
+};

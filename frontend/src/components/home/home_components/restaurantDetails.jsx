@@ -1,15 +1,34 @@
-import { React, useState } from 'react'
-import data from "../home_test"
+import { React, useEffect, useState } from 'react'
 import "../home.css"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import Home from '../home';
+// COMMENT OUT IF USING DATABASE
+import data from "../home_test"
 import { useNavigate } from 'react-router-dom';
-import StandardOrder, {StandardOrderCustom} from '../../order/standardOrder/standardOrder';
+import { getAllRestaurant } from '/src/service/axiosService';
 
 export default function Restaurant(detail) {
+    // // COMMENT OUT IF USING TEST DATA
+    // const [data, setData] = useState([]);
+
+    // useEffect(() => {
+    //     // Function to call backend for opened restaurant list
+    //     async function getRestaurantList() {
+    //         await getAllRestaurant().then((response) => {  
+    //             if (response === undefined) {
+    //                 console.log("No Data");
+    //                 return false;
+    //             } else {
+    //                 setData(response);
+    //             }
+    //         });
+    //     }
+    //     getRestaurantList();
+    // }, []);
+    
     // Filter the data based on the input on the search bar in home.jsx
     const filteredData = data.filter((el) => {
-        return el.name.toLowerCase().includes(detail.input)
+        return el.id.toLowerCase().includes(detail.input)
     })
 
     // Handle Routing from button click
@@ -44,7 +63,7 @@ export default function Restaurant(detail) {
                         />
                         {/* restaurant name, price and description */}
                         <div className="restaurant-stats">
-                            <span className='name' style={{fontSize:"1.3em"}}>{item.name}</span>
+                            <span className='name' style={{fontSize:"1.3em"}}>{item.id}</span>
                             <div className='restaurant-info'>
                                 <span className='money'><AttachMoneyIcon></AttachMoneyIcon></span>
                                 <span className='price'>{item.price} • </span>

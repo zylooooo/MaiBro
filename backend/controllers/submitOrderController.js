@@ -32,7 +32,7 @@ async function submitOrder(req, res) {
             message: "Order submitted successfully!"
         });
     } catch (error) {
-        console.erro("Error submitting order:", error);
+        console.error("Error submitting order:", error);
         return res.status(400).json({
             error: "Error submitting order!"
         });
