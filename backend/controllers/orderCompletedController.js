@@ -5,7 +5,7 @@ async function orderCompleted(req, res) {
 
     try {
         // Update the orderCompleted field in the database
-        await db.collection("AvailableOrders").doc(orderId).update({
+        await db.collection("AllOrders").doc(orderId).update({
             orderCompleted: true
         });
 
