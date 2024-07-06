@@ -1,5 +1,5 @@
 const express = require("express");
-const { completeOrder } = require("../controllers/orderCompletedController");
+const { orderCompleted } = require("../controllers/orderCompletedController");
 
 const orderCompletedRouter = express.Router();
 
@@ -10,6 +10,6 @@ orderCompletedRouter.get("/health", async (req, res) => {
     });
 });
 
-orderCompletedRouter.post("/", completeOrder); // post beacause we are inserting the order into the AllOrders collection
+orderCompletedRouter.put("/", orderCompleted); // post beacause we are inserting the order into the AllOrders collection
 
 module.exports = orderCompletedRouter;
