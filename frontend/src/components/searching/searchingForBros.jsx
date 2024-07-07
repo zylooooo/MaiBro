@@ -41,13 +41,14 @@ export default function SearchingForBros() {
                         </div>
                         <div className='order-list'>{order}</div>
 
-                        <Button disableRipple fullWidth variant='contained' className='confirm-button'
-                        style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}
-                        onClick={""}>
-                        Cancel Order
-                        </Button>
                     </div>
                 </div>
+                <div style={{ marginBottom: "5em" }}>
+                        <Button disableRipple fullWidth variant='contained' onClick={""}
+                                style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
+                                    Cancel Order
+                        </Button>
+                        </div>
             </div>
             <div>
                 <BottomTab />

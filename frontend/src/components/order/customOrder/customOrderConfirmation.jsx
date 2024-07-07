@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Map, Marker, APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 import {Button,TextField, InputAdornment} from '@mui/material';
 import {ProfileTopBar, StandardHeader } from "../../common/topTab/topTab";
+import {useNavigate} from "react-router-dom";
 import OrderStore from "./customOrderInput";
 import "../../common/topTab/topTab.css";
 import BottomTab from "../../common/bottomTab/bottomTab";
@@ -53,12 +54,13 @@ const Info = () => {
 }
 
 
-
+//initializing the confirmation page
 export default function Confirmation() {
   let name = localStorage.getItem('name')
   let address = localStorage.getItem('address')
   let delivery = localStorage.getItem('delivery')
   let order = localStorage.getItem('order')
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -83,7 +85,7 @@ export default function Confirmation() {
         </div>
         <div className='order-list'>{order}</div>
         <div>
-        <Button disableRipple fullWidth variant='contained'  onClick={""} className='confirm-button'
+        <Button disableRipple fullWidth variant='contained'  onClick={() => navigate("/home/searchingForBros")}  className='confirm-button'
           style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}>
           Confirm Order
         </Button>
@@ -94,6 +96,7 @@ export default function Confirmation() {
       <div className='bottomTab'>
       <BottomTab value='bottom'/>
       </div>
+
     </div>
   )
 }

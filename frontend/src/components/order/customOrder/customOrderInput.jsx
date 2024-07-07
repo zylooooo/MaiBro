@@ -1,9 +1,9 @@
 import "./customOrderInput.css";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Map, Marker, APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 import {Button,TextField, InputAdornment} from '@mui/material';
 import {ProfileTopBar, StandardHeader } from "../../common/topTab/topTab";
+import { useNavigate } from "react-router-dom";
 import Confirmation from "./customOrderConfirmation";
 import "../../common/topTab/topTab.css";
 import "../../common/bottomTab/bottomTab.css"
@@ -12,7 +12,6 @@ import BottomTab from "../../common/bottomTab/bottomTab";
 
 const CustomMap = ({latitude,longtitude}) => {
   // shows marker on chosen location
-
   return (
     <div className="map-container">
       <Map
@@ -92,7 +91,7 @@ const LocationSearch = () => {
 
 }
 
-
+// Store the delivery location
 function DeliveryLocationStore() {
   const [delivery, setDelivery] = useState("");
   
@@ -100,6 +99,7 @@ function DeliveryLocationStore() {
     setDelivery(event.target.value);
   }
 
+  //storing delivery location via local storage
   const handleSave = () => {
     NewInfo(delivery);
   }
@@ -139,10 +139,11 @@ function DeliveryLocationStore() {
 
 const CustomOrder = () => {
   //Initialise the Page
+  const navigate = useNavigate();
   return (
     <>
       <form>
-        <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
+        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
         <ProfileTopBar/>
         <StandardHeader headerName="Custom Order"/>
         
@@ -151,7 +152,7 @@ const CustomOrder = () => {
         <DeliveryLocationStore/>
         <LocationSearch />
         <div style={{ marginBottom: "5em" }}>
-          <Button disableRipple fullWidth variant='contained' onClick={""}
+          <Button disableRipple fullWidth variant='contained' onClick={() => navigate("/home/customordering")}
                   style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
                     Order Now!
           </Button>
@@ -173,7 +174,6 @@ const NewInformation = (address, name, longitude, latitude) => {
   localStorage.setItem('name', name);
   localStorage.setItem('longitude', longitude);
   localStorage.setItem('latitude', latitude);
-  console.log(localStorage.getItem('address'));
 }
 
 const NewInfo = (delivery) => {
