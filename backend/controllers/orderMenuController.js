@@ -22,23 +22,29 @@ async function getOrderMenu(req, res) {
         const menuRef = restaurantRef.collection("menu");
 
         // Get the menu items from the database
-        const snapshot = await menuRef.get();
+        const menuItems = await menuRef.get();
 
         // If there are no menu items, return an error
-        if (snapshot.empty) {
+        if (menuItems.empty) {
             return res.status(404).json({ error: "No menu found!" });
         }
 
         // Create an array to store the menu items
-        let menuItems = [];
+        let menuItemsArray = [];
 
         // Add each menu item to the array
-        snapshot.forEach(doc => {
-            menuItems.push(doc.data());
+        menuItems.forEach(doc => {
+            const data = doc.data();
+            menuItemsArray.push({
+                itemName: doc.id.trim(), // trim beacuse the item name has a space at the front
+                coverImg: data.coverImg,
+                price: data.price,
+                description: data.description || ""
+            });
         });
 
         // Return the menu items
-        return res.status(200).json(menuItems);
+        return res.status(200).json(menuItemsArray);
         
     } catch (error) {
         console.error("Error getting menu:", error);
