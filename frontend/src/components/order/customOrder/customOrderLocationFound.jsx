@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Map, Marker, APIProvider, useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 import {Button,TextField, InputAdornment} from '@mui/material';
 import {ProfileTopBar, StandardHeader } from "../../common/topTab/topTab";
+import { useNavigate } from "react-router-dom";
 import "../../common/topTab/topTab.css";
 import BottomTab from "../../common/bottomTab/bottomTab";
 
@@ -58,7 +59,9 @@ const Order = () => {
     }
     const handleSave = () => {
       localStorage.setItem('order', order);
+      navigate("/home/customOrderConfirmation")
     }
+    const navigate = useNavigate();
     return (
       <div>
         <ProfileTopBar />

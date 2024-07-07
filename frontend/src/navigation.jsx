@@ -2,7 +2,7 @@ import Settings from './components/settings/Settings.jsx';
 import HomeMain from './components/home/home.jsx';
 import Transaction from './components/transaction/transaction.jsx'
 import Delivery from './components/delivery/delivery.jsx'
-import Login from './components/login/login.jsx'
+import Login from './components/login/Login.jsx'
 import SignUp from './components/signup/signup.jsx'
 import StandardOrder, {StandardOrderCustom} from './components/order/standardOrder/standardOrder.jsx';
 import CustomOrder from './components/order/customOrder/customOrderInput.jsx';

@@ -1,3 +1,9 @@
 .pic_time{
     width: 100%;
 }
+
+.bottomTab{
+    display: flex;
+    justify-content: space-between;
+    margin: 5%;
+}
