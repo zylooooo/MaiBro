@@ -2,7 +2,8 @@ const { db } = require("../config");
 
 async function getOrderMenu(req, res) {
     // Get the restaurantId from the request body
-    const { restaurantId } = req.body;
+    const { restaurantId } = req.query;
+    console.log(req.query)
 
     try {
         // Get the restaurant document from the database
@@ -24,9 +25,9 @@ async function getOrderMenu(req, res) {
         // Get the menu items from the database
         const menuItems = await menuRef.get();
 
-        // If there are no menu items, return an error
+        // If there are no menu items, return an error but with 200 status
         if (menuItems.empty) {
-            return res.status(404).json({ error: "No menu found!" });
+            return res.status(200).json({ error: "No menu found!" });
         }
 
         // Create an array to store the menu items
