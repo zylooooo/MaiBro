@@ -65,6 +65,7 @@ export default function Confirmation() {
       <ProfileTopBar />
       <StandardHeader headerName="Order Details"/>
       <Info />
+      <form>
       <div className='confirmation'>
         <div className='confirmation-location'>
           <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
@@ -81,16 +82,18 @@ export default function Confirmation() {
           <div className='order-details'>Order Details</div>
         </div>
         <div className='order-list'>{order}</div>
-
-        <Button disableRipple fullWidth variant='contained' className='confirm-button'
-          style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}
-          onClick={""}>
+        <div>
+        <Button disableRipple fullWidth variant='contained'  onClick={""} className='confirm-button'
+          style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}>
           Confirm Order
         </Button>
-
+        </div>
+        
       </div>
-
-      <BottomTab />
+      </form>
+      <div className='bottomTab'>
+      <BottomTab value='bottom'/>
+      </div>
     </div>
   )
 }
