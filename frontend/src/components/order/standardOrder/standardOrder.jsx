@@ -88,7 +88,7 @@ export function StandardOrderCustom() {
     //Obtain prop from history
     const restaurantObj = location.state.restaurant;
 
-    const restaurantName = restaurantObj.name;
+    const restaurantName = restaurantObj.id;
     const restaurantLogo = restaurantObj.coverImg;
 
     //Textfield State

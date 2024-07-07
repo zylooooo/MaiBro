@@ -3,28 +3,28 @@ import "../home.css"
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import Home from '../home';
 // COMMENT OUT IF USING DATABASE
-import data from "../home_test"
+// import data from "../home_test"
 import { useNavigate } from 'react-router-dom';
 import { getAllRestaurant } from '/src/service/axiosService';
 
 export default function Restaurant(detail) {
     // // COMMENT OUT IF USING TEST DATA
-    // const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
 
-    // useEffect(() => {
-    //     // Function to call backend for opened restaurant list
-    //     async function getRestaurantList() {
-    //         await getAllRestaurant().then((response) => {  
-    //             if (response === undefined) {
-    //                 console.log("No Data");
-    //                 return false;
-    //             } else {
-    //                 setData(response);
-    //             }
-    //         });
-    //     }
-    //     getRestaurantList();
-    // }, []);
+    useEffect(() => {
+        // Function to call backend for opened restaurant list
+        async function getRestaurantList() {
+            await getAllRestaurant().then((response) => {  
+                if (response === undefined) {
+                    console.log("No Data");
+                    return false;
+                } else {
+                    setData(response);
+                }
+            });
+        }
+        getRestaurantList();
+    }, []);
     
     // Filter the data based on the input on the search bar in home.jsx
     const filteredData = data.filter((el) => {
@@ -34,14 +34,15 @@ export default function Restaurant(detail) {
     // Handle Routing from button click
     const navigate = useNavigate();
     function restaurantClick(item){
-        //Check if restaurant requires standard/custom order page
-        if (item.custom) {
-            // Redirect to custom order page and pass the restaurant id to list the menu
-            navigate("/home/standardordercustom", {state: {restaurant: item}});
-        } else{
-            // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
-            navigate("/home/standardorder", {state: {restaurant: item}});
-        }
+        // //Check if restaurant requires standard/custom order page (COMMENTED OUT UNTIL ISSUE IS FIXED)
+        // if (item.custom) {
+        //     // Redirect to custom order page and pass the restaurant id to list the menu
+        //     navigate("/home/standardordercustom", {state: {restaurant: item}});
+        // } else{
+        //     // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
+        //     navigate("/home/standardorder", {state: {restaurant: item}});
+        // }
+        navigate("/home/standardordercustom", {state: {restaurant: item}});
         
     }
 
