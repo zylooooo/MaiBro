@@ -87,7 +87,6 @@ export function StandardOrderCustom() {
     const location = useLocation();
     //Obtain prop from history
     const restaurantObj = location.state.restaurant;
-
     const restaurantName = restaurantObj.id;
     const restaurantLogo = restaurantObj.coverImg;
 
@@ -126,7 +125,6 @@ export function StandardOrderCustom() {
                 </Button>
             </div> 
         </div>
-        
         <BottomTab value="Order" />
         </>
     )
