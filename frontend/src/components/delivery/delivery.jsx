@@ -25,15 +25,15 @@ export function MapDisplay({latitude, longtitude}) {
 }
 
 
-
 export default function Delivery() {
-
+    
 
     var deliveryObjList = deliveryListings["Listings"]
     
+
     return (
         <>
-        <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
+        <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
         <div>
             <ProfileTopBar/>
             <StandardHeader headerName="Delivery"/>

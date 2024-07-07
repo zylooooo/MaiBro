@@ -45,7 +45,7 @@ const Info = () => {
         <div className="app">
             <></>
           {/* calling CustomMap function */}
-          <APIProvider apiKey="AIzaSyCXV5ytv98uxdC8R3_krSY0S4cTkzhOq-g">
+          <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
             <CustomMap lati={latitude} longt={longitude}    />
           </APIProvider>
         </div>
