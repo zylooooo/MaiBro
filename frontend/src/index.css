@@ -11,7 +11,7 @@
   width: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 0px;
+  padding: 0px;;
 }
 
 /* Header */
@@ -26,4 +26,10 @@
 
 .lato {
   font-family: Lato, sans-serif;
+}
+
+
+body {
+  margin-left: 4%;
+  margin-right: 4%;
 }

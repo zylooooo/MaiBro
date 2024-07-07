@@ -36,7 +36,7 @@ export default function StandardOrder(){
             </div>
         
        
-        <form >
+        <form>
             <div className='menuDetails'>
                     {
                         //For each item in the menu, display the item name, price and description

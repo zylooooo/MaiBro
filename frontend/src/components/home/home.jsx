@@ -33,32 +33,30 @@ export default function HomeMain() {
   return (
     <>
       {/* Search bar */}
-      <OrderTopBar />
-      <OrderHeader />
-      <div className="mainHome">
+      <div className='mainHome'>
+        <OrderTopBar />
+        <OrderHeader />
         <div className="search">
           <TextField
-            id="outlined-basic"
-            onChange={inputHandler}
-            variant="outlined"
-            fullWidth
-            placeholder="Search"
-            color="grey"
-            InputProps={{
-              style: { borderRadius: "25px", backgroundColor: "#D3D3D3", },
-              endAdornment:
-                <InputAdornment position="end">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-            }}
-            focused
-          />
+              id="outlined-basic"
+              onChange={inputHandler}
+              variant="outlined"
+              fullWidth
+              placeholder="Search"
+              color="grey"
+              InputProps={{
+                style: { borderRadius: "25px", backgroundColor: "#D3D3D3", },
+                endAdornment:
+                  <InputAdornment position="end">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+              }}
+              focused
+            />
         </div>
-        <Restaurant input={inputText} />
       </div>
-      <div>
-        <section className="restaurant-list">
-        </section>
+      <div className="restaurantList">
+        <Restaurant input={inputText} />
       </div>
       <div>
         <BottomTab value="Order"></BottomTab>

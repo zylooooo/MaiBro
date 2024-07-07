@@ -73,7 +73,7 @@ export function OrderTopBar() {
     return (
             <>
             <div className='profileTopBar'>
-                <div style={{paddingLeft:"2.5%", fontWeight:"650", fontSize:"1em"}}>Welcome to MaiBro!</div>
+                <div style={{fontWeight:"650", fontSize:"1em"}}>Welcome to MaiBro!</div>
                 <img style={{height:"3em",width:"3em"}}src='src/assets/profile_pic.png' className='profilePicImg'/>
             </div>
             
