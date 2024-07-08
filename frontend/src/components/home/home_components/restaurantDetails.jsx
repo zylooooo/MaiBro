@@ -5,7 +5,7 @@ import Home from '../home';
 // COMMENT OUT IF USING DATABASE
 // import data from "../home_test"
 import { useNavigate } from 'react-router-dom';
-import { getAllRestaurant } from '/src/service/axiosService';
+import { getAllRestaurant, getRestaurantMenu } from '/src/service/axiosService';
 
 export default function Restaurant(detail) {
     // // COMMENT OUT IF USING TEST DATA
@@ -31,18 +31,42 @@ export default function Restaurant(detail) {
         return el.id.toLowerCase().includes(detail.input)
     })
 
-    // Handle Routing from button click
+    // Handle Button Click
     const navigate = useNavigate();
-    function restaurantClick(item){
-        // //Check if restaurant requires standard/custom order page (COMMENTED OUT UNTIL ISSUE IS FIXED)
-        // if (item.custom) {
-        //     // Redirect to custom order page and pass the restaurant id to list the menu
-        //     navigate("/home/standardordercustom", {state: {restaurant: item}});
-        // } else{
-        //     // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
-        //     navigate("/home/standardorder", {state: {restaurant: item}});
-        // }
-        navigate("/home/standardordercustom", {state: {restaurant: item}});
+    // Menu State
+    const [menu, setMenu] = useState(false);
+
+    async function checkMenuExists(id) {
+        const body = {
+            restaurantId: id,
+        }
+        const check = await getRestaurantMenu(body).then((response) => {  
+            if (("error" in response)) {
+                return false
+            } else{
+                return true
+            }
+        });
+        return check
+    }
+
+
+    async function restaurantClick(restaurantInfo){
+        //Call function to check if restaurant has standard menu
+        const check = await checkMenuExists(restaurantInfo.id)
+
+        // Route to menu order page/custom order page depending on return value
+        //Check if restaurant requires standard/custom order page (COMMENTED OUT UNTIL ISSUE IS FIXED)
+        if (check) {
+            // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
+            navigate("/home/standardorder", {state: {restaurant: restaurantInfo}});
+        } else{
+            // Redirect to custom order page and pass the restaurant id to list the menu
+            navigate("/home/standardordercustom", {state: {restaurant: restaurantInfo}});
+        }
+        
+        // //Bypass above if/else
+        // navigate("/home/standardordercustom", {state: {restaurant: item}});
         
     }
 
