@@ -15,7 +15,12 @@ app.use(cors()); // Allow cross- origin requests
 
 // Attach socket.io to the server
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+    },
+});
 
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
