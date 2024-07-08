@@ -1,7 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
-
+const http = require("http");
+const { Server } = require("socket.io");
 
 // Server settings
 const PORT = 8000;
@@ -12,6 +12,10 @@ app.use(express.json()); // So that express can understand json
    It is important when we need to pull data from external APIs and allow authorised servers to access our data.
 */
 app.use(cors()); // Allow cross- origin requests
+
+// Attach socket.io to the server
+const server = http.createServer(app);
+const io = new Server(server);
 
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
@@ -39,7 +43,8 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
 });
 
-
+// Export socket.io to be used in other files
+module.exports = { app, io };
 
 // Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
 // let restaurantName = "55";

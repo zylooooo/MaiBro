@@ -1,5 +1,6 @@
 const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
 const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
+const axios = require("axios");
 
 // Initialise app with admin privileges
 admin.initializeApp({
@@ -29,8 +30,15 @@ checkFirebaseConnection();
 // Create a Firebase auth instance
 const auth = admin.auth();
 
-// Export the db to be used in other files
-module.exports = { db, auth };
+// Create an axios instance
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:8000",
+    headers: { "Content-Type": "application/json" },
+    withCredentials: false,
+});
+
+// Export the modules to be used in other files
+module.exports = { db, auth, axiosInstance };
 
 
 
