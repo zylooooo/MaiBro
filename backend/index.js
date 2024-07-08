@@ -22,6 +22,16 @@ const io = new Server(server, {
     },
 });
 
+// Check the socket connection
+io.on("connection", socket => {
+    console.log(`User ${socket.id} connected!`);
+
+    // Handle disconnection
+    socket.on("disconnect", () => {
+        console.log(`User ${socket.id} disconnected!`);
+    })
+});
+
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
    The '/' in the hyperlink will return a message to the user that the server is up and running.
@@ -42,6 +52,7 @@ app.use("/order-list", require("./routers/orderListRouter"));
 app.use("/order-accepted", require("./routers/orderAcceptedRouter"));
 app.use("/order-completed", require("./routers/orderCompletedRouter"));
 app.use("/order-menu", require("./routers/orderMenuRouter"));
+app.use("/chat", require("./routers/chatRouter"));
 
 // Start the application
 app.listen(PORT, () => {
