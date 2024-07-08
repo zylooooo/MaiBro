@@ -79,6 +79,7 @@ function Login() {
 
         //Navigate to the appropriate page
         const userName = user.displayName;
+        sessionStorage.setItem('userName', userName);
         
         //If display name is null, navigate to signup page
         if (userName === null){

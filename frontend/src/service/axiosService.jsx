@@ -13,6 +13,17 @@ async function getAllRestaurant() {
   return res.data;
 }
 
+async function getAllAvailableOrders() {
+  // Send request to the backend to get a list of restaurants currently opened
+  const res = await axiosInstance({
+    method: "get",
+    url: "/order-list/",
+  });
+
+  // Return the list of restaurants
+  return res.data;
+}
+
 async function getRestaurantMenu(body) {
   // Send request to the backend to get a avaialble orders
   const res = await axiosInstance({
@@ -38,6 +49,6 @@ async function getAvailableOrders() {
 
 export {
     getAllRestaurant,
-    getAvailableOrders,
     getRestaurantMenu,
+    getAllAvailableOrders
 };

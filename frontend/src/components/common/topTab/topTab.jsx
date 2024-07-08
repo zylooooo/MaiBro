@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './topTab.css';
 import { Button } from '@mui/material';
+import {firebaseAuth} from "/src/service/firebaseConfig";
 
 const BackButton = () => {
     // const location = useLocation();
@@ -70,10 +71,12 @@ export function ProfileTopBar() {
 
 //Same as profile top bar but no back button. Says "HELLO" to user
 export function OrderTopBar() {
+    const userName = sessionStorage.getItem('userName') == null ? "User": sessionStorage.getItem('userName');
+    
     return (
             <>
             <div className='profileTopBar'>
-                <div style={{fontWeight:"650", fontSize:"1em"}}>Welcome to MaiBro!</div>
+                <div style={{fontWeight:"650", fontSize:"1em"}}>Welcome to MaiBro, {userName}!</div>
                 <img style={{height:"3em",width:"3em"}}src='src/assets/profile_pic.png' className='profilePicImg'/>
             </div>
             
