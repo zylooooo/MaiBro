@@ -3,7 +3,6 @@ const { db } = require("../config");
 async function getOrderMenu(req, res) {
     // Get the restaurantId from the request body
     const { restaurantId } = req.query;
-    console.log(req.query)
 
     try {
         // Get the restaurant document from the database
