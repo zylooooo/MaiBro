@@ -1,7 +1,7 @@
 import './login.css'
 import {Button,TextField, InputAdornment, Container} from '@mui/material';
 import {React, useState } from 'react';
-import { RecaptchaVerifier, signInWithPhoneNumber} from "firebase/auth";
+import { RecaptchaVerifier, signInWithPhoneNumber, setPersistence, browserSessionPersistence} from "firebase/auth";
 import {firebaseAuth} from "../../service/firebaseConfig";
 import { useNavigate } from 'react-router-dom';
 
@@ -51,8 +51,10 @@ function Login() {
     // Add country code to phone number
     phoneNumber = "+65" + phoneNumber;
 
-    // Send OTP
-    signInWithPhoneNumber(firebaseAuth, phoneNumber, window.reCaptcha)
+    // Send OTP and allow session persistence login only
+    setPersistence(firebaseAuth, browserSessionPersistence)
+        .then(() => {
+        return signInWithPhoneNumber(firebaseAuth, phoneNumber, window.reCaptcha)})
         .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the user in with confirmationResult
         window.confirmationResult = confirmationResult;
@@ -88,6 +90,7 @@ function Login() {
         } else {
           //Navigate to home page
           navigate('/home');
+          
         }
 
     }).catch((error) => {

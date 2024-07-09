@@ -12,13 +12,14 @@ import Confirmation from './components/order/customOrder/customOrderConfirmation
 import SearchingForBros from './components/searching/searchingForBros.jsx';
 import BroFound from './components/searching/broFound.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import Protect from './protect.jsx';
 
 // UPDATE NAVIGATION HERE
 const browserRouter = createBrowserRouter(createRoutesFromElements(
   <>
     {/* Home */}
-    <Route path="/" element={<HomeMain />} />
-    <Route path="/home" element={<HomeMain />}/>
+    <Route path="/" element={<Protect><HomeMain /></Protect>} />
+    <Route path="/home" element={<Protect><HomeMain /></Protect>}/>
 
     {/* Authentication Pages */}
     <Route path="/login" element={<Login />} />
