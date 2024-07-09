@@ -43,7 +43,6 @@ const Info = () => {
     const addressObj = JSON.parse(address)
     const latitude = addressObj.latitude
     const longitude = addressObj.longitude
-    
     return (
         <div className="app">
             <></>

@@ -140,6 +140,15 @@ function DeliveryLocationStore() {
 const CustomOrder = () => {
   //Initialise the Page
   const navigate = useNavigate();
+  const [order, setOrder] = useState('');
+  const handleOrderChange = (event) => {
+    setOrder(event.target.value);
+  }
+  const handleSave = () => {
+    localStorage.setItem('order', order);
+    navigate("/home/OrderConfirmation")
+  }
+
   return (
     <>
       <form>
@@ -152,7 +161,14 @@ const CustomOrder = () => {
         <DeliveryLocationStore/>
         <LocationSearch />
         <div style={{ marginBottom: "5em" }}>
-          <Button disableRipple fullWidth variant='contained' onClick={() => navigate("/home/customordering")}
+          <TextField
+              fullWidth placeholder="Input Order Here"
+              multiline rows={10} maxRows={Infinity} onChange={handleOrderChange}
+              color='grey' variant="outlined"
+              InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3'}}}
+              focused
+            />
+          <Button disableRipple fullWidth variant='contained' onClick={() => handleSave()}
                   style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
                     Order Now!
           </Button>
@@ -169,13 +185,14 @@ const CustomOrder = () => {
 export default CustomOrder;
 
 //inputting information of location into local storage
-const NewInformation = (address, name, longitude, latitude) => {
-  localStorage.setItem('address', address);
-  localStorage.setItem('name', name);
-  localStorage.setItem('longitude', longitude);
-  localStorage.setItem('latitude', latitude);
+const NewInformation = (name, longitude, latitude) => {
+  localStorage.setItem('restaurantName', name);
+  const longstring = longitude.toString();
+  const latstring = latitude.toString();
+  const add = JSON.stringify({ longitude: longstring, latitude: latstring });
+  localStorage.setItem('address', add);
 }
 
 const NewInfo = (delivery) => {
-  localStorage.setItem('delivery', delivery);
+  localStorage.setItem('deliveryLocation', delivery);
 }
