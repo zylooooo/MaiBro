@@ -8,6 +8,7 @@ import restaurantMenu from './restaurantMenu'
 import { getRestaurantMenu } from '/src/service/axiosService';
 
 export default function StandardOrder(){
+
     //Initialise react router navigate function
     const navigate = useNavigate();
 
@@ -41,6 +42,7 @@ export default function StandardOrder(){
     }
 
     //Obtain menu items list obj
+    //FUTURE: STORE MENU ITEMS IN LOCAL STORAGE TO REDUCE DB CALLS
     const [menu, setMenu] = useState([]); 
     useEffect(() => {
         // Function to call backend for opened restaurant list

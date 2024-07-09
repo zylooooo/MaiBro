@@ -10,6 +10,7 @@ import BottomTab from "../../common/bottomTab/bottomTab";
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import {submitOrder} from "/src/service/axiosService";
 
 
 const CustomMap = ({lati,longt}) => {
@@ -55,17 +56,55 @@ const Info = () => {
 }
 
 
+
 //initializing the confirmation page
 export default function Confirmation() {
+  const navigate = useNavigate();
+
   // Obtain information from local/session storage for display on confirmation page
-  let name = sessionStorage.getItem('userName') == null ? "User": sessionStorage.getItem('userName');
+  let userName = sessionStorage.getItem('userName') == null ? "User": sessionStorage.getItem('userName');
   let restaurantName = localStorage.getItem('restaurantName')
   let delivery = localStorage.getItem('deliveryLocation')
   let order = localStorage.getItem('order')
-  const navigate = useNavigate();
+
+  //getting data from local storage that was inputted in customOrderInput
+  let address = localStorage.getItem('address')
+  const addressObj = JSON.parse(address)
+  const latitude = addressObj.latitude
+  const longitude = addressObj.longitude
+
 
   //Function to send data to backend to confirm order
-  function sendOrderBackend(){}
+  const sendOrderBackend = async (userName, restaurantName, delivery, latitude, longitude, order) => {
+
+    //Create the req object
+    const orderData = {
+      broId: null,
+      buyerId: userName,
+      deliveryLocation: delivery,
+      earnings: 2,
+      latitude: latitude,
+      longitude: longitude,
+      orderAccepted: false,
+      orderCompleted: false,
+      ordeItems: order,
+      restaurantName: restaurantName,
+    }
+
+    //Send the data to the backend
+    const response = await submitOrder(orderData)
+    console.log(response)
+    if (response == 201) {
+      //clear local storage
+      localStorage.removeItem('address')
+      localStorage.removeItem('restaurantName')
+      localStorage.removeItem('deliveryLocation')
+      localStorage.removeItem('order')
+      navigate("/home/searchingForBros", {state: {order: orderData}})
+    } else {
+      alert("Order could not be placed. Please try again.")
+    }
+  }
 
   return (
     <div>
@@ -90,7 +129,7 @@ export default function Confirmation() {
         </div>
         <div className='order-list'>{order}</div>
         <div>
-        <Button disableRipple fullWidth variant='contained'  onClick={() => navigate("/home/searchingForBros")}  className='confirm-button'
+        <Button disableRipple fullWidth variant='contained'  onClick={() => sendOrderBackend(userName, restaurantName, delivery, latitude, longitude, order)}  className='confirm-button'
           style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}}>
           Confirm Order
         </Button>

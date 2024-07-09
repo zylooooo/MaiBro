@@ -5,6 +5,8 @@ async function submitOrder(req, res) {
     const {
         buyerId,
         earnings,
+        latitude,
+        longitude,
         orderAccepted,
         orderCompleted,
         restaurant,
@@ -22,6 +24,8 @@ async function submitOrder(req, res) {
             buyerId: buyerId,
             deliveryLocation: deliveryLocation,
             earnings: earnings,
+            latitude: latitude,
+            longitude: longitude,
             orderAccepted: orderAccepted,
             orderCompleted: orderCompleted,
             orderItems: orderItems,

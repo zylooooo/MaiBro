@@ -47,8 +47,21 @@ async function getAvailableOrders() {
   return res.data;
 }
 
+async function submitOrder(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "post",
+    url: "/submit-order/",
+    data: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.status;
+}
+
 export {
     getAllRestaurant,
     getRestaurantMenu,
-    getAllAvailableOrders
+    getAllAvailableOrders,
+    submitOrder
 };
