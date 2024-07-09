@@ -8,18 +8,18 @@ import { Divider, Button } from "@mui/material"
 import {getAllAvailableOrders} from "../../service/axiosService"
 
 
-export function MapDisplay({latitude, longtitude}) {
+export function MapDisplay({latitude, longitude}) {
     return(
     <div className="deliveryMap">
       <Map
         defaultZoom={17}
         // Changed to center instead of defaultcenter
         st
-        center={{ lat: latitude, lng: longtitude}}
+        center={{ lat: latitude, lng: longitude}}
         gestureHandling={"greedy"}
         disableDefaultUI
       >
-        <Marker position={{ lat: latitude, lng: longtitude}} />
+        <Marker position={{ lat: latitude, lng: longitude}} />
       </Map>
     </div>
     )
@@ -60,7 +60,7 @@ export default function Delivery() {
                                     <div className="deliveryName">{item.buyerId}</div>
                                 </div>
                                 {/* HIDDEN AS Backend has no lat long rn */}
-                                <MapDisplay key={`map-${item.number}`} latitude={item.latitude} longtitude={item.longtitude}/>
+                                <MapDisplay key={`map-${item.number}`} latitude={item.latitude} longitude={item.longitude}/>
                                 <div className="deliveryLocation">
                                     <div style={{fontWeight:"bold"}}>Delivery Location</div>
                                     {item.deliveryLocation}

@@ -13,7 +13,7 @@ async function submitOrder(req, res) {
         orderItems,
         deliveryLocation
     } = req.body;
-
+    
     // Update the database with the order details
     try {
         const orderId = generateOrderId();

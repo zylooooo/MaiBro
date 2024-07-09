@@ -79,7 +79,6 @@ export default function Confirmation() {
 
     //Create the req object
     const orderData = {
-      broId: null,
       buyerId: userName,
       deliveryLocation: delivery,
       earnings: 2,
@@ -87,9 +86,11 @@ export default function Confirmation() {
       longitude: longitude,
       orderAccepted: false,
       orderCompleted: false,
-      ordeItems: order,
-      restaurantName: restaurantName,
+      orderItems: order,
+      restaurant: restaurantName,
     }
+
+    console.log(orderData)
 
     //Send the data to the backend
     const response = await submitOrder(orderData)
