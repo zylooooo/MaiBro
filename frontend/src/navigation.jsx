@@ -38,7 +38,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path= "/penalty" element= {<Penalty/>} />
 
     <Route path= "/home/customordering" element= {<Order/>} />
-    <Route path= "/home/customOrderConfirmation" element= {<Confirmation/>} />
+    <Route path= "/home/OrderConfirmation" element= {<Confirmation/>} />
 
     <Route path= "/home/searchingForBros" element= {<SearchingForBros/>} />
     <Route path= "/home/broFound" element= {<BroFound/>} />

@@ -38,9 +38,10 @@ const CustomMap = ({lati,longt}) => {
 
 const Info = () => {
     //getting data from local storage that was inputted in customOrderInput
-    
-    let latitude = localStorage.getItem('latitude')
-    let longitude = localStorage.getItem('longitude')
+    let address = localStorage.getItem('address')
+    const addressObj = JSON.parse(address)
+    const latitude = addressObj.latitude
+    const longitude = addressObj.longitude
     
     return (
         <div className="app">
@@ -56,11 +57,15 @@ const Info = () => {
 
 //initializing the confirmation page
 export default function Confirmation() {
-  let name = localStorage.getItem('name')
-  let address = localStorage.getItem('address')
-  let delivery = localStorage.getItem('delivery')
+  // Obtain information from local/session storage for display on confirmation page
+  let name = sessionStorage.getItem('userName') == null ? "User": sessionStorage.getItem('userName');
+  let restaurantName = localStorage.getItem('restaurantName')
+  let delivery = localStorage.getItem('deliveryLocation')
   let order = localStorage.getItem('order')
   const navigate = useNavigate();
+
+  //Function to send data to backend to confirm order
+  function sendOrderBackend(){}
 
   return (
     <div>
@@ -71,9 +76,9 @@ export default function Confirmation() {
       <div className='confirmation'>
         <div className='confirmation-location'>
           <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
-          <div className='confirmation-title'>{name}</div>
+          <div className='confirmation-title'>{restaurantName}</div>
         </div>
-        <div className='confirmationText'>{address}</div>
+        <div className='confirmationText'>{}</div>
         <div className='delivery-location'>
           <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
           <div className='delivery-title'>Delivery Location</div>
