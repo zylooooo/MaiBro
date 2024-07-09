@@ -7,7 +7,6 @@ import SignUp from './components/signup/signup.jsx'
 import StandardOrder, {StandardOrderCustom} from './components/order/standardOrder/standardOrder.jsx';
 import CustomOrder from './components/order/customOrder/customOrderInput.jsx';
 import Penalty from './components/penalty/penalty.jsx';
-import Order from './components/order/customOrder/customOrderLocationFound.jsx';
 import Confirmation from './components/order/customOrder/customOrderConfirmation.jsx';
 import SearchingForBros from './components/searching/searchingForBros.jsx';
 import BroFound from './components/searching/broFound.jsx';
@@ -38,7 +37,6 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
 
     <Route path= "/penalty" element= {<Penalty/>} />
 
-    <Route path= "/home/customordering" element= {<Order/>} />
     <Route path= "/home/OrderConfirmation" element= {<Confirmation/>} />
 
     <Route path= "/home/searchingForBros" element= {<SearchingForBros/>} />
