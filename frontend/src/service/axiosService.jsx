@@ -59,9 +59,35 @@ async function submitOrder(body) {
   return res.status;
 }
 
+async function buyerOrderStatus(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "get",
+    url: "/order-status/buyer",
+    params: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.data;
+}
+
+async function broOrderStatus(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "get",
+    url: "/order-status/bro",
+    params: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.data;
+}
+
 export {
     getAllRestaurant,
     getRestaurantMenu,
     getAllAvailableOrders,
-    submitOrder
+    submitOrder,
+    buyerOrderStatus,
+    broOrderStatus,
 };

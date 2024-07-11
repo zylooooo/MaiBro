@@ -5,7 +5,9 @@ import deliveryListings from "./deliveryListings"
 import "./delivery.css"
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
 import { Divider, Button } from "@mui/material"
-import {getAllAvailableOrders} from "../../service/axiosService"
+import {broOrderStatus, getAllAvailableOrders} from "../../service/axiosService"
+import DeliveryStatus from "./deliveryStatusBar"
+import { useNavigate } from "react-router-dom"
 
 
 export function MapDisplay({latitude, longitude}) {
@@ -27,6 +29,35 @@ export function MapDisplay({latitude, longitude}) {
 
 
 export default function Delivery() {
+    const navigate = useNavigate();
+    const userName = sessionStorage.getItem("userName");
+    //Check if user has a delivery in progress
+    //If yes, route to delivery page
+    //If no, route to delivery listings page
+    const [currentDelivery, setCurrentDelivery] = useState([])
+
+    useEffect(() => { 
+        async function deliveryInProgress(userName){
+            const body = {
+                userName: userName
+            }
+            await broOrderStatus(body).then((response) => {
+                if (response.length === 0) {
+                    setCurrentDelivery([])
+                } else {
+                    setCurrentDelivery(response)
+                }
+            })
+        }
+        deliveryInProgress(userName)
+    },[])
+
+    if (currentDelivery.length === 0) {
+        //Navigate to new delivery page passing the delivery as a prop to the new page (Not created yet)
+    }
+
+
+    //Obtain list of available orders
     const [deliveryList, setDeliveryList] = useState([])
 
     useEffect(() => { 
@@ -59,7 +90,6 @@ export default function Delivery() {
                                     <div style={{fontWeight:"700",fontSize:"1.1em"}}>{item.restaurant}</div>
                                     <div className="deliveryName">{item.buyerId}</div>
                                 </div>
-                                {/* HIDDEN AS Backend has no lat long rn */}
                                 <MapDisplay key={`map-${item.number}`} latitude={item.latitude} longitude={item.longitude}/>
                                 <div className="deliveryLocation">
                                     <div style={{fontWeight:"bold"}}>Delivery Location</div>
@@ -79,7 +109,7 @@ export default function Delivery() {
                 })
             }
         </div>
-        
+        <DeliveryStatus/>
         <div>
             <BottomTab value="Delivery"></BottomTab>
         </div>
