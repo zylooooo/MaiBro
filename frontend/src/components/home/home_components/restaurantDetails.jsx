@@ -10,6 +10,7 @@ import { getAllRestaurant, getRestaurantMenu } from '/src/service/axiosService';
 export default function Restaurant(detail) {
     // // COMMENT OUT IF USING TEST DATA
     const [data, setData] = useState([]);
+    const [lastRestaurantUpdate, setLastRestaurantUpdate] = useState([]);
 
     useEffect(() => {
         // Function to call backend for opened restaurant list
@@ -23,7 +24,35 @@ export default function Restaurant(detail) {
                 }
             });
         }
-        getRestaurantList();
+
+        // Get the current hour
+        const date = new Date();
+        const currentHour = date.getHours();
+
+        //Check if local cache contains restaurant data. If not call backend
+        if (localStorage.getItem('restaurantData').length === 0) {
+            console.log("No Data in local cache")
+            getRestaurantList().then(() => {
+                //Save restaurant data to local cache
+                localStorage.setItem('restaurantData', JSON.stringify(data));
+            });
+            
+            //Save lastUpdate time to local cache
+            localStorage.setItem('lastRestaurantUpdate', currentHour);}
+        else {
+            console.log("Data in local cache... Checking time now")
+            if (localStorage.getItem('lastRestaurantUpdate') != currentHour) {
+                console.log("Data in local cache is outdated. Updating now")
+                getRestaurantList().then(() => {
+                    //Save restaurant data to local cache
+                    localStorage.setItem('restaurantData', JSON.stringify(data));
+                });
+
+                //Save lastUpdate time to local cache
+                localStorage.setItem('lastRestaurantUpdate', currentHour);
+            }
+            setData(JSON.parse(localStorage.getItem('restaurantData')));
+        }
     }, []);
     
     // Filter the data based on the input on the search bar in home.jsx
