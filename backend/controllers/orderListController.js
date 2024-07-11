@@ -8,7 +8,11 @@ async function getOrderList(req, res) {
         const availableOrdersPromises = availableOrdersCollection.docs.map(async doc => {
             const availableOrderData = doc.data();
             if (availableOrderData && availableOrderData.orderAccepted === false && availableOrderData.orderCompleted === false) {
-                return availableOrderData;
+                // include documentId here
+                return {
+                    docId: doc.id,
+                    ...availableOrderData
+                };
             } else {
                 return null;
             }

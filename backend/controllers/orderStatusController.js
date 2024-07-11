@@ -9,7 +9,10 @@ async function getBuyerOrder(req, res) {
         const availableOrdersPromises = availableOrdersCollection.docs.map(async doc => {
             const availableOrderData = doc.data();
             if (availableOrderData && availableOrderData.orderAccepted === false && availableOrderData.orderCompleted === false && availableOrderData.buyerId === userName) {
-                return availableOrderData;
+                return {
+                    docId: doc.id,
+                    ...availableOrderData
+                };
             } else {
                 return null;
             }
@@ -34,7 +37,10 @@ async function getBroOrder(req, res) {
         const availableOrdersPromises = availableOrdersCollection.docs.map(async doc => {
             const availableOrderData = doc.data();
             if (availableOrderData && availableOrderData.orderAccepted === false && availableOrderData.orderCompleted === false && availableOrderData.broId === userName) {
-                return availableOrderData;
+                return {
+                    docId: doc.id,
+                    ...availableOrderData
+                };
             } else {
                 return null;
             }
