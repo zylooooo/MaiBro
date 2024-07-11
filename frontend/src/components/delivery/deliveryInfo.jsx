@@ -5,6 +5,9 @@ import { useLocation } from "react-router-dom";
 import BottomTab from "../common/bottomTab/bottomTab"
 import { Button } from "@mui/material";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import RestaurantAddress from "../common/mapAPI/geocoding";
 
 export function MapDisplay({latitude, longitude}) {
     return(
@@ -27,6 +30,10 @@ export default function DeliveryInfo() {
     const location = useLocation();
     const deliveryObj = location.state.delivery[0];
 
+    //Chat Button
+
+    //Arrived at Restaurant Button -> Change Status
+
     return (
         <>
         <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
@@ -34,31 +41,41 @@ export default function DeliveryInfo() {
             <ProfileTopBar/>
             <StandardHeader headerName="Delivery Info"/>
         </div>
-        <div className="deliveryListings">
-            <div className="deliveryItem">
-                <div className="deliveryInfo">
-                    <div style={{fontWeight:"700",fontSize:"1.1em"}}>{deliveryObj.restaurant}</div>
-                    <div className="deliveryName">{deliveryObj.buyerId}</div>
+            <div className='buyerContact'>
+                <div className='buyerContactTitle'>Chat with {deliveryObj.buyerId}</div>
+                <div className='contact-button'>
+                    <Button disableRipple fullWidth variant='contained' className='confirm-button'
+                    style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#143851",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
+                    onClick={""}>
+                    Chat
+                    </Button>
                 </div>
-                <MapDisplay latitude={deliveryObj.latitude} longitude={deliveryObj.longitude}/>
-                <div className="deliveryLocation">
-                    <div style={{fontWeight:"bold"}}>Delivery Location</div>
-                    {deliveryObj.deliveryLocation}
+            </div>
+            <MapDisplay latitude={deliveryObj.latitude} longitude={deliveryObj.longitude}/>
+            <div className="buyerOrderInfoCard">
+                <div className="buyerInfoText">
+                    <div className="restaurantContactInfo">{deliveryObj.restaurant}</div>
+                    <div className='confirmation'>
+                        <RestaurantAddress latitude={deliveryObj.latitude} longitude={deliveryObj.longitude}/>
+                        <div className='delivery-location'>
+                        <LocalShippingOutlinedIcon />
+                        <div style={{paddingLeft:"10px"}}>{deliveryObj.deliveryLocation}</div>
+                        </div>
+                        <div className='order'>
+                        <ArticleOutlinedIcon />
+                        <div style={{paddingLeft:"10px"}}>{deliveryObj.orderItems}</div>
+                        </div>
+                        
+                    </div>
                 </div>
-                <div className="deliveryOrderDetails">
-                    <div style={{fontWeight:"bold"}}>Order Details</div>
-                    <div className="orderDetails">{deliveryObj.orderItems}</div>
+                <div className='cancel-button'>
+                    <Button disableRipple fullWidth variant='contained' className='confirm-button'
+                    style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
+                    onClick={""}>
+                    Arrived at Restaurant
+                    </Button>
                 </div>
-                <Button disableRipple fullWidth variant='contained' 
-                style={{borderRadius: "25px", fontSize:"0.9em",marginTop:"15px",marginBottom:"15px",backgroundColor:"#133851",height:"3.5em",textTransform:"none",fontWeight:"600",}} >
-                    Chat with Buyer
-                </Button>
-                <Button disableRipple fullWidth variant='contained' 
-                style={{borderRadius: "25px", fontSize:"0.9em",marginTop:"15px",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",}} >
-                    Order Collected at Restaurant
-                </Button>
-            </div>  
-        </div>
+            </div>
         <div>
             <BottomTab value="Delivery"></BottomTab>
         </div>
