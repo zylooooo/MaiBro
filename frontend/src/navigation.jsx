@@ -12,6 +12,7 @@ import SearchingForBros from './components/searching/searchingForBros.jsx';
 import BroFound from './components/searching/broFound.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Protect from './protect.jsx';
+import DeliveryInfo from './components/delivery/deliveryInfo.jsx';
 
 // UPDATE NAVIGATION HERE
 const browserRouter = createBrowserRouter(createRoutesFromElements(
@@ -34,6 +35,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path="/transaction" element={<Transaction />} />
 
     <Route path="/delivery" element={<Delivery />} />
+    <Route path="/delivery/info" element={<DeliveryInfo />} />
 
     <Route path= "/penalty" element= {<Penalty/>} />
 
@@ -41,6 +43,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
 
     <Route path= "/home/searchingForBros" element= {<SearchingForBros/>} />
     <Route path= "/home/broFound" element= {<BroFound/>} />
+
   </>
 ));
 

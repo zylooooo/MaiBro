@@ -52,8 +52,10 @@ export default function Delivery() {
         deliveryInProgress(userName)
     },[])
 
-    if (currentDelivery.length === 0) {
-        //Navigate to new delivery page passing the delivery as a prop to the new page (Not created yet)
+    console.log(currentDelivery.length)
+    if (!currentDelivery.length == 0) {
+        //Navigate to new delivery page passing the delivery as a prop to the new page 
+        navigate("/delivery/info", {state: {delivery: currentDelivery}})
     }
 
 
@@ -109,7 +111,6 @@ export default function Delivery() {
                 })
             }
         </div>
-        <DeliveryStatus/>
         <div>
             <BottomTab value="Delivery"></BottomTab>
         </div>
