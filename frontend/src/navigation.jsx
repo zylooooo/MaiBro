@@ -13,6 +13,7 @@ import BroFound from './components/searching/broFound.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Protect from './protect.jsx';
 import DeliveryInfo from './components/delivery/deliveryInfo.jsx';
+import Chat from './components/chat/chat.jsx';
 
 // UPDATE NAVIGATION HERE
 const browserRouter = createBrowserRouter(createRoutesFromElements(
@@ -44,6 +45,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path= "/home/searchingForBros" element= {<SearchingForBros/>} />
     <Route path= "/home/broFound" element= {<BroFound/>} />
 
+    <Route path= "/chat" element= {<Chat />} />
   </>
 ));
 

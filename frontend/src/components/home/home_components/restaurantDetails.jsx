@@ -18,7 +18,7 @@ export default function Restaurant(detail) {
             await getAllRestaurant().then((response) => {  
                 if (response === undefined) {
                     console.log("No Data");
-                    return false;
+                    setData(false);
                 } else {
                     setData(response);
                 }
@@ -29,7 +29,9 @@ export default function Restaurant(detail) {
         const date = new Date();
         const currentHour = date.getHours();
         //Check if local cache contains restaurant data. If not call backend
-        if (localStorage.getItem('restaurantData') == "[]") {
+        const restaurantData = localStorage.getItem('restaurantData');
+        const restaurantObj = JSON.parse(restaurantData);
+        if (restaurantObj.length === 0) {
             console.log("No Data in local cache")
             getRestaurantList().then(() => {
                 //Save restaurant data to local cache
