@@ -28,9 +28,8 @@ export default function Restaurant(detail) {
         // Get the current hour
         const date = new Date();
         const currentHour = date.getHours();
-
         //Check if local cache contains restaurant data. If not call backend
-        if (localStorage.getItem('restaurantData').length === 0) {
+        if (localStorage.getItem('restaurantData') == "[]") {
             console.log("No Data in local cache")
             getRestaurantList().then(() => {
                 //Save restaurant data to local cache
