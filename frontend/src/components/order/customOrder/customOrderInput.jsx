@@ -67,10 +67,9 @@ const LocationSearch = () => {
       console.log(results)
       handleLatitudeChange(results[0].geometry.location.lat());
       handleLongtitudeChange(results[0].geometry.location.lng());
-      const formattedAddress = results[0].formatted_address;
       const input_name = results[0].name;
       // Store formatted_address as a separate exportable variable
-      NewInformation(formattedAddress, input_name, results[0].geometry.location.lng(), results[0].geometry.location.lat());
+      NewInformation(input_name, results[0].geometry.location.lng(), results[0].geometry.location.lat());
     }})
 
   };
