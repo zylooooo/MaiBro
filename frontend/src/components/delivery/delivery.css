@@ -68,3 +68,11 @@
     margin-bottom: 10px;
     font-size: 130%;
 }
+
+.buyerContactInfo{
+    font-weight: bold;
+    font-size: 130%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}   
