@@ -6,7 +6,6 @@ import "./delivery.css"
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
 import { Divider, Button } from "@mui/material"
 import {broOrderStatus, getAllAvailableOrders} from "../../service/axiosService"
-import DeliveryStatus from "./deliveryStatusBar"
 import { useNavigate } from "react-router-dom"
 
 
