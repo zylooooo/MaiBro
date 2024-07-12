@@ -85,6 +85,7 @@ export default function Confirmation() {
       longitude: longitude,
       orderAccepted: false,
       orderCompleted: false,
+      orderCollected: false,
       orderItems: order,
       restaurant: restaurantName,
     }

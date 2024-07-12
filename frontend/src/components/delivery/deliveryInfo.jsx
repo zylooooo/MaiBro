@@ -8,7 +8,7 @@ import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import RestaurantAddress from "../common/mapAPI/geocoding";
-import WalletIcon from '@mui/icons-material/Wallet';
+import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
 
 export function MapDisplay({latitude, longitude}) {
     return(
@@ -75,7 +75,7 @@ const DeliveryCollected = ({info}) =>
                         <div style={{paddingLeft:"10px"}}>{deliveryObj.orderItems}</div>
                         </div>
                         <div className="order">
-                        <WalletIcon />
+                        <AccountBalanceWalletOutlinedIcon />
                             <div style={{paddingLeft:"10px"}}>${deliveryObj.earnings}</div>
                         </div>
                         
