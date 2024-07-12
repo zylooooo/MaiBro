@@ -41,7 +41,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
 
     <Route path= "/home/OrderConfirmation" element= {<Confirmation/>} />
 
-    <Route path= "/home/searchingForBros" element= {<SearchingForBros/>} />
+    <Route path= "/home/info" element= {<SearchingForBros/>} />
 
 
     <Route path= "/chat" element= {<Chat />} />

@@ -8,7 +8,7 @@ async function getBuyerOrder(req, res) {
         const availableOrdersCollection = await availableOrdersRef.get();
         const availableOrdersPromises = availableOrdersCollection.docs.map(async doc => {
             const availableOrderData = doc.data();
-            if (availableOrderData && availableOrderData.orderAccepted === false && availableOrderData.orderCompleted === false && availableOrderData.buyerId === userName) {
+            if (availableOrderData && availableOrderData.buyerId === userName) {
                 return {
                     docId: doc.id,
                     ...availableOrderData

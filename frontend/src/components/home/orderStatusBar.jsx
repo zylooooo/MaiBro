@@ -8,11 +8,24 @@ export default function OrderStatus() {
     const navigate = useNavigate();
     //LOGIC to obtain accepted orders from backend
     const [isVisible, setIsVisible] = useState(false);
-    const [orderStatus, setOrderStatus] = useState([]);
+    const [orderInfo, setOrderInfo] = useState([]);
     const [status, setStatus] = useState("Finding Bros...")
 
     // Serach for order and check for status
     useEffect(() => {
+        // Check order status
+        function statusCheck(orderInfo) {
+            if (orderInfo.orderAccepted === false) {
+                setStatus("Finding Bros...")
+            }
+            if (orderInfo.orderAccepted === true) {
+                setStatus("Collecting Food...")
+            }
+            if (orderInfo.orderCollected === true) {
+                setStatus("Delivering Food...")
+            }
+        }
+
         async function getStatus(userName) {
             const body = {
                 userName: userName
@@ -22,7 +35,8 @@ export default function OrderStatus() {
                     setIsVisible(false);
                 } else {
                     setIsVisible(true);
-                    setOrderStatus(response);
+                    setOrderInfo(response[0]);
+                    statusCheck(response[0])
                 }
             });
         }
@@ -31,11 +45,10 @@ export default function OrderStatus() {
 
     //On Status Bar Click
     const handleClick = () => {
-        console.log("CLICKED")
         //navigate to bro page and pass the order status data to the page via location state.
+        navigate("/home/info", {state: {order: orderInfo}});
     }
-
-
+    
     return (
         <>
         <div className={`statusBarDiv ${isVisible ? 'visible' : ''}`} onClick={handleClick} >

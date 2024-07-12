@@ -9,6 +9,7 @@ async function submitOrder(req, res) {
         longitude,
         orderAccepted,
         orderCompleted,
+        orderCollected,
         restaurant,
         orderItems,
         deliveryLocation
@@ -28,6 +29,7 @@ async function submitOrder(req, res) {
             longitude: longitude,
             orderAccepted: orderAccepted,
             orderCompleted: orderCompleted,
+            orderCollected: orderCollected,
             orderItems: orderItems,
             restaurant: restaurant
         });
