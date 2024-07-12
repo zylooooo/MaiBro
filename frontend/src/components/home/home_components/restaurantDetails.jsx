@@ -18,8 +18,9 @@ export default function Restaurant(detail) {
             await getAllRestaurant().then((response) => {  
                 if (response === undefined) {
                     console.log("No Data");
-                    return false;
+                    return false
                 } else {
+                    localStorage.setItem('restaurantData', JSON.stringify(response));
                     setData(response);
                 }
             });
@@ -29,12 +30,11 @@ export default function Restaurant(detail) {
         const date = new Date();
         const currentHour = date.getHours();
         //Check if local cache contains restaurant data. If not call backend
-        if (localStorage.getItem('restaurantData') == "[]") {
+        const restaurantData = localStorage.getItem('restaurantData') || "[]";
+        const restaurantObj = JSON.parse(restaurantData);
+        if (restaurantObj.length === 0) {
             console.log("No Data in local cache")
-            getRestaurantList().then(() => {
-                //Save restaurant data to local cache
-                localStorage.setItem('restaurantData', JSON.stringify(data));
-            });
+            getRestaurantList();
             
             //Save lastUpdate time to local cache
             localStorage.setItem('lastRestaurantUpdate', currentHour);}
@@ -42,15 +42,13 @@ export default function Restaurant(detail) {
             console.log("Data in local cache... Checking time now")
             if (localStorage.getItem('lastRestaurantUpdate') != currentHour) {
                 console.log("Data in local cache is outdated. Updating now")
-                getRestaurantList().then(() => {
-                    //Save restaurant data to local cache
-                    localStorage.setItem('restaurantData', JSON.stringify(data));
-                });
+                getRestaurantList()
 
                 //Save lastUpdate time to local cache
                 localStorage.setItem('lastRestaurantUpdate', currentHour);
+            } else {
+                setData(JSON.parse(localStorage.getItem('restaurantData')));
             }
-            setData(JSON.parse(localStorage.getItem('restaurantData')));
         }
     }, []);
     
