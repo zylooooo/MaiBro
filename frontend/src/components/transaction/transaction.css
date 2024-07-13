@@ -1,0 +1,27 @@
+.indivData{
+    border: 1px solid black;
+    display: flex;
+    justify-content:space-between;
+}
+
+.restName{
+    font-size: 20px;
+    font-weight: bold;
+
+}
+
+
+
+.leftgroup{
+    display: flex;
+    align-items: center;
+}
+
+
+.expenditure{
+    color:red;
+}
+
+.earnings{
+    color: rgb(119, 181, 25);
+}
