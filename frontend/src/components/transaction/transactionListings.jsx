@@ -2,6 +2,8 @@ export default {
     "Listings": [
         {
             buyerID:  "Gloria" ,
+            orderer: true,
+            bro: false,
             phone: 91234567,
             earnings:   0  ,
             expenditure: 10.70,
@@ -17,6 +19,8 @@ export default {
         },
         {
             buyerID:  "Gloria" ,
+            orderer: false,
+            bro: true,
             phone: 91234567,
             earnings:   1.50  ,
             expenditure: 0.00,
@@ -32,6 +36,8 @@ export default {
         },
         {
             buyerID:  "Gloria" ,
+            orderer: true,
+            bro: false,
             phone: 91234567,
             earnings:   0  ,
             expenditure: 8.00,
@@ -46,6 +52,8 @@ export default {
             longitude: -77.03612314 ,
         },
         {   buyerID:  "Gloria" ,
+            orderer: true,
+            bro: false,
             phone: 91234567,
             earnings:   0  ,
             expenditure: 18.70,

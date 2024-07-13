@@ -2,6 +2,9 @@ import React from "react"
 import BottomTab from "../common/bottomTab/bottomTab"
 import { ProfileTopBar, StandardHeader } from "../common/topTab/topTab"
 import transactionlist from "./transactionListings.jsx"
+import "./transaction.css"
+import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
+import TwoWheelerIcon from '@mui/icons-material/TwoWheeler'
 
 
 var transaction = transactionlist["Listings"];
@@ -10,21 +13,45 @@ var transaction = transactionlist["Listings"];
 export function Transaction() {
   return (
     <>
-    <div>
+    <div className='test'>
 <ProfileTopBar />
 <StandardHeader headerName="History"/>
         
-         </div>
+    </div>
+    <div className="body">
     {transaction.map(function(data) {
       var completedOrPending;
       if(data.orderCompleted){
-        completedOrPending = "Completed";
+        completedOrPending = <div style={{ color: 'green' }}>Completed</div>
+        
       }else{
-        completedOrPending = "Pending";
+        completedOrPending = <div style={{ color: 'blue' }}>Pending</div>
+
       }
+
+
+      
       return (
-        <div>
-        {data.restaurantName} {data.orderDate} {data.orderTime} {completedOrPending}
+        <div className="indivData">
+          <div className="leftgroup">
+
+            <div className="leftdata">
+              <div className = "restName">{data.restaurantName} </div> 
+              <div className = "completedOrPending">{completedOrPending} </div> 
+            </div>
+
+            <div className= "image">
+              {data.orderer? <RestaurantMenuIcon fontSize="large" />: <TwoWheelerIcon fontSize="large" />}
+            </div>
+          </div>
+
+          <div className="rightgroup">
+            <div className = "orderDate" >{data.orderDate} </div> 
+            <div className = "orderTime">{data.orderTime} </div> 
+            <div className = "earnings">{data.bro? "$"+ Number(data.earnings).toFixed(2): ""}</div>
+            <div className = "expenditure">{data.orderer? "$"+  Number(data.expenditure).toFixed(2): ""}</div>
+          </div>
+        
 
         </div>
         
@@ -35,6 +62,7 @@ export function Transaction() {
         <BottomTab value="Transaction"></BottomTab>
 
          </div>
+    </div>
     </>
 
   )
@@ -42,60 +70,3 @@ export function Transaction() {
 
 export default Transaction;
 
-// export default function Transaction() {
-//     var transaction = transactionlist["Listings"]
-
-//     return (
-//         <>
-//         <div>
-//             <ProfileTopBar />
-//             <StandardHeader headerName="History"/>
-        
-//         </div>
-        
-//         <div>
-
-//         </div>
-        
-//         <div>
-
-//             <BottomTab value="Transaction"></BottomTab>
-
-//         </div>
-//         </>
-        
-//     )
-// }
-
-// export default function Transaction() {
-//     var transaction = transactionlist["Listings"]
-
-//     return (
-//         <>
-//         <div>
-//             <ProfileTopBar />
-//             <StandardHeader headerName="History"/>
-        
-//         </div>
-        
-//         <div>
-//         {
-//             transaction.map(function(data)){
-//                 return(
-//                     <div>
-//                     {data.restaurantName}
-//                     </div>
-//                 )
-            
-//             })}
-//         </div>
-        
-//         <div>
-
-//             <BottomTab value="Transaction"></BottomTab>
-
-//         </div>
-//         </>
-        
-//     )
-// }
