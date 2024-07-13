@@ -1,7 +1,7 @@
 import { React , useState } from "react";
 import { ProfileTopBar } from "../common/topTab/topTab";
 import { StandardHeader } from "../common/topTab/topTab";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import BottomTab from "../common/bottomTab/bottomTab"
 import { Button } from "@mui/material";
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
@@ -94,14 +94,15 @@ const DeliveryCollected = ({info}) =>
 
 
 export default function DeliveryInfo() {
+    const navigate = useNavigate();
     const location = useLocation();
     const [collected, setCollected] = useState(true)
     const deliveryObj = location.state.delivery[0];
 
     //Chat Button
-
-    //Arrived at Restaurant Button -> Change Status
-    // Needa figure out how to store this HAHAHAH
+    const handleChatClick = () => {
+        navigate('/chat', {state: {roomId: deliveryObj.docId}});
+    }
 
 
     return (
@@ -116,7 +117,7 @@ export default function DeliveryInfo() {
                 <div className='contact-button'>
                     <Button disableRipple fullWidth variant='contained' className='confirm-button'
                     style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#143851",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={""}>
+                    onClick={{handleChatClick}}>
                     Chat
                     </Button>
                 </div>
