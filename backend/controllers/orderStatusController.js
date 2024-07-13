@@ -36,7 +36,7 @@ async function getBroOrder(req, res) {
         const availableOrdersCollection = await availableOrdersRef.get();
         const availableOrdersPromises = availableOrdersCollection.docs.map(async doc => {
             const availableOrderData = doc.data();
-            if (availableOrderData && availableOrderData.orderAccepted === false && availableOrderData.orderCompleted === false && availableOrderData.broId === userName) {
+            if (availableOrderData && availableOrderData.broId === userName) {
                 return {
                     docId: doc.id,
                     ...availableOrderData
