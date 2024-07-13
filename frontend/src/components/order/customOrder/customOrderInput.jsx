@@ -173,9 +173,9 @@ const CustomOrder = () => {
         <div style={{ marginBottom: "5em" }}>
           <TextField
               fullWidth placeholder="Input Order Here"
-              multiline rows={10} maxRows={Infinity} onChange={handleOrderChange}
+              multiline rows={10} onChange={handleOrderChange}
               color='grey' variant="outlined"
-              InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3'}}}
+              InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3', marginBottom:"10px", marginTop:"10px"}}}
               focused
             />
           <Button disableRipple fullWidth variant='contained' onClick={() => handleSave()}
@@ -186,7 +186,7 @@ const CustomOrder = () => {
         </APIProvider>
       </form>
       <div>
-      <BottomTab  />
+      <BottomTab  value="Order"/>
       </div>
     </>
   );
