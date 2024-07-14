@@ -1,7 +1,6 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const http = require("http");
-const { Server } = require("socket.io");
+const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
 
 // Server settings
 const PORT = 8000;
@@ -14,11 +13,9 @@ app.use(express.json()); // So that express can understand json
 app.use(cors()); // Allow cross- origin requests
 
 // Attach socket.io to the server
-const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: "*",
-        methods: ["GET", "POST"],
+const io = require("socket.io")(3000, {
+    cors:{
+        origin: ["http://localhost:5173"],
     },
 });
 
@@ -41,6 +38,27 @@ app.get('/', (req, res) => {
         message: "Server is up and running!"
     });
 });
+
+// Attach socket.io to the server
+io.on("connection", socket => {
+    console.log(`User ${socket.id} connected!`);
+
+    // Listen for the join room event
+    socket.on('join room', (room) => {
+        socket.join(room);
+        console.log(`User ${socket.id} joined room: ${room}`);
+    });
+
+    // Listen for 'chat message' event and broadcast to the room
+    socket.on('chat message', ({ roomId, message, sender }) => {
+        io.to(roomId).emit('chat message', {message, sender});
+        console.log(`Message sent to room ${roomId}: ${message} by user ${socket.id}`);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`User ${socket.id} disconnected`);
+    });
+})
 
 // Connect to the all the routers
 app.use("/login", require("./routers/loginRouter"));
