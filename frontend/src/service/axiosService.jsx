@@ -36,17 +36,6 @@ async function getRestaurantMenu(body) {
   return res.data;
 }
 
-async function getAvailableOrders() {
-  // Send request to the backend to get a avaialble orders
-  const res = await axiosInstance({
-    method: "get",
-    url: "/order-list/",
-  });
-
-  // Return the list of avaialble orders
-  return res.data;
-}
-
 async function submitOrder(body) {
   // Send request to the backend to get a avaialble orders
   const res = await axiosInstance({
@@ -56,7 +45,7 @@ async function submitOrder(body) {
   });
 
   // Return the list of avaialble orders
-  return res.status;
+  return res;
 }
 
 async function buyerOrderStatus(body) {

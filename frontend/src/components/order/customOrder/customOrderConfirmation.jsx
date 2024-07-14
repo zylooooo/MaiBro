@@ -96,12 +96,12 @@ export default function Confirmation() {
     //Send the data to the backend
     const response = await submitOrder(orderData)
 
-    if (response == 201) {
+    if (response.status == 201) {
       //clear local storage
       localStorage.removeItem('restaurantName')
       localStorage.removeItem('deliveryLocation')
       localStorage.removeItem('order')
-      navigate("/home/info", {state: {order: orderData}})
+      navigate("/home/info", {state: {docId: response.data.docId}})
     } else {
       alert("Order could not be placed. Please try again.")
     }
