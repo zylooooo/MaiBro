@@ -1,5 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
+const http = require("http");
+const { Server } = require("socket.io");
 const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
 
 // Server settings
@@ -13,8 +15,9 @@ app.use(express.json()); // So that express can understand json
 app.use(cors()); // Allow cross- origin requests
 
 // Attach socket.io to the server
-const io = require("socket.io")(3000, {
-    cors:{
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
         origin: ["http://localhost:5173"],
     },
 });
