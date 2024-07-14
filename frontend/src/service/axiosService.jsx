@@ -108,6 +108,20 @@ async function orderAccepted(body) {
   return res.data;
 }
 
+async function historyList(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "get",
+    // Fill up URL HERE
+    url: "",
+    // BODY Value is a object containing the userName {userName: }
+    params: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.data;
+}
+
 export {
     getAllRestaurant,
     getRestaurantMenu,
@@ -118,4 +132,5 @@ export {
     buyerStatusBar,
     orderCompleted,
     orderAccepted,
+    historyList,
 };

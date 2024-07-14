@@ -1,16 +1,19 @@
 .indivData{
-    border: 1px solid black;
+    background-color: rgb(209, 209, 209);
     display: flex;
     justify-content:space-between;
+    margin-top: 5px;
 }
 
 .restName{
     font-size: 20px;
     font-weight: bold;
-
 }
 
-
+.historyList{
+    margin-top: 20px;
+    margin-bottom: 70px;
+}
 
 .leftgroup{
     display: flex;

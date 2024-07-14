@@ -3,7 +3,7 @@ const { db } = require("../config");
 // Function to get all of the order of the user from the database
 async function getHistory(req, res) {
     // Look through the data base and get all the orders that the user has made
-    const userId = req.body.userId;
+    const userId = req.query.userId;
 
     try {
         // Find the orders submitted by the user in the available orders collection
