@@ -17,7 +17,6 @@ app.use(cors()); // Allow cross- origin requests
 const server = http.createServer(app);
 const io = initSocket(server);
 
-
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
    The '/' in the hyperlink will return a message to the user that the server is up and running.
