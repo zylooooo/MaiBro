@@ -1,8 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
 const http = require("http");
-const { Server } = require("socket.io");
-const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
+const { initSocket } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
 
 // Server settings
 const PORT = 8000;
@@ -14,23 +13,10 @@ app.use(express.json()); // So that express can understand json
 */
 app.use(cors()); // Allow cross- origin requests
 
-// Attach socket.io to the server
+// Initialise the socket.io server
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: ["http://localhost:5173"],
-    },
-});
+const io = initSocket(server);
 
-// Check the socket connection
-io.on("connection", socket => {
-    console.log(`User ${socket.id} connected!`);
-
-    // Handle disconnection
-    socket.on("disconnect", () => {
-        console.log(`User ${socket.id} disconnected!`);
-    })
-});
 
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
@@ -41,27 +27,6 @@ app.get('/', (req, res) => {
         message: "Server is up and running!"
     });
 });
-
-// Attach socket.io to the server
-io.on("connection", socket => {
-    console.log(`User ${socket.id} connected!`);
-
-    // Listen for the join room event
-    socket.on('join room', (room) => {
-        socket.join(room);
-        console.log(`User ${socket.id} joined room: ${room}`);
-    });
-
-    // Listen for 'chat message' event and broadcast to the room
-    socket.on('chat message', ({ roomId, message, sender }) => {
-        io.to(roomId).emit('chat message', {message, sender});
-        console.log(`Message sent to room ${roomId}: ${message} by user ${socket.id}`);
-    });
-
-    socket.on('disconnect', () => {
-        console.log(`User ${socket.id} disconnected`);
-    });
-})
 
 // Connect to the all the routers
 app.use("/login", require("./routers/loginRouter"));
@@ -76,35 +41,9 @@ app.use("/order-menu", require("./routers/orderMenuRouter"));
 app.use("/chat", require("./routers/chatRouter"));
 
 // Start the application
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
 });
 
 // Export socket.io to be used in other files
 module.exports = { app, io };
-
-// Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
-// let restaurantName = "55";
-// (async () => {
-//     try {
-//         const availableOrdersRef = db.collection("AvailableOrders").doc("testOrder");
-//         const doc = await availableOrdersRef.get();
-//         if (doc.exists) {
-//             restaurantName = doc.data().restaurant;
-//             console.log(restaurantName); // Now logs the updated name after fetching from the database
-
-//             // Assuming you want to fetch more data based on the updated restaurantName
-//             const restaurantRef = db.collection("Restaurants").doc(restaurantName);
-//             const restaurantDoc = await restaurantRef.get();
-//             if (restaurantDoc.exists) {
-//                 console.log(restaurantDoc.data());
-//             } else {
-//                 console.log("No such document!");
-//             }
-//         } else {
-//             console.log("No such document!");
-//         }
-//     } catch (error) {
-//         console.error("Error getting document:", error);
-//     }
-// })();

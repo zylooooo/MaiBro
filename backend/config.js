@@ -1,6 +1,7 @@
 const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
 const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
 const axios = require("axios");
+const { Server } = require("socket.io");
 
 // Initialise app with admin privileges
 admin.initializeApp({
@@ -37,8 +38,60 @@ const axiosInstance = axios.create({
     withCredentials: false,
 });
 
+// Initialise the socket.io server
+let io;
+
+function initSocket(server) {
+    io = new Server(server, {
+        cors: {
+            origin: ["http://localhost:5173"],
+        },
+    });
+
+    // Check the socket connection
+    io.on("connection", socket => {
+        console.log(`User ${socket.id} connected!`);
+
+        // Handle disconnection
+        socket.on("disconnect", () => {
+            console.log(`User ${socket.id} disconnected!`);
+        })
+    });
+
+    // Add event listeners to the socket.io
+    io.on("connection", socket => {
+        console.log(`User ${socket.id} connected!`);
+    
+        // Listen for the join room event
+        socket.on('join room', (room) => {
+            socket.join(room);
+            console.log(`User ${socket.id} joined room: ${room}`);
+        });
+    
+        // Listen for 'chat message' event and broadcast to the room
+        socket.on('chat message', ({ roomId, message, sender }) => {
+            io.to(roomId).emit('chat message', {message, sender});
+            console.log(`Message sent to room ${roomId}: ${message} by user ${socket.id}`);
+        });
+    
+        socket.on('disconnect', () => {
+            console.log(`User ${socket.id} disconnected`);
+        });
+    });
+
+    return io;
+}
+
+// Function to get the socket.io instance in other files
+function getIO() {
+    if (!io) {
+        throw new Error("Socket.io not initialised!");
+    }
+    return io;
+}
+
 // Export the modules to be used in other files
-module.exports = { db, auth, axiosInstance };
+module.exports = { db, auth, axiosInstance, initSocket, getIO };
 
 
 
