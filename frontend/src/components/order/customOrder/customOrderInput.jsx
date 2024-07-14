@@ -11,6 +11,11 @@ import BottomTab from "../../common/bottomTab/bottomTab";
 
 
 const CustomMap = ({latitude,longtitude}) => {
+  const geolocation = {
+    "latitude": latitude,
+    "longitude": longtitude,
+  }
+  localStorage.setItem('address', JSON.stringify(geolocation));
   // shows marker on chosen location
   return (
     <div className="map-container">
@@ -71,11 +76,7 @@ const LocationSearch = () => {
       const input_name = results[0].name;
       // Store formatted_address as a separate exportable variable
       localStorage.setItem('restaurantName', location);
-      const geolocation = {
-        "latitude": latitude,
-        "longitude": longtitude,
-      }
-      localStorage.setItem('address', JSON.stringify(geolocation));
+
       
       // NewInformation(input_name, results[0].geometry.location.lng(), results[0].geometry.location.lat());
     }})
