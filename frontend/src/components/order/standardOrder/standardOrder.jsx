@@ -60,7 +60,7 @@ export default function StandardOrder(){
 
 
     //Confirm Button Clicked
-    function confirmOrderButton(name, latitude, longtitude, restaurantName, order, userLocation) {
+    function confirmOrderButton(latitude, longtitude, restaurantName, order, userLocation) {
         if (Object.keys(order).length === 0) {
             alert("Please enter a valid order")
         } else {
@@ -131,7 +131,7 @@ export default function StandardOrder(){
             <div className='userLocation'>
                 <TextField fullWidth id="outlined-basic" placeholder="Delivery Location" value={userLocation} onChange={handleLocationChange} color="grey" variant="outlined" 
                     InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter"}}} focused />
-                <Button disableRipple fullWidth variant='contained' onClick={() => confirmOrderButton(name, latitude, longitude, restaurantName, itemQuantity, userLocation)}
+                <Button disableRipple fullWidth variant='contained' onClick={() => confirmOrderButton(latitude, longitude, restaurantName, itemQuantity, userLocation)}
                     style={{borderRadius: "25px", fontSize:"0.8em",marginTop:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",}} >
                         Confirm Order
                 </Button>
@@ -144,6 +144,9 @@ export default function StandardOrder(){
 }
 
 export function StandardOrderCustom() {
+    //Initialise react router navigate function
+    const navigate = useNavigate();
+
     const location = useLocation();
     //Obtain prop from history
     
@@ -151,10 +154,36 @@ export function StandardOrderCustom() {
     const restaurantName = restaurantObj.id;
     const restaurantLogo = restaurantObj.coverImg;
 
+    //Location
+    const restaurantLocation = restaurantObj.location
+    const latitude = restaurantLocation._latitude
+    const longitude = restaurantLocation._longitude
+
     //Textfield State
     const [userLocation, setLocation] = useState('');
     const handleLocationChange= (event) => {
         setLocation(event.target.value);
+    }
+    const [order, setOrder] = useState('');
+    const handleOrderChange= (event) => {
+        setOrder(event.target.value);
+    }
+
+    //Confirm Button Clicked
+    function confirmOrderButton(latitude, longtitude, restaurantName, order, userLocation) {
+        const address = {
+            "latitude" : latitude,
+            "longitude" : longtitude,
+        }
+
+
+        //Store to localstorage
+        localStorage.setItem('address', JSON.stringify(address))
+        localStorage.setItem('deliveryLocation', userLocation)
+        localStorage.setItem('restaurantName', restaurantName)
+        localStorage.setItem('order', order)
+        
+        navigate('/home/OrderConfirmation')
     }
 
     //handle Button press
@@ -173,6 +202,7 @@ export function StandardOrderCustom() {
             fullWidth placeholder="Input Order Here"
             multiline rows={15} 
             color='grey' variant="outlined"
+            value={order} onChange={handleOrderChange}
             InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3'}}}
             focused
             />
@@ -180,7 +210,7 @@ export function StandardOrderCustom() {
             <div className='userLocation'>
                 <TextField fullWidth id="outlined-basic" placeholder="Delivery Location" value={userLocation} onChange={handleLocationChange} color="grey" variant="outlined" 
                     InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter"}}} focused />
-                <Button disableRipple fullWidth variant='contained' 
+                <Button disableRipple fullWidth variant='contained' onClick={() => confirmOrderButton(latitude, longitude, restaurantName, order, userLocation)}
                     style={{borderRadius: "25px", fontSize:"0.8em",marginTop:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600",}} >
                         Confirm Order
                 </Button>

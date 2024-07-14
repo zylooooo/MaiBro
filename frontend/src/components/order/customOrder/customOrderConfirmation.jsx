@@ -43,12 +43,13 @@ const Info = () => {
     const addressObj = JSON.parse(address)
     const latitude = addressObj.latitude
     const longitude = addressObj.longitude
+
     return (
         <div className="app">
             <></>
           {/* calling CustomMap function */}
           <APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API}>
-            <CustomMap lati={latitude} longt={longitude}    />
+            <CustomMap lati={latitude} longt={longitude}/>
           </APIProvider>
         </div>
       );
@@ -94,7 +95,7 @@ export default function Confirmation() {
 
     //Send the data to the backend
     const response = await submitOrder(orderData)
-    console.log(response)
+
     if (response == 201) {
       //clear local storage
       localStorage.removeItem('restaurantName')
