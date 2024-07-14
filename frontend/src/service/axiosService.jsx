@@ -48,6 +48,18 @@ async function submitOrder(body) {
   return res;
 }
 
+async function buyerStatusBar(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "get",
+    url: "/order-status/statusbar",
+    params: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.data;
+}
+
 async function buyerOrderStatus(body) {
   // Send request to the backend to get a avaialble orders
   const res = await axiosInstance({
@@ -103,6 +115,7 @@ export {
     submitOrder,
     buyerOrderStatus,
     broOrderStatus,
+    buyerStatusBar,
     orderCompleted,
     orderAccepted,
 };
