@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import "./searchingForBros.css";
 import "../common/topTab/topTab.css";
 import {Button,TextField, InputAdornment} from '@mui/material';
@@ -9,6 +9,8 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import Searching from './images/Searching.png'
 import Purchasing from './images/Purchasing.png'
 import RestaurantAddress from '../common/mapAPI/geocoding.jsx'
+import {buyerOrderStatus} from "/src/service/axiosService";
+
 
 const Address = () => {
     let coordinates = localStorage.getItem('address')
@@ -54,7 +56,7 @@ const SearchingForBros = () =>{
                     </div>
                 </div>
                 <div style={{ marginBottom: "5em" }}>
-                        <Button disableRipple fullWidth variant='contained' onClick={""}
+                        <Button disableRipple fullWidth variant='contained' 
                                 style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
                                     Cancel Order
                         </Button>
@@ -128,7 +130,37 @@ const BroFound = () => {
 
 export default function BroUpdate() {
     const [foundBro, setFoundBro] = useState(false);
+    const [completedOrder, setCompletedOrder] = useState(false);
+    const userName = sessionStorage.getItem('userName');
+    const [isVisible, setIsVisible] = useState(false);
+    
+    useEffect(() => {
+        function updatePage(orderInfo){
+            console.log(orderInfo)
+            if(orderInfo.orderAccepted === true){
+                setFoundBro(true)
+            }
+            if (orderInfo.orderCollected === true) {
+                setCompletedOrder(true)
+            }
+        }
 
+        async function getStatus(userName) {
+            const body = {
+                userName: userName
+            }
+            await buyerOrderStatus(body).then((response) => { 
+                if (response.length === 0) {
+                    setIsVisible(false);
+                } else {
+                    console.log(response[0])
+                    updatePage(response[0])
+                }
+            });
+        }
+        getStatus(userName);
+    },[])
+    
     return (
         <>
         {foundBro ? <BroFound /> : <SearchingForBros />}

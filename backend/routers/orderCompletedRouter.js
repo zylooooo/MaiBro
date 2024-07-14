@@ -10,6 +10,6 @@ orderCompletedRouter.get("/health", async (req, res) => {
     });
 });
 
-orderCompletedRouter.put("/", orderCompleted); // post beacause we are inserting the order into the AllOrders collection
+orderCompletedRouter.post("/", orderCompleted); // post beacause we are inserting the order into the AllOrders collection
 
 module.exports = orderCompletedRouter;

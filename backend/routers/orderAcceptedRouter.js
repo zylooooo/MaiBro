@@ -9,6 +9,6 @@ orderAcceptedRouter.get("/health", async (req, res) => {
         message: "Order Accepted router hit!"
     });
 });
-orderAcceptedRouter.post("/", orderAccepted); // put because we are updating the order
+orderAcceptedRouter.put("/", orderAccepted); // put because we are updating the order
 
 module.exports = orderAcceptedRouter;

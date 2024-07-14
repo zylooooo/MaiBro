@@ -8,7 +8,7 @@ import StandardOrder, {StandardOrderCustom} from './components/order/standardOrd
 import CustomOrder from './components/order/customOrder/customOrderInput.jsx';
 import Penalty from './components/penalty/penalty.jsx';
 import Confirmation from './components/order/customOrder/customOrderConfirmation.jsx';
-import SearchingForBros from './components/searching/searchingForBros.jsx';
+import BroUpdate from './components/searching/searchingForBros.jsx';
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import Protect from './protect.jsx';
 import DeliveryInfo from './components/delivery/deliveryInfo.jsx';
@@ -41,7 +41,7 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
 
     <Route path= "/home/OrderConfirmation" element= {<Confirmation/>} />
 
-    <Route path= "/home/info" element= {<SearchingForBros/>} />
+    <Route path= "/home/info" element= {<BroUpdate/>} />
 
 
     <Route path= "/chat" element= {<Chat />} />

@@ -83,6 +83,30 @@ async function broOrderStatus(body) {
   return res.data;
 }
 
+async function orderCompleted(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "put",
+    url: "/order-completed/",
+    data: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.data;
+}
+
+async function orderAccepted(body) {
+  // Send request to the backend to get a avaialble orders
+  const res = await axiosInstance({
+    method: "put",
+    url: "/order-accepted/",
+    data: body,
+  });
+
+  // Return the list of avaialble orders
+  return res.data;
+}
+
 export {
     getAllRestaurant,
     getRestaurantMenu,
@@ -90,4 +114,6 @@ export {
     submitOrder,
     buyerOrderStatus,
     broOrderStatus,
+    orderCompleted,
+    orderAccepted,
 };

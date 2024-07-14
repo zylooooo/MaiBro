@@ -97,11 +97,10 @@ export default function Confirmation() {
     console.log(response)
     if (response == 201) {
       //clear local storage
-      localStorage.removeItem('address')
       localStorage.removeItem('restaurantName')
       localStorage.removeItem('deliveryLocation')
       localStorage.removeItem('order')
-      navigate("/home/searchingForBros", {state: {order: orderData}})
+      navigate("/home/info", {state: {order: orderData}})
     } else {
       alert("Order could not be placed. Please try again.")
     }
