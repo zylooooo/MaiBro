@@ -26,6 +26,7 @@
     "react-geocode": "^1.0.0-alpha.1",
     "react-google-autocomplete": "^2.7.3",
     "react-router-dom": "^6.23.1",
+    "socket.io-client": "^4.7.5",
     "stream-chat": "^8.36.0",
     "use-places-autocomplete": "^4.0.1"
   },
