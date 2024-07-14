@@ -28,23 +28,23 @@ const browserRouter = createBrowserRouter(createRoutesFromElements(
     <Route path="/home/restaurant" element={<Settings />}/>
 
     {/* Order */}
-    <Route path="/home/standardorder" element={<StandardOrder />}/>
-    <Route path="/home/standardordercustom" element={<StandardOrderCustom />}/>
-    <Route path="/home/customorder" element={<CustomOrder />}/>
+    <Route path="/home/standardorder" element={<Protect><StandardOrder /></Protect>}/>
+    <Route path="/home/standardordercustom" element={<Protect><StandardOrderCustom /></Protect>}/>
+    <Route path="/home/customorder" element={<Protect><CustomOrder /></Protect>}/>
     
-    <Route path="/transaction" element={<Transaction />} />
+    <Route path="/transaction" element={<Protect><Transaction /></Protect>} />
 
-    <Route path="/delivery" element={<Delivery />} />
+    <Route path="/delivery" element={<Protect><Delivery /></Protect>} />
     <Route path="/delivery/info" element={<DeliveryInfo />} />
 
     <Route path= "/penalty" element= {<Penalty/>} />
 
-    <Route path= "/home/OrderConfirmation" element= {<Confirmation/>} />
+    <Route path= "/home/OrderConfirmation" element= {<Protect><Confirmation/></Protect>} />
 
-    <Route path= "/home/info" element= {<BroUpdate/>} />
+    <Route path= "/home/info" element= {<Protect><BroUpdate/></Protect>} />
 
 
-    <Route path= "/chat" element= {<Chat />} />
+    <Route path= "/chat" element= {<Protect><Chat /></Protect>} />
   </>
 ));
 
