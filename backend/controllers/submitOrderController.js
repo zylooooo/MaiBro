@@ -35,6 +35,7 @@ async function submitOrder(req, res) {
         });
 
         return res.status(201).json({
+            docId: orderId,
             message: "Order submitted successfully!"
         });
     } catch (error) {

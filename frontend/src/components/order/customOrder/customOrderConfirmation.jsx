@@ -76,7 +76,6 @@ export default function Confirmation() {
 
   //Function to send data to backend to confirm order
   const sendOrderBackend = async (userName, restaurantName, delivery, latitude, longitude, order) => {
-
     //Create the req object
     const orderData = {
       buyerId: userName,

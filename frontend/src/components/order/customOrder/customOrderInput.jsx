@@ -156,8 +156,17 @@ const CustomOrder = () => {
   //Submit Order
   const handleSave = () => {
     // Store order details to local storage
-    localStorage.setItem('order', order);
-    navigate("/home/OrderConfirmation")
+    const haveOrdered = sessionStorage.getItem("buyerOrdered") || false
+    if (haveOrdered) {
+      alert("You already have an order in progress. Please wait for it to be completed.")
+      localStorage.removeItem('address')
+      localStorage.removeItem('deliveryLocation')
+      localStorage.removeItem('restaurantName')
+      navigate("/home");
+    } else {
+      localStorage.setItem('order', order);
+      navigate("/home/OrderConfirmation")
+    }
   }
 
   return (

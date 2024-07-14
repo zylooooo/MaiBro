@@ -1,5 +1,5 @@
 const express = require("express");
-const { getBuyerOrder, getBroOrder } = require("../controllers/orderStatusController");
+const { getBuyerOrder, getBroOrder, getBuyerStatusBar } = require("../controllers/orderStatusController");
 
 const orderStatusRouter = express.Router();
 
@@ -11,5 +11,6 @@ orderStatusRouter.get("/health", async (req, res) => {
 });
 orderStatusRouter.get("/buyer", getBuyerOrder);
 orderStatusRouter.get("/bro", getBroOrder);
+orderStatusRouter.get("/statusbar", getBuyerStatusBar);
 
 module.exports = orderStatusRouter;

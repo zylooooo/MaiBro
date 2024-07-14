@@ -1,7 +1,7 @@
 import {React, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "./home.css"
-import { buyerOrderStatus } from "../../service/axiosService";
+import { buyerStatusBar } from "../../service/axiosService";
 
 export default function OrderStatus() {
     const userName = sessionStorage.getItem("userName");
@@ -30,13 +30,15 @@ export default function OrderStatus() {
             const body = {
                 userName: userName
             }
-            await buyerOrderStatus(body).then((response) => { 
+            await buyerStatusBar(body).then((response) => { 
                 if (response.length === 0) {
                     setIsVisible(false);
+                    sessionStorage.removeItem("buyerOrdered");
                 } else {
                     setIsVisible(true);
-                    setOrderInfo(response[0]);
-                    statusCheck(response[0])
+                    setOrderInfo(response);
+                    statusCheck(response)
+                    sessionStorage.setItem("buyerOrdered", true);
                 }
             });
         }
@@ -46,7 +48,7 @@ export default function OrderStatus() {
     //On Status Bar Click
     const handleClick = () => {
         //navigate to bro page and pass the order status data to the page via location state.
-        navigate("/home/info", {state: {order: orderInfo}});
+        navigate("/home/info", {state: {docId: orderInfo.docId}});
     }
     
     return (

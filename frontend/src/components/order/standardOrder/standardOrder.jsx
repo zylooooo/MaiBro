@@ -61,26 +61,32 @@ export default function StandardOrder(){
 
     //Confirm Button Clicked
     function confirmOrderButton(latitude, longtitude, restaurantName, order, userLocation) {
-        if (Object.keys(order).length === 0) {
-            alert("Please enter a valid order")
+        const haveOrdered = sessionStorage.getItem("buyerOrdered") || false
+        if (haveOrdered) {
+          alert("You already have an order in progress. Please wait for it to be completed.")
+          navigate("/home");
         } else {
-            const address = {
-                "latitude" : latitude,
-                "longitude" : longtitude,
+            if (Object.keys(order).length === 0) {
+                alert("Please enter a valid order")
+            } else {
+                const address = {
+                    "latitude" : latitude,
+                    "longitude" : longtitude,
+                }
+    
+                //Convert Order to a String Value
+                const orderList = Object.entries(order)
+                     .map(([item, quantity]) => `${item} x${quantity}`)
+                     .join(', ');
+    
+                //Store to localstorage
+                localStorage.setItem('address', JSON.stringify(address))
+                localStorage.setItem('deliveryLocation', userLocation)
+                localStorage.setItem('restaurantName', restaurantName)
+                localStorage.setItem('order', orderList)
+                
+                navigate('/home/OrderConfirmation')
             }
-
-            //Convert Order to a String Value
-            const orderList = Object.entries(order)
-                 .map(([item, quantity]) => `${item} x${quantity}`)
-                 .join(', ');
-
-            //Store to localstorage
-            localStorage.setItem('address', JSON.stringify(address))
-            localStorage.setItem('deliveryLocation', userLocation)
-            localStorage.setItem('restaurantName', restaurantName)
-            localStorage.setItem('order', orderList)
-            
-            navigate('/home/OrderConfirmation')
         }
     }
 
@@ -171,19 +177,27 @@ export function StandardOrderCustom() {
 
     //Confirm Button Clicked
     function confirmOrderButton(latitude, longtitude, restaurantName, order, userLocation) {
-        const address = {
-            "latitude" : latitude,
-            "longitude" : longtitude,
+        const haveOrdered = sessionStorage.getItem("buyerOrdered") || false
+        if (haveOrdered) {
+          alert("You already have an order in progress. Please wait for it to be completed.")
+          navigate("/home");
+        } else {
+            const address = {
+                "latitude" : latitude,
+                "longitude" : longtitude,
+            }
+    
+    
+            //Store to localstorage
+            localStorage.setItem('address', JSON.stringify(address))
+            localStorage.setItem('deliveryLocation', userLocation)
+            localStorage.setItem('restaurantName', restaurantName)
+            localStorage.setItem('order', order)
+            
+            navigate('/home/OrderConfirmation')
         }
 
-
-        //Store to localstorage
-        localStorage.setItem('address', JSON.stringify(address))
-        localStorage.setItem('deliveryLocation', userLocation)
-        localStorage.setItem('restaurantName', restaurantName)
-        localStorage.setItem('order', order)
         
-        navigate('/home/OrderConfirmation')
     }
 
     //handle Button press
