@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { useLocation } from 'react-router-dom'
 import Restaurant from "./home_components/restaurantDetails"
 import BottomTab from "../common/bottomTab/bottomTab"
 import "./home.css"
@@ -29,13 +30,12 @@ export default function HomeMain() {
     var lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
-  
 
   return (
     <>
       {/* Search bar */}
       <div className='mainHome'>
-        <OrderTopBar />
+        <OrderTopBar userName ={name}/>
         <OrderHeader />
         <div className="search">
           <TextField

@@ -15,6 +15,7 @@ admin.initializeApp({
     Also included how to verify the connection to firebase database.
 */
 const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
 
 // Function to check the connectionn to the Firebase database
 async function checkFirebaseConnection() {

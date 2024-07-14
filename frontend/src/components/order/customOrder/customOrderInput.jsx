@@ -11,6 +11,11 @@ import BottomTab from "../../common/bottomTab/bottomTab";
 
 
 const CustomMap = ({latitude,longtitude}) => {
+  const geolocation = {
+    "latitude": latitude,
+    "longitude": longtitude,
+  }
+  localStorage.setItem('address', JSON.stringify(geolocation));
   // shows marker on chosen location
   return (
     <div className="map-container">
@@ -53,6 +58,7 @@ const LocationSearch = () => {
     setLocation(event.target.value);
   };
 
+  // Search for location Button
   const handleLocationPress = () => {
     // Define the request
     const request = {
@@ -67,10 +73,12 @@ const LocationSearch = () => {
       console.log(results)
       handleLatitudeChange(results[0].geometry.location.lat());
       handleLongtitudeChange(results[0].geometry.location.lng());
-      const formattedAddress = results[0].formatted_address;
       const input_name = results[0].name;
       // Store formatted_address as a separate exportable variable
-      NewInformation(formattedAddress, input_name, results[0].geometry.location.lng(), results[0].geometry.location.lat());
+      localStorage.setItem('restaurantName', location);
+
+      
+      // NewInformation(input_name, results[0].geometry.location.lng(), results[0].geometry.location.lat());
     }})
 
   };
@@ -99,9 +107,9 @@ function DeliveryLocationStore() {
     setDelivery(event.target.value);
   }
 
-  //storing delivery location via local storage
+  // //storing delivery location via local storage
   const handleSave = () => {
-    NewInfo(delivery);
+    localStorage.setItem('deliveryLocation', delivery);
   }
   
 
@@ -140,6 +148,27 @@ function DeliveryLocationStore() {
 const CustomOrder = () => {
   //Initialise the Page
   const navigate = useNavigate();
+  const [order, setOrder] = useState('');
+  const handleOrderChange = (event) => {
+    setOrder(event.target.value);
+  }
+
+  //Submit Order
+  const handleSave = () => {
+    // Store order details to local storage
+    const haveOrdered = sessionStorage.getItem("buyerOrdered") || false
+    if (haveOrdered) {
+      alert("You already have an order in progress. Please wait for it to be completed.")
+      localStorage.removeItem('address')
+      localStorage.removeItem('deliveryLocation')
+      localStorage.removeItem('restaurantName')
+      navigate("/home");
+    } else {
+      localStorage.setItem('order', order);
+      navigate("/home/OrderConfirmation")
+    }
+  }
+
   return (
     <>
       <form>
@@ -152,7 +181,14 @@ const CustomOrder = () => {
         <DeliveryLocationStore/>
         <LocationSearch />
         <div style={{ marginBottom: "5em" }}>
-          <Button disableRipple fullWidth variant='contained' onClick={() => navigate("/home/customordering")}
+          <TextField
+              fullWidth placeholder="Input Order Here"
+              multiline rows={10} onChange={handleOrderChange}
+              color='grey' variant="outlined"
+              InputProps={{style: {borderRadius: "25px", backgroundColor: '#D3D3D3', marginBottom:"10px", marginTop:"10px"}}}
+              focused
+            />
+          <Button disableRipple fullWidth variant='contained' onClick={() => handleSave()}
                   style={{borderRadius: "25px", fontSize:"0.8em",marginBottom:"15px",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"600"}} >
                     Order Now!
           </Button>
@@ -160,7 +196,7 @@ const CustomOrder = () => {
         </APIProvider>
       </form>
       <div>
-      <BottomTab  />
+      <BottomTab  value="Order"/>
       </div>
     </>
   );
@@ -169,13 +205,14 @@ const CustomOrder = () => {
 export default CustomOrder;
 
 //inputting information of location into local storage
-const NewInformation = (address, name, longitude, latitude) => {
-  localStorage.setItem('address', address);
-  localStorage.setItem('name', name);
-  localStorage.setItem('longitude', longitude);
-  localStorage.setItem('latitude', latitude);
-}
+// const NewInformation = (name, longitude, latitude) => {
+//   localStorage.setItem('restaurantName', name);
+//   const longstring = longitude.toString();
+//   const latstring = latitude.toString();
+//   const add = JSON.stringify({ longitude: longstring, latitude: latstring });
+//   localStorage.setItem('address', add);
+// }
 
-const NewInfo = (delivery) => {
-  localStorage.setItem('delivery', delivery);
-}
+// const NewInfo = (delivery) => {
+//   localStorage.setItem('deliveryLocation', delivery);
+// }

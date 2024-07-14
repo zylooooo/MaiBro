@@ -5,11 +5,12 @@ import Home from '../home';
 // COMMENT OUT IF USING DATABASE
 // import data from "../home_test"
 import { useNavigate } from 'react-router-dom';
-import { getAllRestaurant } from '/src/service/axiosService';
+import { getAllRestaurant, getRestaurantMenu } from '/src/service/axiosService';
 
 export default function Restaurant(detail) {
     // // COMMENT OUT IF USING TEST DATA
     const [data, setData] = useState([]);
+    const [lastRestaurantUpdate, setLastRestaurantUpdate] = useState([]);
 
     useEffect(() => {
         // Function to call backend for opened restaurant list
@@ -17,13 +18,38 @@ export default function Restaurant(detail) {
             await getAllRestaurant().then((response) => {  
                 if (response === undefined) {
                     console.log("No Data");
-                    return false;
+                    return false
                 } else {
+                    localStorage.setItem('restaurantData', JSON.stringify(response));
                     setData(response);
                 }
             });
         }
-        getRestaurantList();
+
+        // Get the current hour
+        const date = new Date();
+        const currentHour = date.getHours();
+        //Check if local cache contains restaurant data. If not call backend
+        const restaurantData = localStorage.getItem('restaurantData') || false;
+        const restaurantObj = JSON.parse(restaurantData);
+        if (restaurantData == false) {
+            console.log("No Data in local cache")
+            getRestaurantList();
+            
+            //Save lastUpdate time to local cache
+            localStorage.setItem('lastRestaurantUpdate', currentHour);}
+        else {
+            console.log("Data in local cache... Checking time now")
+            if (localStorage.getItem('lastRestaurantUpdate') != currentHour) {
+                console.log("Data in local cache is outdated. Updating now")
+                getRestaurantList()
+
+                //Save lastUpdate time to local cache
+                localStorage.setItem('lastRestaurantUpdate', currentHour);
+            } else {
+                setData(JSON.parse(localStorage.getItem('restaurantData')));
+            }
+        }
     }, []);
     
     // Filter the data based on the input on the search bar in home.jsx
@@ -31,18 +57,42 @@ export default function Restaurant(detail) {
         return el.id.toLowerCase().includes(detail.input)
     })
 
-    // Handle Routing from button click
+    // Handle Button Click
     const navigate = useNavigate();
-    function restaurantClick(item){
-        // //Check if restaurant requires standard/custom order page (COMMENTED OUT UNTIL ISSUE IS FIXED)
-        // if (item.custom) {
-        //     // Redirect to custom order page and pass the restaurant id to list the menu
-        //     navigate("/home/standardordercustom", {state: {restaurant: item}});
-        // } else{
-        //     // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
-        //     navigate("/home/standardorder", {state: {restaurant: item}});
-        // }
-        navigate("/home/standardordercustom", {state: {restaurant: item}});
+    // Menu State
+    const [menu, setMenu] = useState(false);
+
+    async function checkMenuExists(id) {
+        const body = {
+            restaurantId: id,
+        }
+        const check = await getRestaurantMenu(body).then((response) => {  
+            if (("error" in response)) {
+                return false
+            } else{
+                return true
+            }
+        });
+        return check
+    }
+
+
+    async function restaurantClick(restaurantInfo){
+        //Call function to check if restaurant has standard menu
+        const check = await checkMenuExists(restaurantInfo.id)
+
+        // Route to menu order page/custom order page depending on return value
+        //Check if restaurant requires standard/custom order page (COMMENTED OUT UNTIL ISSUE IS FIXED)
+        if (check) {
+            // Redirect to standard restaurant order page and pass the restaurant name/id to list the menu (Rn im using name)
+            navigate("/home/standardorder", {state: {restaurant: restaurantInfo}});
+        } else{
+            // Redirect to custom order page and pass the restaurant id to list the menu
+            navigate("/home/standardordercustom", {state: {restaurant: restaurantInfo}});
+        }
+        
+        // //Bypass above if/else
+        // navigate("/home/standardordercustom", {state: {restaurant: item}});
         
     }
 

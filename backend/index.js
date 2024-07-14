@@ -38,7 +38,7 @@ app.use("/order-list", require("./routers/orderListRouter"));
 app.use("/order-accepted", require("./routers/orderAcceptedRouter"));
 app.use("/order-completed", require("./routers/orderCompletedRouter"));
 app.use("/order-menu", require("./routers/orderMenuRouter"));
-app.use("/chat", require("./routers/chatRouter"));
+app.use("/order-status", require("./routers/orderStatusRouter"));
 
 // Start the application
 server.listen(PORT, () => {

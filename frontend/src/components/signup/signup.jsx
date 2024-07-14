@@ -28,6 +28,7 @@ export default function SignUp() {
         }).then(() => {
             // Profile update successful
             console.log("Name updated successfully");
+            sessionStorage.setItem("userName", name);
             navigate('/home');
         }).catch((error) => {
             // An error occurred

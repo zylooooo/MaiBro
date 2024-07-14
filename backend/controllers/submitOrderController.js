@@ -5,13 +5,16 @@ async function submitOrder(req, res) {
     const {
         buyerId,
         earnings,
+        latitude,
+        longitude,
         orderAccepted,
         orderCompleted,
+        orderCollected,
         restaurant,
         orderItems,
         deliveryLocation
     } = req.body;
-
+    
     // Update the database with the order details
     try {
         const orderId = generateOrderId();
@@ -22,13 +25,17 @@ async function submitOrder(req, res) {
             buyerId: buyerId,
             deliveryLocation: deliveryLocation,
             earnings: earnings,
+            latitude: latitude,
+            longitude: longitude,
             orderAccepted: orderAccepted,
             orderCompleted: orderCompleted,
+            orderCollected: orderCollected,
             orderItems: orderItems,
             restaurant: restaurant
         });
 
         return res.status(201).json({
+            docId: orderId,
             message: "Order submitted successfully!"
         });
     } catch (error) {

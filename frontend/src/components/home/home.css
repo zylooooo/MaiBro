@@ -66,21 +66,38 @@ ul li {
 
 .restaurantList{
     margin-top: 10px;
-    height: 65vh;
+    height: 60vh;
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-color: rgb(201, 201, 201) #e1e1e1;
 }
 
-.orderStatusBar{
+.statusBarDiv {
     position: fixed;
-    bottom: 70px;
-    background-color: #b6b6b6;
-    display: flex;
-    align-items: center;
+    bottom: 65px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    height: 25px;
+    background-color: rgba(255, 255, 255, 0.943);
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0px 3px 2px rgb(188, 188, 188);
+    opacity: 0;
     
-    height: 4.5vh;
 }
+
+.statusBarDiv.visible {
+    opacity: 100;
+}
+
+.orderStatus{
+    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+}
+
 
 /* <img 
     src={`${item.coverImg}`}
