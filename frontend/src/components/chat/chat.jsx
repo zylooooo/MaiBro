@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import {io} from "socket.io-client";
 
 //Need to check whether the chat is from the buyer or the seller to update bottom bar
-const socket = io('http://localhost:3000');
+const socket = io('http://localhost:8000');
 const sender = sessionStorage.getItem("userName");
 
 const ChatDisplay = ({roomId}) => {
@@ -21,8 +21,9 @@ const ChatDisplay = ({roomId}) => {
         socket.on('chat message', (msg) => {
           console.log(`Message received: ${msg}`);
           setMessages((prevMessages) => [...prevMessages, msg]);
+          console.log("Messages: ", messages);
         });
-    
+        
         // Clean up the socket connection when the component unmounts
         return () => {
           socket.off('chat message');
@@ -31,11 +32,24 @@ const ChatDisplay = ({roomId}) => {
       
     return (
         <div id="messages">
-            {messages.map((msg, index) => (
-            <div key={index} className="messageCard">
-                <strong>{msg.sender}:</strong> {msg.message}
-            </div>
-            ))}
+            {messages.map((msg, index) => {
+                if (msg.sender === sender) {
+                    return (
+                        <div key={index} className="messageCard sending">
+                        <strong>You: </strong> {msg.message}
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div key={index} className="messageCard receiving">
+                        <strong>{msg.sender}: </strong> {msg.message}
+                        </div>
+                    )
+                }
+                
+            }
+            
+            )}
         </div>
     )
 }
@@ -58,7 +72,7 @@ export default function Chat() {
         <>
         <div>
             <ProfileTopBar/>
-            <StandardHeader headerName="Chat"/>
+            <StandardHeader headerName="BroChat"/>
         </div>
         {/* Prolly a map function to display all the chats */}
         <div className="chatList">
