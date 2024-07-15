@@ -1,7 +1,9 @@
+require("dotenv").config(); // Import the dotenv module to read the environment variables from the .env file
 const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
 const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
 const axios = require("axios");
 const { Server } = require("socket.io");
+const { MongoClient, ServerApiVersion } = require("mongodb");
 
 // Initialise app with admin privileges
 admin.initializeApp({
@@ -23,7 +25,7 @@ async function checkFirebaseConnection() {
         await db.doc("test/doc").get();
         console.log("Connected to the database successfully!");
     } catch (error) {
-        console.error("Faied to connect to the data base", error);
+        console.error("Failed to connect to the data base", error);
     }
 }
 
@@ -64,9 +66,9 @@ function initSocket(server) {
         console.log(`User ${socket.id} connected!`);
     
         // Listen for the join room event
-        socket.on('join room', (room) => {
-            socket.join(room);
-            console.log(`User ${socket.id} joined room: ${room}`);
+        socket.on('join room', (roomId) => {
+            socket.join(roomId);
+            console.log(`User ${socket.id} joined room: ${roomId}`);
         });
     
         // Listen for 'chat message' event and broadcast to the room
@@ -91,8 +93,33 @@ function getIO() {
     return io;
 }
 
+// Set up the MongoDB client
+const client = new MongoClient(process.env.MONGODB_URI, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+
+async function initMongodb() {
+    try {
+        await client.connect();
+        // Send a ping to confirm a successful connection
+        await client.db("admin").command({ ping: 1 });
+        console.log("Connected to MongoDB successfully!");
+    } catch (error) {
+        console.error("Failed to connect to MongoDB!", error);
+    } finally {
+        // Ensure that the client will close regardless if there was an error or when you finish with the db
+        client.close();
+    }
+}
+
+const mongodb = initMongodb();
+
 // Export the modules to be used in other files
-module.exports = { db, auth, axiosInstance, initSocket, getIO };
+module.exports = { db, auth, axiosInstance, initSocket, getIO, mongodb };
 
 
 
