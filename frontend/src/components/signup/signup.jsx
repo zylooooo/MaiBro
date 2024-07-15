@@ -4,13 +4,39 @@ import { useNavigate } from 'react-router-dom';
 import {firebaseAuth} from "../../service/firebaseConfig";
 import { updateProfile } from 'firebase/auth';
 import "./signup.css";
+import { submitSignup } from '../../service/axiosService';
+import { requestNotificationPermissionAndGetToken } from '../../utils/firebaseMessaging.jsx';
 
+
+
+async function updateUserAccount(name, phoneNumber) {
+    var cont = false;
+    const token = await requestNotificationPermissionAndGetToken();
+    //Initialise react router navigate function
+    const body = {
+        userId: name,
+        phoneNumber: phoneNumber,
+        token: token,
+    }
+    // Call Backend
+    await submitSignup(body).then((res) =>
+        {   
+            // if userName taken, send alert
+            if (res) {
+                sessionStorage.setItem("userName", name);
+                cont = true;
+            } else {
+                alert("Username already taken, please choose another username!");
+                cont = false;
+            }
+        }
+    )
+
+    return cont
+}
 
 export default function SignUp() {
-    //Initialise react router navigate function
     const navigate = useNavigate();
-
-    
 
     // States for Text Fields
     const [name, setName] = useState('');
@@ -27,9 +53,13 @@ export default function SignUp() {
             displayName: name
         }).then(() => {
             // Profile update successful
-            console.log("Name updated successfully");
-            sessionStorage.setItem("userName", name);
-            navigate('/home');
+            updateUserAccount(name, user.phoneNumber).then((cont) => {
+                if (cont) {
+                    // Navigate to Home Page
+                    navigate('/home');
+                }
+            })
+            
         }).catch((error) => {
             // An error occurred
             console.log(error)

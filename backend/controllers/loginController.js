@@ -1,30 +1,20 @@
 const { auth } = require("../config");
+const { db } = require("../config");
 
-async function authLogin(req, res, next) {
-    // Retrieve the idToken key from the request body
-    let idToken = req.body.idToken;
+async function authLogin(req, res) {
+    // Retrieve the token key from the request body
+    let {token, userId} = req.body;
 
-    // Return 200 if the idToken is correct and 401 if it is incorrect
-    return auth
-        .verifyIdToken(idToken)
-        .then((decodedToken) => {
-            const uid = decodedToken.uid;
-            console.log("decoded token", decodedToken);
+    // Check if token key is same to document in firestore
+    const userDoc = await db.collection("Users").doc(userId).get();
+    const userToken = userDoc.data().token;
 
-            res.status(200).json({
-                message: "You have successfully logged in.",
-                login: true,
-            });
+    if (userToken !== token) {
+        // Replace the token in the document
+        await db.collection("Users").doc(userId).update({ token: token});
+    }
 
-            next();
-        })
-        .catch((error) => {
-            console.error("decoded token error", error);
-            return res.status(401).json({
-                error: "You are not authroized to access this account.",
-                login: false,
-            });
-        });
+
 }
 
 module.exports = { authLogin };

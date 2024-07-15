@@ -1,11 +1,10 @@
 import { React, useEffect, useState} from "react"
 import BottomTab from "../common/bottomTab/bottomTab"
 import { ProfileTopBar, StandardHeader } from "../common/topTab/topTab"
-import deliveryListings from "./deliveryListings"
 import "./delivery.css"
 import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
 import { Divider, Button } from "@mui/material"
-import {broOrderStatus, getAllAvailableOrders} from "../../service/axiosService"
+import {broOrderStatus, getAllAvailableOrders, orderAccepted} from "../../service/axiosService"
 import { useNavigate } from "react-router-dom"
 
 
@@ -26,7 +25,6 @@ export function MapDisplay({latitude, longitude}) {
     )
 }
 
-
 export default function Delivery() {
     const navigate = useNavigate();
     const userName = sessionStorage.getItem("userName");
@@ -44,23 +42,20 @@ export default function Delivery() {
                 if (response.length === 0) {
                     setCurrentDelivery([])
                 } else {
-                    setCurrentDelivery(response)
+                    setCurrentDelivery(response[0])
                 }
             })
         }
         deliveryInProgress(userName)
     },[])
 
-    console.log(currentDelivery.length)
+    //Navigate to new delivery page passing the delivery as a prop to the new page 
     if (!currentDelivery.length == 0) {
-        //Navigate to new delivery page passing the delivery as a prop to the new page 
         navigate("/delivery/info", {state: {delivery: currentDelivery}})
     }
 
-
-    //Obtain list of available orders
+    //ELSE Obtain list of available orders
     const [deliveryList, setDeliveryList] = useState([])
-
     useEffect(() => { 
         async function getDeliveryList() {
             await getAllAvailableOrders().then((response) => {
@@ -72,8 +67,10 @@ export default function Delivery() {
             })
         }
         getDeliveryList();
-        
     }, [])
+    
+
+
     
     return (
         <>
@@ -100,7 +97,7 @@ export default function Delivery() {
                                     <div style={{fontWeight:"bold"}}>Order Details</div>
                                     <div className="orderDetails">{item.orderItems}</div>
                                 </div>
-                                <Button disableRipple fullWidth variant='contained' 
+                                <Button disableRipple fullWidth variant='contained' onClick={() => handleBroUp(item)}
                                 style={{borderRadius: "25px", fontSize:"0.9em",marginTop:"15px",marginBottom:"15px",backgroundColor:"#133851",height:"3.5em",textTransform:"none",fontWeight:"600",}} >
                                     Bro Them Up!
                                 </Button>

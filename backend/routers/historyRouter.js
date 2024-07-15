@@ -10,6 +10,6 @@ historyRouter.get("/health", async (req, res) => {
         message: "History route hit!"
     });
 })
-historyRouter.post("/", getHistory);
+historyRouter.get("/", getHistory);
 
 module.exports = historyRouter;

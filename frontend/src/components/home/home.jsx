@@ -9,12 +9,29 @@ import { InputAdornment } from "@mui/material";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {RouterProvider, useNavigate } from "react-router-dom";
 import browserRouter from "../../navigation";
-import { firebaseAuth } from "../../service/firebaseConfig";
 import OrderStatus from "./orderStatusBar";
+import { getMessaging, onMessage } from "firebase/messaging";
 
 // App Initialization
 // Starts the router for routing
 export function App() {
+  // Check if the browser supports service workers
+  if ('serviceWorker' in navigator) {
+  // Register the service worker
+    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+      .then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function(error) {
+        console.log('ServiceWorker registration failed: ', error);
+      });
+  }
+
+  const messaging = getMessaging();
+  onMessage(messaging, (payload) => {
+    console.log('Message received foreground', payload);
+    // ...
+  });
+
   return (
     <>
     <RouterProvider router={browserRouter} />

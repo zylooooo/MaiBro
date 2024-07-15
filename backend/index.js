@@ -31,6 +31,7 @@ app.use("/submit-order", require("./routers/submitOrderRouter"));
 app.use("/history", require("./routers/historyRouter"));
 app.use("/order-list", require("./routers/orderListRouter"));
 app.use("/order-accepted", require("./routers/orderAcceptedRouter"));
+app.use("/order-collected", require("./routers/orderCollectedRouter"));
 app.use("/order-completed", require("./routers/orderCompletedRouter"));
 app.use("/order-menu", require("./routers/orderMenuRouter"));
 app.use("/order-status", require("./routers/orderStatusRouter"));

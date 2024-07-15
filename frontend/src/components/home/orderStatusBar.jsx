@@ -47,8 +47,10 @@ export default function OrderStatus() {
 
     //On Status Bar Click
     const handleClick = () => {
+        if (isVisible === true) {
         //navigate to bro page and pass the order status data to the page via location state.
         navigate("/home/info", {state: {docId: orderInfo.docId}});
+        }
     }
     
     return (
