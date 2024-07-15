@@ -1,10 +1,13 @@
+const fs = require("fs"); // Import the fs module to read files
+const path = require("path"); // Import the path module to handle file paths
 require("dotenv").config(); // Import the dotenv module to read the environment variables from the .env file
 const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
-const serviceAccount = require("./serviceAccountKey.json"); // Import the firebase service Account key
 const axios = require("axios");
 const { Server } = require("socket.io");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
+const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH;
+const serviceAccount = JSON.parse(fs.readFileSync(path.resolve(serviceAccountKeyPath), "utf8")); // Read the service account key file
 // Initialise app with admin privileges
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
