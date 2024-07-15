@@ -1,7 +1,8 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useLayoutEffect, useState } from "react";
 import "./searchingForBros.css";
 import "../common/topTab/topTab.css";
 import {Button,TextField, InputAdornment} from '@mui/material';
+import { buyerOrderStatus } from "../../service/axiosService";
 import BottomTab from "../common/bottomTab/bottomTab";
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
@@ -9,7 +10,8 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import Searching from './images/Searching.png'
 import Purchasing from './images/Purchasing.png'
 import RestaurantAddress from '../common/mapAPI/geocoding.jsx'
-import {buyerOrderStatus} from "/src/service/axiosService";
+import { useLocation } from "react-router-dom";
+
 
 
 const Address = () => {
@@ -131,12 +133,14 @@ const BroFound = () => {
 export default function BroUpdate() {
     const [foundBro, setFoundBro] = useState(false);
     const [completedOrder, setCompletedOrder] = useState(false);
-    const userName = sessionStorage.getItem('userName');
+    const docId = useLocation().state.docId;
+    console.log(docId)
     const [isVisible, setIsVisible] = useState(false);
+    const [orderInfo, setOrderInfo] = useState([]);
     
     useEffect(() => {
         function updatePage(orderInfo){
-            console.log(orderInfo)
+            console.log(orderInfo.orderAccepted)
             if(orderInfo.orderAccepted === true){
                 setFoundBro(true)
             }
@@ -145,20 +149,24 @@ export default function BroUpdate() {
             }
         }
 
-        async function getStatus(userName) {
+        async function getStatus(docId) {
             const body = {
-                userName: userName
+                docId: docId
             }
             await buyerOrderStatus(body).then((response) => { 
                 if (response.length === 0) {
+                    console.log("nooooo")
                     setIsVisible(false);
                 } else {
-                    console.log(response[0])
-                    updatePage(response[0])
+                    setIsVisible(true);
+                    console.log("lmaoooo")
+                    setOrderInfo(response);
+                    console.log(response)
+                    updatePage(response)
                 }
             });
         }
-        getStatus(userName);
+        getStatus(docId);
     },[])
     
     return (

@@ -8,9 +8,20 @@ async function orderCompleted(req, res) {
         const order = await db.collection("AvailableOrders").doc(orderId).update({
             orderCompleted: true
         });
+
+                // Retrieve the updated document
+                const orderSnapshot = await db.collection("AvailableOrders").doc(orderId).get();
         
-        //Create a new order in the AllOrders collection to copy over data
-        await db.collection("AllOrders").doc(orderId).set(order.data());
+        // Check if the document exists before trying to use .data()
+        if (!orderSnapshot.exists) {
+            console.error("Order not found:", orderId);
+            return res.status(404).json({
+                error: "Order not found!"
+            });
+        }
+
+        // Create a new order in the AllOrders collection to copy over data
+        await db.collection("AllOrders").doc(orderId).set(orderSnapshot.data());
 
         // Finally, remove the order from the AvailableOrders collection
         await db.collection("AvailableOrders").doc(orderId).delete();
@@ -27,3 +38,4 @@ async function orderCompleted(req, res) {
 }
 
 module.exports = { orderCompleted };
+

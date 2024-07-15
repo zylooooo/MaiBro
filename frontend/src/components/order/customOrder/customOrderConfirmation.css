@@ -22,3 +22,9 @@
     justify-content: space-between;
     margin: 5%;
 }
+
+.bottomTab{
+    display: flex;
+    justify-content: space-between;
+    margin: 5%;
+}
