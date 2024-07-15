@@ -97,7 +97,7 @@ export default function DeliveryInfo() {
     const navigate = useNavigate();
     const location = useLocation();
     const [collected, setCollected] = useState(true)
-    const deliveryObj = location.state.delivery[0];
+    const deliveryObj = location.state.delivery;
 
     //Chat Button
     const handleChatClick = () => {
