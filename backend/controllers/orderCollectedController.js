@@ -1,15 +1,14 @@
 const { db } = require("../config");
 
-async function orderAccepted(req, res) {
+async function orderCollected(req, res) {
     // Retrieve the orderId from the request body
-    const { orderId, userName } = req.body;
+    const { orderId } = req.body;
    // copy the current available order into the existing AllOrders collection
 
     try {
          // After cutting and pasting the order into the AllOrdersCollection, update the orderCompleted field in the AvailableOrders collection
         await db.collection("AvailableOrders").doc(orderId).update({
-            broId: userName,
-            orderAccepted: true
+            orderCollected: true
         });
 
         return res.status(200).json({
@@ -25,4 +24,4 @@ async function orderAccepted(req, res) {
 }
 
 
-module.exports = { orderAccepted };
+module.exports = { orderCollected };

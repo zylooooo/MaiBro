@@ -2,15 +2,18 @@ const { db } = require("../config");
 
 async function orderCompleted(req, res) {
     const { orderId } = req.body;
-
     try {
         // Update the orderCompleted field in the database
         const order = await db.collection("AvailableOrders").doc(orderId).update({
             orderCompleted: true
         });
+
+        //Get snapshot of the order + data
+        const orderSnapshot = await db.collection("AvailableOrders").doc(orderId).get();
+        const orderData = orderSnapshot.data();
         
         //Create a new order in the AllOrders collection to copy over data
-        await db.collection("AllOrders").doc(orderId).set(order.data());
+        await db.collection("AllOrders").doc(orderId).set(orderData);
 
         // Finally, remove the order from the AvailableOrders collection
         await db.collection("AvailableOrders").doc(orderId).delete();
