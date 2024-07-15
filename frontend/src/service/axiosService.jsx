@@ -1,6 +1,20 @@
 import axiosInstance from "../utils/axiosInstance";
 
 //Functions to send requests to backend
+async function submitSignup(body) {
+  // Send request to the backend to get a avaialble orders
+  try {
+    const res = await axiosInstance({
+      method: "post",
+      url: "/signup",
+      data: body,
+    });
+  } catch (error) {
+    return false
+  }
+  // Return the list of avaialble orders
+  return true;
+}
 
 async function getAllRestaurant() {
   // Send request to the backend to get a list of restaurants currently opened
@@ -123,6 +137,7 @@ async function historyList(body) {
 }
 
 export {
+    submitSignup,  
     getAllRestaurant,
     getRestaurantMenu,
     getAllAvailableOrders,

@@ -9,7 +9,6 @@ import { InputAdornment } from "@mui/material";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import {RouterProvider, useNavigate } from "react-router-dom";
 import browserRouter from "../../navigation";
-import { firebaseAuth } from "../../service/firebaseConfig";
 import OrderStatus from "./orderStatusBar";
 
 // App Initialization
