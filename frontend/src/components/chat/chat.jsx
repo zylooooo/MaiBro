@@ -7,7 +7,7 @@ import SendIcon from '@mui/icons-material/Send';
 import {io} from "socket.io-client";
 
 //Need to check whether the chat is from the buyer or the seller to update bottom bar
-const socket = io('http://localhost:8000');
+// const socket = io('http://localhost:8000');
 const sender = sessionStorage.getItem("userName");
 
 const ChatDisplay = ({roomId}) => {
@@ -76,7 +76,7 @@ export default function Chat() {
         </div>
         {/* Prolly a map function to display all the chats */}
         <div className="chatList">
-        <ChatDisplay roomId={roomId}/>
+        {/* <ChatDisplay roomId={roomId}/> */}
         </div>
         <div className="chatDiv">
             <div className="chatBox">
