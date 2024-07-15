@@ -3,7 +3,7 @@ const { db } = require("../config");
 
 // Function to create user
 const createNewUser = async (req, res) => {
-    const { phoneNumber, userId } = req.body;
+    const { phoneNumber, userId, token} = req.body;
 
         // // Check if user already exists, have already signed up before
         // try {
@@ -29,7 +29,8 @@ const createNewUser = async (req, res) => {
         // Create a record in Firestore for the new user
         await db.collection("Users").doc(userId).set({
             phoneNumber: phoneNumber,
-            userId: userId
+            userId: userId,
+            token: token,
         });
 
         return res.status(200).json({

@@ -4,6 +4,20 @@ import {React, useState } from 'react';
 import { RecaptchaVerifier, signInWithPhoneNumber, setPersistence, browserSessionPersistence} from "firebase/auth";
 import {firebaseAuth} from "../../service/firebaseConfig";
 import { useNavigate } from 'react-router-dom';
+import { requestNotificationPermissionAndGetToken } from '../../utils/firebaseMessaging';
+import { submitLogin } from '../../service/axiosService';
+
+async function checkToken(userId) {
+  const token = await requestNotificationPermissionAndGetToken();
+  const body = {
+    token: token,
+    userId: userId,
+  }
+  // Call Backend
+  await submitLogin(body)
+
+}
+
 
 function Login() {
   //Initialise react router navigate function
@@ -88,6 +102,8 @@ function Login() {
           //Navigate to signup page
           navigate('/signup'); 
         } else {
+          //Check and refresh token
+          checkToken(userName);
           //Navigate to home page
           navigate('/home');
           

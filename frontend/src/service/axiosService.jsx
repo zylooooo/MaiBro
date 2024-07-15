@@ -10,6 +10,23 @@ async function submitSignup(body) {
       data: body,
     });
   } catch (error) {
+    console.log(error)
+    return false
+  }
+  // Return the list of avaialble orders
+  return true;
+}
+
+//Functions to send requests to backend
+async function submitLogin(body) {
+  // Send request to the backend to get a avaialble orders
+  try {
+    const res = await axiosInstance({
+      method: "post",
+      url: "/login",
+      data: body,
+    });
+  } catch (error) {
     return false
   }
   // Return the list of avaialble orders
@@ -138,6 +155,7 @@ async function historyList(body) {
 
 export {
     submitSignup,  
+    submitLogin,
     getAllRestaurant,
     getRestaurantMenu,
     getAllAvailableOrders,

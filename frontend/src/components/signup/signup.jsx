@@ -5,13 +5,18 @@ import {firebaseAuth} from "../../service/firebaseConfig";
 import { updateProfile } from 'firebase/auth';
 import "./signup.css";
 import { submitSignup } from '../../service/axiosService';
+import { requestNotificationPermissionAndGetToken } from '../../utils/firebaseMessaging.jsx';
+
+
 
 async function updateUserAccount(name, phoneNumber) {
     var cont = false;
+    const token = await requestNotificationPermissionAndGetToken();
     //Initialise react router navigate function
     const body = {
         userId: name,
         phoneNumber: phoneNumber,
+        token: token,
     }
     // Call Backend
     await submitSignup(body).then((res) =>
