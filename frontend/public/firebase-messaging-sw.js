@@ -2,7 +2,7 @@ importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
 firebase.initializeApp({
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  apiKey: AIzaSyD4kPTTjC5c5ZtNmmKnQGKHOKO5gsk6dbI,
   authDomain: "maibro.firebaseapp.com",
   projectId: "maibro",
   storageBucket: "maibro.appspot.com",

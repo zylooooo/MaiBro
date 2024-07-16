@@ -70,15 +70,12 @@ const LocationSearch = () => {
     service.findPlaceFromQuery(request, (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
       // Set the location
-      console.log(results)
       handleLatitudeChange(results[0].geometry.location.lat());
       handleLongtitudeChange(results[0].geometry.location.lng());
       const input_name = results[0].name;
       // Store formatted_address as a separate exportable variable
       localStorage.setItem('restaurantName', location);
 
-      
-      // NewInformation(input_name, results[0].geometry.location.lng(), results[0].geometry.location.lat());
     }})
 
   };
@@ -203,16 +200,3 @@ const CustomOrder = () => {
 };
 
 export default CustomOrder;
-
-//inputting information of location into local storage
-// const NewInformation = (name, longitude, latitude) => {
-//   localStorage.setItem('restaurantName', name);
-//   const longstring = longitude.toString();
-//   const latstring = latitude.toString();
-//   const add = JSON.stringify({ longitude: longstring, latitude: latstring });
-//   localStorage.setItem('address', add);
-// }
-
-// const NewInfo = (delivery) => {
-//   localStorage.setItem('deliveryLocation', delivery);
-// }
