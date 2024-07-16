@@ -32,17 +32,21 @@ export default function Delivery() {
     //If yes, route to delivery page
     //If no, route to delivery listings page
 
-    useEffect(async () => { 
+    
+    useEffect( () => { 
         const body = {
             userName: userName
         }
+        async function checkOrderStatus(body) {
         await broOrderStatus(body).then((response) => {
             if (response.length === 0) {
                 return false
             } else {
                 navigate("/delivery/info", {state: {delivery: response[0]}})
             }
-        })
+        })}
+
+        checkOrderStatus(body);
     },[])
 
 
