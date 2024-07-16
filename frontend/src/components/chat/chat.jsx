@@ -5,12 +5,14 @@ import {Button,TextField, InputAdornment} from '@mui/material';
 import "./chat.css";
 import SendIcon from '@mui/icons-material/Send';
 import {io} from "socket.io-client";
+import {useLocation} from "react-router-dom";
 
 //Need to check whether the chat is from the buyer or the seller to update bottom bar
-// const socket = io('http://localhost:8000');
+const socket = io('http://localhost:8000');
 const sender = sessionStorage.getItem("userName");
 
 const ChatDisplay = ({roomId}) => {
+
     //Server Message
     const [messages, setMessages] = useState([]);
     useEffect(() => {
@@ -55,7 +57,15 @@ const ChatDisplay = ({roomId}) => {
 }
 
 export default function Chat() {
-    const roomId = "testRoom";
+    const location = useLocation();
+    const deliveryObj = location.state.delivery;
+    
+    //Get the roomId(OrderId) and opposite sender name
+    const roomId = deliveryObj.docId;
+    console.log(roomId)
+    const otherName = (deliveryObj.broId === sender) ? deliveryObj.buyerId : deliveryObj.broId;
+
+
     //Client Message
     const [message, setMessage] = useState("")
     const handleChatChange = (event) => {
@@ -76,7 +86,7 @@ export default function Chat() {
         </div>
         {/* Prolly a map function to display all the chats */}
         <div className="chatList">
-        {/* <ChatDisplay roomId={roomId}/> */}
+        <ChatDisplay roomId={roomId}/>
         </div>
         <div className="chatDiv">
             <div className="chatBox">

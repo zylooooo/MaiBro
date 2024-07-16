@@ -23,11 +23,7 @@ const Address = () => {
     return address
 }
 
-const SearchingForBros = () =>{
-
-    let name = localStorage.getItem('name')
-    let delivery = localStorage.getItem('delivery')
-    let order = localStorage.getItem('order')
+const SearchingForBros = ({delivery}) =>{
 
     return (
         <div className="searchingForBros">
@@ -41,19 +37,19 @@ const SearchingForBros = () =>{
                     <div className='confirmation'>
                         <div className='confirmation-location'>
                         <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
-                        <div className='confirmation-title'>{name}</div>
+                        <div className='confirmation-title'>{delivery.restaurant}</div>
                         </div>
                         <Address/>
                         <div className='delivery-location'>
                         <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
                         <div className='delivery-title'>Delivery Location</div>
                         </div>
-                        <div className='delivery-place'>{delivery}</div>
+                        <div className='delivery-place'>{delivery.deliveryLocation}</div>
                         <div className='order'>
                         <ArticleOutlinedIcon></ArticleOutlinedIcon> 
                         <div className='order-details'>Order Details</div>
                         </div>
-                        <div className='order-list'>{order}</div>
+                        <div className='order-list'>{delivery.orderItems}</div>
 
                     </div>
                 </div>
@@ -65,17 +61,14 @@ const SearchingForBros = () =>{
                         </div>
             </div>
             <div>
-                <BottomTab />
+                <BottomTab value="Order"/>
             </div>
         </div>
     );
 }
 
-const BroFound = () => {
+const BroFound = ({delivery}) => {
 
-    let name = localStorage.getItem('name')
-    let delivery = localStorage.getItem('delivery')
-    let order = localStorage.getItem('order')
 
     return(
         <div className="searchingForBros">
@@ -99,19 +92,19 @@ const BroFound = () => {
                     <div className='confirmation'>
                         <div className='confirmation-location'>
                         <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
-                        <div className='confirmation-title'>{name}</div>
+                        <div className='confirmation-title'>{delivery.restaurant}</div>
                         </div>
                         <Address    />
                         <div className='delivery-location'>
                         <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
                         <div className='delivery-title'>Delivery Location</div>
                         </div>
-                        <div className='delivery-place'>{delivery}</div>
+                        <div className='delivery-place'>{delivery.deliveryLocation}</div>
                         <div className='order'>
                         <ArticleOutlinedIcon></ArticleOutlinedIcon> 
                         <div className='order-details'>Order Details</div>
                         </div>
-                        <div className='order-list'>{order}</div>
+                        <div className='order-list'>{delivery.orderItems}</div>
 
                     </div>
                 </div>
@@ -124,7 +117,7 @@ const BroFound = () => {
                 </div>
             </div>
             <div>
-                <BottomTab />
+                <BottomTab value="Order"/>
             </div>
         </div>
     )
@@ -134,13 +127,12 @@ export default function BroUpdate() {
     const [foundBro, setFoundBro] = useState(false);
     const [completedOrder, setCompletedOrder] = useState(false);
     const docId = useLocation().state.docId;
-    console.log(docId)
+
     const [isVisible, setIsVisible] = useState(false);
     const [orderInfo, setOrderInfo] = useState([]);
     
     useEffect(() => {
         function updatePage(orderInfo){
-            console.log(orderInfo.orderAccepted)
             if(orderInfo.orderAccepted === true){
                 setFoundBro(true)
             }
@@ -155,13 +147,10 @@ export default function BroUpdate() {
             }
             await buyerOrderStatus(body).then((response) => { 
                 if (response.length === 0) {
-                    console.log("nooooo")
                     setIsVisible(false);
                 } else {
                     setIsVisible(true);
-                    console.log("lmaoooo")
                     setOrderInfo(response);
-                    console.log(response)
                     updatePage(response)
                 }
             });
@@ -171,7 +160,7 @@ export default function BroUpdate() {
     
     return (
         <>
-        {foundBro ? <BroFound /> : <SearchingForBros />}
+        {foundBro ? <BroFound delivery={orderInfo}/> : <SearchingForBros delivery={orderInfo}/>}
         </>
     );
 }
