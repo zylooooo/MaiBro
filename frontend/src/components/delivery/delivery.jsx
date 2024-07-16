@@ -31,28 +31,20 @@ export default function Delivery() {
     //Check if user has a delivery in progress
     //If yes, route to delivery page
     //If no, route to delivery listings page
-    const [currentDelivery, setCurrentDelivery] = useState([])
 
-    useEffect(() => { 
-        async function deliveryInProgress(userName){
-            const body = {
-                userName: userName
-            }
-            await broOrderStatus(body).then((response) => {
-                if (response.length === 0) {
-                    setCurrentDelivery([])
-                } else {
-                    setCurrentDelivery(response[0])
-                }
-            })
+    useEffect(async () => { 
+        const body = {
+            userName: userName
         }
-        deliveryInProgress(userName)
+        await broOrderStatus(body).then((response) => {
+            if (response.length === 0) {
+                return false
+            } else {
+                navigate("/delivery/info", {state: {delivery: response[0]}})
+            }
+        })
     },[])
 
-    //Navigate to new delivery page passing the delivery as a prop to the new page 
-    if (!currentDelivery.length == 0) {
-        navigate("/delivery/info", {state: {delivery: currentDelivery}})
-    }
 
     //ELSE Obtain list of available orders
     const [deliveryList, setDeliveryList] = useState([])
@@ -70,7 +62,27 @@ export default function Delivery() {
     }, [])
     
 
-
+    const handleBroUp = async (deliveryObj) => {
+        const body ={
+            //Gett DocID and userName to pass to backend
+            userName: userName,
+            orderId: deliveryObj.docId,
+        }
+        const status = await orderAccepted(body).then((res) => {
+            console.log(res)
+            if (res.status == 200) {
+                return true
+            } else {
+                return false
+            }
+        });
+        // Check if order was accepted
+        if (status) {
+            navigate("/delivery/info", {state: {delivery: deliveryObj}})
+        } else {
+            alert("Error in accepting order")
+        }
+    }
     
     return (
         <>

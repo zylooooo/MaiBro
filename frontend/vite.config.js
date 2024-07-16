@@ -5,6 +5,12 @@ import mkcert from 'vite-plugin-mkcert'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  optimizeDeps: {
+    exclude: ['chunk-STTA7I4X.js'], // Replace with the actual module name if different
+  },
+  server: {
+    https: true
+  }, // Not needed for Vite 5+ (simply omit this option)
   plugins: [
     mkcert(),
     react(), 
