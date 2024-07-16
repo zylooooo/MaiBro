@@ -4,7 +4,8 @@ require("dotenv").config(); // Import the dotenv module to read the environment 
 const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
 const axios = require("axios");
 const { Server } = require("socket.io");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { ServerApiVersion } = require("mongodb");
+const mongoose = require("mongoose");
 
 const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH;
 const serviceAccount = JSON.parse(fs.readFileSync(path.resolve(serviceAccountKeyPath), "utf8")); // Read the service account key file
@@ -96,30 +97,19 @@ function getIO() {
     return io;
 }
 
-// Set up the MongoDB client
-const client = new MongoClient(process.env.MONGODB_URI, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
+// Set up the mongoDB client using Mongoose
+mongoose.connect(process.env.MONGODB_URI, {
+    serverApi: ServerApiVersion.v1,
 });
 
-async function initMongodb() {
-    try {
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Connected to MongoDB successfully!");
-    } catch (error) {
-        console.error("Failed to connect to MongoDB!", error);
-    } finally {
-        // Ensure that the client will close regardless if there was an error or when you finish with the db
-        client.close();
-    }
-}
+const mongodb = mongoose.connection;
 
-const mongodb = initMongodb();
+mongodb.on("error", () => {
+    console.error("Error connecting to MongoDB using Mongoose!");
+});
+mongodb.once("open", () => {
+    console.log("Connected to MongoDB successfully using Mongoose!");
+});
 
 // Export the modules to be used in other files
 module.exports = { db, auth, axiosInstance, initSocket, getIO, mongodb };

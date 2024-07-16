@@ -43,6 +43,3 @@ app.use("/order-status", require("./routers/orderStatusRouter"));
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
 });
-
-// Export socket.io to be used in other files
-module.exports = { app, io };
