@@ -14,11 +14,7 @@ import { useLocation } from "react-router-dom";
 
 
 
-const Address = () => {
-    let coordinates = localStorage.getItem('address')
-    const addressObj = JSON.parse(coordinates)
-    const latitude = addressObj.latitude
-    const longitude = addressObj.longitude
+const Address = ({latitude, longitude}) => {
     const address = RestaurantAddress({latitude, longitude})
     return address
 }
@@ -39,7 +35,7 @@ const SearchingForBros = ({delivery}) =>{
                         <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
                         <div className='confirmation-title'>{delivery.restaurant}</div>
                         </div>
-                        <Address/>
+                        <Address latitude={delivery.latitude} longitude={delivery.longitude}/>
                         <div className='delivery-location'>
                         <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
                         <div className='delivery-title'>Delivery Location</div>
