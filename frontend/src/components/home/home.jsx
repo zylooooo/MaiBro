@@ -18,7 +18,7 @@ export function App() {
   // Check if the browser supports service workers
   if ('serviceWorker' in navigator) {
   // Register the service worker
-    navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    navigator.serviceWorker.register('/firebase-messaging-sw.js', { type: 'module' })
       .then(function(registration) {
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
       }).catch(function(error) {
