@@ -1,7 +1,7 @@
 const express = require("express"); // Import express framework into the file
 const cors = require("cors"); // Imports CORS middleware
-const { db, auth } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
-
+const http = require("http");
+const { initSocket } = require("./config"); // Import the db object from the config.js file (which is the connection to the firebase database
 
 // Server settings
 const PORT = 8000;
@@ -12,6 +12,10 @@ app.use(express.json()); // So that express can understand json
    It is important when we need to pull data from external APIs and allow authorised servers to access our data.
 */
 app.use(cors()); // Allow cross- origin requests
+
+// Initialise the socket.io server
+const server = http.createServer(app);
+const io = initSocket(server);
 
 /* Default health checkpoints
    Health check is a monitoring process that constantly checks the status of the server.
@@ -31,40 +35,14 @@ app.use("/submit-order", require("./routers/submitOrderRouter"));
 app.use("/history", require("./routers/historyRouter"));
 app.use("/order-list", require("./routers/orderListRouter"));
 app.use("/order-accepted", require("./routers/orderAcceptedRouter"));
-app.use("/order-collected", require("./routers/orderCollectedRouter"));
 app.use("/order-completed", require("./routers/orderCompletedRouter"));
 app.use("/order-menu", require("./routers/orderMenuRouter"));
 app.use("/order-status", require("./routers/orderStatusRouter"));
 
 // Start the application
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
 });
 
-
-
-// Testing: fetching a data from one collection and use it to fetch data from another document from another collection with the same document ID
-// let restaurantName = "55";
-// (async () => {
-//     try {
-//         const availableOrdersRef = db.collection("AvailableOrders").doc("testOrder");
-//         const doc = await availableOrdersRef.get();
-//         if (doc.exists) {
-//             restaurantName = doc.data().restaurant;
-//             console.log(restaurantName); // Now logs the updated name after fetching from the database
-
-//             // Assuming you want to fetch more data based on the updated restaurantName
-//             const restaurantRef = db.collection("Restaurants").doc(restaurantName);
-//             const restaurantDoc = await restaurantRef.get();
-//             if (restaurantDoc.exists) {
-//                 console.log(restaurantDoc.data());
-//             } else {
-//                 console.log("No such document!");
-//             }
-//         } else {
-//             console.log("No such document!");
-//         }
-//     } catch (error) {
-//         console.error("Error getting document:", error);
-//     }
-// })();
+// Export socket.io to be used in other files
+module.exports = { app, io };
