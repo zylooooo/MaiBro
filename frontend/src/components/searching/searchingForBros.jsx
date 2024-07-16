@@ -10,7 +10,7 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import Searching from './images/Searching.png'
 import Purchasing from './images/Purchasing.png'
 import RestaurantAddress from '../common/mapAPI/geocoding.jsx'
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 
@@ -20,7 +20,6 @@ const Address = ({latitude, longitude}) => {
 }
 
 const SearchingForBros = ({delivery}) =>{
-
     return (
         <div className="searchingForBros">
             <div className="searchingForBrosHeader">
@@ -63,63 +62,10 @@ const SearchingForBros = ({delivery}) =>{
     );
 }
 
-const BroFound = ({delivery}) => {
 
-
-    return(
-        <div className="searchingForBros">
-            <div className="searchingForBrosHeader">
-                <h2 className="searchingForBrosTitle">Purchasing Your Food...</h2>
-                <img src={Purchasing} className='pic_time' alt=''></img>
-            </div>
-            <div className='broContact'>
-                <div className='broContactTitle'>Bro's Contact</div>
-                <div className='contact-button'>
-                    <Button disableRipple fullWidth variant='contained' className='confirm-button'
-                    style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#143851",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={""}>
-                    Chat
-                    </Button>
-                </div>
-            </div>
-            <div className="searchingForBrosBody">
-                <div className="searchingForBrosBodyText">
-                    <h2 className="searchingForBrosBodyTitle">Your Order</h2>
-                    <div className='confirmation'>
-                        <div className='confirmation-location'>
-                        <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
-                        <div className='confirmation-title'>{delivery.restaurant}</div>
-                        </div>
-                        <Address    />
-                        <div className='delivery-location'>
-                        <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
-                        <div className='delivery-title'>Delivery Location</div>
-                        </div>
-                        <div className='delivery-place'>{delivery.deliveryLocation}</div>
-                        <div className='order'>
-                        <ArticleOutlinedIcon></ArticleOutlinedIcon> 
-                        <div className='order-details'>Order Details</div>
-                        </div>
-                        <div className='order-list'>{delivery.orderItems}</div>
-
-                    </div>
-                </div>
-                <div className='cancel-button'>
-                    <Button disableRipple fullWidth variant='contained' className='confirm-button'
-                    style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={""}>
-                    Complete Order
-                    </Button>
-                </div>
-            </div>
-            <div>
-                <BottomTab value="Order"/>
-            </div>
-        </div>
-    )
-}
 
 export default function BroUpdate() {
+    const navigate = useNavigate();
     const [foundBro, setFoundBro] = useState(false);
     const [completedOrder, setCompletedOrder] = useState(false);
     const docId = useLocation().state.docId;
@@ -154,6 +100,66 @@ export default function BroUpdate() {
         getStatus(docId);
     },[])
     
+
+    //Bro Found Page
+    const BroFound = ({delivery}) => {
+        const handleChatClick = () => {
+            navigate('/chat', {state: {delivery: delivery}});
+        }
+    
+        return(
+            <div className="searchingForBros">
+                <div className="searchingForBrosHeader">
+                    <h2 className="searchingForBrosTitle">Purchasing Your Food...</h2>
+                    <img src={Purchasing} className='pic_time' alt=''></img>
+                </div>
+                <div className='broContact'>
+                    <div className='broContactTitle'>Bro's Contact</div>
+                    <div className='contact-button'>
+                        <Button disableRipple fullWidth variant='contained' className='confirm-button'
+                        style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#143851",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
+                        onClick={handleChatClick}>
+                        Chat
+                        </Button>
+                    </div>
+                </div>
+                <div className="searchingForBrosBody">
+                    <div className="searchingForBrosBodyText">
+                        <h2 className="searchingForBrosBodyTitle">Your Order</h2>
+                        <div className='confirmation'>
+                            <div className='confirmation-location'>
+                            <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
+                            <div className='confirmation-title'>{delivery.restaurant}</div>
+                            </div>
+                            <Address latitude={delivery.latitude} longitude={delivery.longitude}/>
+                            <div className='delivery-location'>
+                            <LocalShippingOutlinedIcon></LocalShippingOutlinedIcon>
+                            <div className='delivery-title'>Delivery Location</div>
+                            </div>
+                            <div className='delivery-place'>{delivery.deliveryLocation}</div>
+                            <div className='order'>
+                            <ArticleOutlinedIcon></ArticleOutlinedIcon> 
+                            <div className='order-details'>Order Details</div>
+                            </div>
+                            <div className='order-list'>{delivery.orderItems}</div>
+    
+                        </div>
+                    </div>
+                    <div className='cancel-button'>
+                        <Button disableRipple fullWidth variant='contained' className='confirm-button'
+                        style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
+                        onClick={{}}>
+                        Complete Order
+                        </Button>
+                    </div>
+                </div>
+                <div>
+                    <BottomTab value="Order"/>
+                </div>
+            </div>
+        )
+    }
+
     return (
         <>
         {foundBro ? <BroFound delivery={orderInfo}/> : <SearchingForBros delivery={orderInfo}/>}

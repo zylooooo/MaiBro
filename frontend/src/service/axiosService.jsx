@@ -159,6 +159,17 @@ async function historyList(body) {
   return res.data;
 }
 
+async function sendNotification(body) {
+  // Send request to the backend to complete the order
+  const res = await axiosInstance({
+    method: "post",
+    url: "/notification/",
+    data: body,
+  });
+
+  return res;
+}
+
 export {
     submitSignup,  
     submitLogin,
@@ -173,4 +184,5 @@ export {
     orderCollected,
     orderAccepted,
     historyList,
+    sendNotification,
 };

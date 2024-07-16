@@ -132,4 +132,4 @@ mongodb.once("open", () => {
 });
 
 // Export the modules to be used in other files
-module.exports = { db, auth, axiosInstance, initSocket, getIO, mongodb };
+module.exports = { admin, db, auth, axiosInstance, initSocket, getIO, mongodb };

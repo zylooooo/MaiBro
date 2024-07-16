@@ -6,14 +6,16 @@ import "./chat.css";
 import SendIcon from '@mui/icons-material/Send';
 import {io} from "socket.io-client";
 import {useLocation} from "react-router-dom";
+import { sendNotification } from "../../service/axiosService";
 
 //Need to check whether the chat is from the buyer or the seller to update bottom bar
 const socket = io('http://localhost:8000');
 const sender = sessionStorage.getItem("userName");
 
 const ChatDisplay = ({roomId}) => {
-
-    //Server Message
+    // Check if mongoDB has create chat room by passing in roomId, else create chat room
+    // If chat room exists, get chat history from mongoDB
+    //Server Message (Replace useState with current chat history obtained from mongoDB)
     const [messages, setMessages] = useState([]);
     useEffect(() => {
         // Join the specified room
@@ -48,9 +50,7 @@ const ChatDisplay = ({roomId}) => {
                         </div>
                     )
                 }
-                
             }
-            
             )}
         </div>
     )
@@ -62,17 +62,17 @@ export default function Chat() {
     
     //Get the roomId(OrderId) and opposite sender name
     const roomId = deliveryObj.docId;
-    console.log(roomId)
     const otherName = (deliveryObj.broId === sender) ? deliveryObj.buyerId : deliveryObj.broId;
-
 
     //Client Message
     const [message, setMessage] = useState("")
     const handleChatChange = (event) => {
         setMessage(event.target.value);
     }
-    const handleSend = (e) => {
+    const handleSend = async (e) => {
         e.preventDefault();
+        // Send Notification to the other user
+        await sendNotification({userName: otherName, msg: message});
         socket.emit('chat message', {roomId, message, sender});
         console.log("Message sent: ", message);
         setMessage('');
@@ -84,7 +84,6 @@ export default function Chat() {
             <ProfileTopBar/>
             <StandardHeader headerName="BroChat"/>
         </div>
-        {/* Prolly a map function to display all the chats */}
         <div className="chatList">
         <ChatDisplay roomId={roomId}/>
         </div>
