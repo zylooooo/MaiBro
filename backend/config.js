@@ -6,6 +6,7 @@ const axios = require("axios");
 const { Server } = require("socket.io");
 const { ServerApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
+const { chatRoomModel, messageSchema } = require("./models/chatRoom");
 
 const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH;
 const serviceAccount = JSON.parse(fs.readFileSync(path.resolve(serviceAccountKeyPath), "utf8")); // Read the service account key file
@@ -76,11 +77,30 @@ function initSocket(server) {
         });
     
         // Listen for 'chat message' event and broadcast to the room
-        socket.on('chat message', ({ roomId, message, sender }) => {
+        socket.on('chat message', async ({ roomId, message, sender }) => {
+            // Save the message to the database
+            try {
+                // Get or create the chat room model for the specific roomId
+                const chatRoom = chatRoomModel(roomId);
+
+                if (chatRoom) {
+                    const newMessage = new messageSchema({
+                        sender: sender,
+                        message: message,
+                    });
+
+                    chatRoom.messages.push(newMessage);
+                    await chatRoom.save();
+                }
+            } catch (error) {
+                console.error("Failed to save message to the databse!", error);
+            }
+
+            // Broadcast the message to the room
             io.to(roomId).emit('chat message', {message, sender});
             console.log(`Message sent to room ${roomId}: ${message} by user ${socket.id}`);
         });
-    
+
         socket.on('disconnect', () => {
             console.log(`User ${socket.id} disconnected`);
         });
