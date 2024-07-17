@@ -90,7 +90,7 @@ function initSocket(server) {
                     await chatRoom.save();
                 }
             } catch (error) {
-                console.error("Failed to save message to the databse!", error);
+                console.error("Failed to save message to the database!", error);
             }
 
             // Broadcast the message to the room

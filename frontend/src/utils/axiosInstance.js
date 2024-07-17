@@ -12,4 +12,24 @@ const axiosInstance = axios.create({
     withCredentials: false,
 });
 
+// Add a response interceptor
+axiosInstance.interceptors.response.use(
+    response => {
+      // If the response is successful, return it
+      return response;
+    },
+    error => {
+      // Check for specific status codes to ignore
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 500 || status === 401) {
+          // Ignore the error and return a default value
+          return Promise.resolve({ data: null });
+        }
+      }
+      // For other errors, return a rejected promise
+      return Promise.reject(error);
+    }
+  );
+
 export default axiosInstance;

@@ -6,26 +6,56 @@ import "./chat.css";
 import SendIcon from '@mui/icons-material/Send';
 import {io} from "socket.io-client";
 import {useLocation} from "react-router-dom";
-import { sendNotification } from "../../service/axiosService";
+import { createChatRoom, getAllMessages, sendNotification } from "../../service/axiosService";
 
 //Need to check whether the chat is from the buyer or the seller to update bottom bar
 const socket = io('http://localhost:8000');
 const sender = sessionStorage.getItem("userName");
 
 const ChatDisplay = ({roomId}) => {
-    // Check if mongoDB has create chat room by passing in roomId, else create chat room
-    // If chat room exists, get chat history from mongoDB
     //Server Message (Replace useState with current chat history obtained from mongoDB)
     const [messages, setMessages] = useState([]);
+
+    // Create/Check mongoDB for messages
+    useEffect(() => {
+        // Check if mongoDB has create chat room by passing in roomId, else create chat room
+        async function createRoom() {
+            const body = {
+                roomId: roomId,
+            };
+            await createChatRoom(body).then((res) => {
+                console.log("DONE")
+            })
+        }
+        createRoom();
+
+        //Get chat history from mongoDB
+        async function getMessages() {
+            const body = {
+                roomId: roomId,
+            };
+            await getAllMessages(body).then((res) => {
+                setMessages(res.messages)
+            })
+        }
+        getMessages();
+    }, []);
+
+    // Socket.io connection
     useEffect(() => {
         // Join the specified room
         socket.emit('join room', roomId);
         
         // Listen for 'chat message' events in the room
         socket.on('chat message', (msg) => {
-          console.log(`Message received: ${msg}`);
-          setMessages((prevMessages) => [...prevMessages, msg]);
-          console.log("Messages: ", messages);
+            const { message, sender } = msg;
+            const body ={
+                _id: sender,
+                roomId: roomId,
+                message: message,
+            }
+            setMessages((prevMessages) => [...prevMessages, body]);
+            console.log("Messages: ", messages);
         });
         
         // Clean up the socket connection when the component unmounts
@@ -37,7 +67,7 @@ const ChatDisplay = ({roomId}) => {
     return (
         <div id="messages">
             {messages.map((msg, index) => {
-                if (msg.sender === sender) {
+                if (msg._id === sender) {
                     return (
                         <div key={index} className="messageCard sending">
                         <strong>You: </strong> {msg.message}
@@ -46,7 +76,7 @@ const ChatDisplay = ({roomId}) => {
                 } else {
                     return (
                         <div key={index} className="messageCard receiving">
-                        <strong>{msg.sender}: </strong> {msg.message}
+                        <strong>{msg._id}: </strong> {msg.message}
                         </div>
                     )
                 }

@@ -9,7 +9,7 @@ async function createChat(req, res) {
         const chat = new ChatRoom({
             _id: roomId,
         });
-
+        
         await chat.save();
         return res.status(201).json({
             message: "Chat room created successfully!",
@@ -24,7 +24,7 @@ async function createChat(req, res) {
 
 // Function to get all of the chat messages that is sent in the chat room
 async function getAllMessages(req, res) {
-    const roomId = req.body.roomId; // Assuming roomId is passed as a query parameter
+    const roomId = req.query.roomId; // Assuming roomId is passed as a query parameter
 
     try {
         const ChatRoom = chatRoomModel(roomId); // Get the model for the specific roomId

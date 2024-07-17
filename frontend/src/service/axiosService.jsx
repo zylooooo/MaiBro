@@ -149,19 +149,15 @@ async function historyList(body) {
   // Send request to the backend to get history list
   const res = await axiosInstance({
     method: "get",
-    // Fill up URL HERE
     url: "/history",
-    // BODY Value is a object containing the userName {userName: } 
-    
     params: body,
   });
   // Return the list of avaialble orders
-  console.log(res.data)
   return res.data;
 }
 
 async function sendNotification(body) {
-  // Send request to the backend to complete the order
+  // Send request to the backend to send notif
   const res = await axiosInstance({
     method: "post",
     url: "/notification/",
@@ -169,6 +165,28 @@ async function sendNotification(body) {
   });
 
   return res;
+}
+
+async function createChatRoom(body) {
+  // Send request to the backend to create database for chatroom
+  const res = await axiosInstance({
+    method: "post",
+    url: "/chat/",
+    data: body,
+  });
+
+  return res;
+}
+
+async function getAllMessages(body) {
+  // Send request to the backend to create database for chatroom
+  const res = await axiosInstance({
+    method: "get",
+    url: "/chat/messages",
+    params: body,
+  });
+
+  return res.data;
 }
 
 export {
@@ -186,4 +204,6 @@ export {
     orderAccepted,
     historyList,
     sendNotification,
+    createChatRoom,
+    getAllMessages,
 };
