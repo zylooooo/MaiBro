@@ -1,8 +1,10 @@
-importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
-importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
+// Import the Firebase scripts using ES module syntax
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js';
+import { getMessaging, onBackgroundMessage } from 'https://www.gstatic.com/firebasejs/9.1.3/firebase-messaging-sw.js';
 
-firebase.initializeApp({
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+// Initialize the Firebase app in the service worker by passing in the messagingSenderId.
+const firebaseApp = initializeApp({
+  apiKey: "AIzaSyD4kPTTjC5c5ZtNmmKnQGKHOKO5gsk6dbI",
   authDomain: "maibro.firebaseapp.com",
   projectId: "maibro",
   storageBucket: "maibro.appspot.com",
@@ -11,14 +13,15 @@ firebase.initializeApp({
   measurementId: "G-X7CLMEKLRQ"
 });
 
-const messaging = firebase.messaging();
+// Retrieve an instance of Firebase Messaging so that it can handle background messages.
+const messaging = getMessaging(firebaseApp);
 
-messaging.onBackgroundMessage((payload) => {
+onBackgroundMessage(messaging, (payload) => {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
-  
-  const notificationTitle = payload.notification.title;
+  // Customize notification here
+  const notificationTitle = 'Background Message Title';
   const notificationOptions = {
-    body: payload.notification.body,
+    body: 'Background Message body.',
     icon: '/firebase-logo.png'
   };
 

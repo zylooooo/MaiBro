@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { requestNotificationPermissionAndGetToken } from '../../utils/firebaseMessaging';
 import { submitLogin } from '../../service/axiosService';
 
-async function checkToken(userId) {
-  const token = await requestNotificationPermissionAndGetToken();
+async function checkToken(userId, token) {
   const body = {
     token: token,
     userId: userId,
@@ -22,6 +21,8 @@ async function checkToken(userId) {
 function Login() {
   //Initialise react router navigate function
   const navigate = useNavigate();
+
+  
 
   //States for TextFields
   //Phone Number Text Field
@@ -83,6 +84,8 @@ function Login() {
 
   //Sign In Function
   const signIn = async () => {
+      const token = await requestNotificationPermissionAndGetToken();
+
       //Check if OTP is valid
       window.confirmationResult.confirm(otp).then((result) => {
         // User signed in successfully. Obtain object with user information
@@ -103,7 +106,7 @@ function Login() {
           navigate('/signup'); 
         } else {
           //Check and refresh token
-          checkToken(userName);
+          checkToken(userName, token);
           //Navigate to home page
           navigate('/home');
           
