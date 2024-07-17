@@ -5,7 +5,17 @@ async function createChat(req, res) {
     const { roomId } = req.body;
 
     try {
+        // Logic to check if the chat room already exists
         const ChatRoom = chatRoomModel(roomId);
+        const existingChatRoom = await ChatRoom.findOne({ _id: roomId });
+
+        if (existingChatRoom) {
+            console.log("ROOM CREATED!");
+            return res.status(409).json({
+                message: "Chat room already exists!",
+            });
+        }
+
         const chat = new ChatRoom({
             _id: roomId,
         });
