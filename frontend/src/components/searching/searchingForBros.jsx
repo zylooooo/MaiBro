@@ -142,7 +142,7 @@ export default function BroUpdate() {
                             <div className='order-details'>Order Details</div>
                             </div>
                             <div className='order-list'>{delivery.orderItems}</div>
-    
+
                         </div>
                     </div>
                     <div className='cancel-button'>
@@ -160,9 +160,24 @@ export default function BroUpdate() {
         )
     }
 
+    
+    const [display, setDisplay] = useState(<SearchingForBros delivery={orderInfo}/>);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (foundBro) {
+                setDisplay(<BroFound delivery={orderInfo}/>);
+            } else {
+                setDisplay(<SearchingForBros delivery={orderInfo}/>);
+            }
+        }, 2000);
+        
+        return () => clearInterval(interval);
+    }, []);
+    
     return (
         <>
-        {foundBro ? <BroFound delivery={orderInfo}/> : <SearchingForBros delivery={orderInfo}/>}
+        {display}
         </>
     );
 }
