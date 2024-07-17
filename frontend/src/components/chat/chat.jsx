@@ -24,7 +24,6 @@ const ChatDisplay = ({roomId}) => {
                 roomId: roomId,
             };
             await createChatRoom(body).then((res) => {
-                console.log("DONE")
             })
         }
         createRoom();

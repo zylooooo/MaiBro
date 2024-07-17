@@ -6,6 +6,12 @@ async function sendNotification(req, res) {
     // Get the token from the database
     const user = await admin.firestore().collection('Users').doc(userName).get();
     const token = user.data().token;
+
+    if (token == null) {
+        return res.status(400).json({
+            message: "Token not found",
+        });
+    }
     
     // Create a message
     const message = {
@@ -30,6 +36,7 @@ async function sendNotification(req, res) {
                 message: "Error sending notification",
             });
         });
+    return res.status(200)
 }
 
 

@@ -22,7 +22,7 @@ axiosInstance.interceptors.response.use(
       // Check for specific status codes to ignore
       if (error.response) {
         const { status } = error.response;
-        if (status === 500 || status === 401) {
+        if (status === 500 || status === 401 || status === 409) {
           // Ignore the error and return a default value
           return Promise.resolve({ data: null });
         }
