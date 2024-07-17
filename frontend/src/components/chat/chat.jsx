@@ -72,7 +72,7 @@ export default function Chat() {
     const handleSend = async (e) => {
         e.preventDefault();
         // Send Notification to the other user
-        await sendNotification({userName: otherName, msg: message});
+        // await sendNotification({userName: otherName, msg: message});
         socket.emit('chat message', {roomId, message, sender});
         console.log("Message sent: ", message);
         setMessage('');
