@@ -5,9 +5,9 @@ import transactionlist from "./transactionListings.jsx"
 import "./transaction.css"
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu'
 import TwoWheelerIcon from '@mui/icons-material/TwoWheeler'
+import { historyList } from "../../service/axiosService.jsx"
 
 
-var transaction = transactionlist["Listings"];
 
 
 export function Transaction() {
@@ -17,18 +17,21 @@ export function Transaction() {
   //Fill in code to obtain transaction history from backend
   useEffect(() => { 
     const body = {
-      userName: userName
+      userId: userName
     }
+
     // Create a async function to get the transaction history from the backend
     async function getTransactionHistory(){
       // Call your axios function HERE!
       await historyList(body).then((response) => {
-        console.log(response)
         // if there is no data return nothing
-
-
-        // else set the transaction state to the 
-        setData(response);
+        if(response === undefined){
+          console.log("No Data");
+          return false
+        }else{
+          setData(response);
+        }
+        // else set the transaction state to the     
       })
     }
 
@@ -47,15 +50,24 @@ export function Transaction() {
         
     </div>
     <div className="historyList">
-    {transaction.map(function(data) {
+    {data.map(function(individualdata) {
       var completedOrPending;
-      if(data.orderCompleted){
-        completedOrPending = <div style={{ color: 'green' }}>Completed</div>
+      if(individualdata.orderAccepted == false || individualdata.orderCollected == false || individualdata.orderCompleted == false ){
+        completedOrPending = <div style={{ color: 'blue' }}>Pending</div>
         
       }else{
-        completedOrPending = <div style={{ color: 'blue' }}>Pending</div>
-
+        completedOrPending = <div style={{ color: 'green' }}>Completed</div>
       }
+
+      var icon;
+      if (individualdata.buyerId == userName){
+        icon = <RestaurantMenuIcon fontSize="large" style={{marginRight:"10px"}} />
+      }else if(individualdata.broId == userName){
+        icon = <TwoWheelerIcon fontSize="large" style={{marginRight:"10px"}}/>;
+      }
+      
+
+      
 
 
       
@@ -63,12 +75,12 @@ export function Transaction() {
         <div className="indivData">
           <div className="leftgroup">
 
-            <div className= "image">
-              {data.orderer? <RestaurantMenuIcon fontSize="large" style={{marginRight:"10px"}} />: <TwoWheelerIcon fontSize="large" style={{marginRight:"10px"}}/>}
+            <div className= "image">{icon}
+
             </div>
 
             <div className="leftdata">
-              <div className = "restName">{data.restaurantName} </div> 
+              <div className = "restName">{individualdata.restaurant} </div> 
               <div className = "completedOrPending">{completedOrPending} </div> 
             </div>
 
@@ -76,10 +88,10 @@ export function Transaction() {
           </div>
 
           <div className="rightgroup">
-            <div className = "orderDate" >{data.orderDate} </div> 
-            <div className = "orderTime">{data.orderTime} </div> 
-            <div className = "earnings">{data.bro? "$"+ Number(data.earnings).toFixed(2): ""}</div>
-            <div className = "expenditure">{data.orderer? "$"+  Number(data.expenditure).toFixed(2): ""}</div>
+            <div className = "orderDate" >{individualdata.orderDate} </div> 
+            <div className = "orderTime">{individualdata.orderTime} </div> 
+            {/* <div className = "earnings">{individualdata.bro? "$"+ Number(data.earnings).toFixed(2): ""}</div>
+            <div className = "expenditure">{individualdata.orderer? "$"+  Number(data.expenditure).toFixed(2): ""}</div> */}
           </div>
         
 
@@ -100,3 +112,5 @@ export function Transaction() {
 
 export default Transaction;
 
+// any false, pending
+// all 3 true, completed

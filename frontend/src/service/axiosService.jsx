@@ -150,12 +150,13 @@ async function historyList(body) {
   const res = await axiosInstance({
     method: "get",
     // Fill up URL HERE
-    url: "",
-    // BODY Value is a object containing the userName {userName: }
+    url: "/history",
+    // BODY Value is a object containing the userName {userName: } 
+    
     params: body,
   });
-
   // Return the list of avaialble orders
+  console.log(res.data)
   return res.data;
 }
 
