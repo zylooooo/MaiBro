@@ -84,7 +84,6 @@ function Login() {
 
   //Sign In Function
   const signIn = async () => {
-      const token = await requestNotificationPermissionAndGetToken();
 
       //Check if OTP is valid
       window.confirmationResult.confirm(otp).then((result) => {
@@ -105,8 +104,9 @@ function Login() {
           //Navigate to signup page
           navigate('/signup'); 
         } else {
+          const fcmToken = sessionStorage.getItem('fcmToken');
           //Check and refresh token
-          checkToken(userName, token);
+          checkToken(userName, fcmToken);
           //Navigate to home page
           navigate('/home');
           

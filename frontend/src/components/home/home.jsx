@@ -11,20 +11,11 @@ import {RouterProvider, useNavigate } from "react-router-dom";
 import browserRouter from "../../navigation";
 import OrderStatus from "./orderStatusBar";
 import { getMessaging, onMessage } from "firebase/messaging";
+import { requestNotificationPermissionAndGetToken } from "../../utils/firebaseMessaging";
 
 // App Initialization
 // Starts the router for routing
 export function App() {
-  // Check if the browser supports service workers
-  if ('serviceWorker' in navigator) {
-  // Register the service worker
-    navigator.serviceWorker.register('/firebase-messaging-sw.js', { type: 'module' })
-      .then(function(registration) {
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }).catch(function(error) {
-        console.log('ServiceWorker registration failed: ', error);
-      });
-  }
 
   const messaging = getMessaging();
   onMessage(messaging, (payload) => {
