@@ -9,6 +9,7 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import RestaurantAddress from "../common/mapAPI/geocoding";
 import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
+import { orderCollected, orderCompleted } from "../../service/axiosService";
 
 export function MapDisplay({latitude, longitude}) {
     return(
@@ -27,81 +28,102 @@ export function MapDisplay({latitude, longitude}) {
     )
 }
 
-const DeliveryAccepted = ({info}) => 
-    {
-       const deliveryObj = info;
-       return (
-        <div className="buyerOrderInfoCard">
-                <div className="buyerInfoText">
-                    <div className="restaurantContactInfo">{deliveryObj.restaurant}</div>
-                    <div className='confirmation'>
-                        <RestaurantAddress latitude={deliveryObj.latitude} longitude={deliveryObj.longitude}/>
-                        <div className='delivery-location'>
-                        <LocalShippingOutlinedIcon />
-                        <div style={{paddingLeft:"10px"}}>{deliveryObj.deliveryLocation}</div>
-                        </div>
-                        <div className='order'>
-                        <ArticleOutlinedIcon />
-                        <div style={{paddingLeft:"10px"}}>{deliveryObj.orderItems}</div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div>
-                    <Button disableRipple fullWidth variant='contained' className='confirm-button'
-                    style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={""}>
-                    Arrived at Restaurant
-                    </Button>
-                </div>
-            </div>
-       )
-    }
-    
-
-const DeliveryCollected = ({info}) => 
-    {
-       const deliveryObj = info;
-       return (
-        <div className="buyerOrderInfoCard">
-                <div className="buyerInfoText">
-                    <div className="buyerContactInfo">
-                        <LocalShippingOutlinedIcon/>
-                        <div style={{paddingLeft:"10px"}}>{deliveryObj.deliveryLocation}</div>
-                    </div>
-                    <div className='confirmation'>
-                        <div className='order'>
-                        <ArticleOutlinedIcon />
-                        <div style={{paddingLeft:"10px"}}>{deliveryObj.orderItems}</div>
-                        </div>
-                        <div className="order">
-                        <AccountBalanceWalletOutlinedIcon />
-                            <div style={{paddingLeft:"10px"}}>${deliveryObj.earnings}</div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div>
-                    <Button disableRipple fullWidth variant='contained' className='confirm-button'
-                    style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={""}>
-                    Order Received
-                    </Button>
-                </div>
-            </div>
-       )
-    }
-
 
 export default function DeliveryInfo() {
     const navigate = useNavigate();
     const location = useLocation();
-    const [collected, setCollected] = useState(true)
     const deliveryObj = location.state.delivery;
+    
+    const [collected, setCollected] = useState(deliveryObj.orderCollected)
+
+    // Delivery Accpeted Page
+    const DeliveryAccepted = ({info}) => 
+        {
+           const deliveryObj = info;
+           const handleArrivedClick = async () => {
+                // Call the axios function to update the order status to collected
+                const status = await orderCollected({orderId: deliveryObj.docId});
+                if (status.status === 200) {
+                    setCollected(true);
+                } else {
+                    alert("Error updating order status");
+                }
+           }
+
+           return (
+            <div className="buyerOrderInfoCard">
+                    <div className="buyerInfoText">
+                        <div className="restaurantContactInfo">{deliveryObj.restaurant}</div>
+                        <div className='confirmation'>
+                            <RestaurantAddress latitude={deliveryObj.latitude} longitude={deliveryObj.longitude}/>
+                            <div className='delivery-location'>
+                            <LocalShippingOutlinedIcon />
+                            <div style={{paddingLeft:"10px"}}>{deliveryObj.deliveryLocation}</div>
+                            </div>
+                            <div className='order'>
+                            <ArticleOutlinedIcon />
+                            <div style={{paddingLeft:"10px"}}>{deliveryObj.orderItems}</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <Button disableRipple fullWidth variant='contained' className='confirm-button' onClick={handleArrivedClick}
+                        style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}>
+                        Arrived at Restaurant
+                        </Button>
+                    </div>
+                </div>
+           )
+        }
+        
+    //Delivery Collected Page
+    const DeliveryCollected = ({info}) => 
+        {
+           const deliveryObj = info;
+           const handleCompletedClick = async () => {
+            // Call the axios function to update the order status to completed
+            const status = await orderCompleted({orderId: deliveryObj.docId});
+            if (status.status === 200) {
+                navigate('/delivery');
+
+            } else {
+                alert("Error updating order status");
+            }
+       }
+           return (
+            <div className="buyerOrderInfoCard">
+                    <div className="buyerInfoText">
+                        <div className="buyerContactInfo">
+                            <LocalShippingOutlinedIcon/>
+                            <div style={{paddingLeft:"10px"}}>{deliveryObj.deliveryLocation}</div>
+                        </div>
+                        <div className='confirmation'>
+                            <div className='order'>
+                            <ArticleOutlinedIcon />
+                            <div style={{paddingLeft:"10px"}}>{deliveryObj.orderItems}</div>
+                            </div>
+                            <div className="order">
+                            <AccountBalanceWalletOutlinedIcon />
+                                <div style={{paddingLeft:"10px"}}>${deliveryObj.earnings}</div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div>
+                        <Button disableRipple fullWidth variant='contained' className='confirm-button'
+                        style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
+                        onClick={handleCompletedClick}>
+                        Order Received
+                        </Button>
+                    </div>
+                </div>
+           )
+        }
 
     //Chat Button
     const handleChatClick = () => {
-        navigate('/chat', {state: {roomId: deliveryObj.docId}});
+        navigate('/chat', {state: {delivery: deliveryObj}});
     }
 
 
@@ -117,7 +139,7 @@ export default function DeliveryInfo() {
                 <div className='contact-button'>
                     <Button disableRipple fullWidth variant='contained' className='confirm-button'
                     style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#143851",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={{handleChatClick}}>
+                    onClick={handleChatClick}>
                     Chat
                     </Button>
                 </div>

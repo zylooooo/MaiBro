@@ -4,7 +4,9 @@ require("dotenv").config(); // Import the dotenv module to read the environment 
 const admin = require("firebase-admin"); // Import the firebase-admin module, allow secure connection with firebase
 const axios = require("axios");
 const { Server } = require("socket.io");
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { ServerApiVersion } = require("mongodb");
+const mongoose = require("mongoose");
+const { chatRoomModel, Message } = require("./models/chatRoom");
 
 const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH;
 const serviceAccount = JSON.parse(fs.readFileSync(path.resolve(serviceAccountKeyPath), "utf8")); // Read the service account key file
@@ -14,11 +16,7 @@ admin.initializeApp({
     databaseURL: process.env.databaseURL
 });
 
-/* Connect to the firebase database
-    The getFirestore() function returns a Firestore instance that is associated with the specified Firebase app.
-    The databaseURL is the URL to the Firebase Realtime Database.
-    Also included how to verify the connection to firebase database.
-*/
+// Connect to the firebase database
 const db = admin.firestore();
 db.settings({ ignoreUndefinedProperties: true });
 
@@ -50,7 +48,7 @@ let io;
 function initSocket(server) {
     io = new Server(server, {
         cors: {
-            origin: ["http://localhost:5173"],
+            origin: ["https://localhost:5173"],
         },
     });
 
@@ -75,11 +73,31 @@ function initSocket(server) {
         });
     
         // Listen for 'chat message' event and broadcast to the room
-        socket.on('chat message', ({ roomId, message, sender }) => {
+        socket.on('chat message', async ({ roomId, message, sender }) => {
+            // Save the message to the database
+            try {
+                // Get or create the chat room model for the specific roomId
+                const ChatRoom = chatRoomModel(roomId);
+                const chatRoom = await ChatRoom.findOne({ _id: roomId });
+
+                if (chatRoom) {
+                    const newMessage = new Message({
+                        _id: sender,
+                        message: message,
+                    });
+
+                    chatRoom.messages.push(newMessage);
+                    await chatRoom.save();
+                }
+            } catch (error) {
+                console.error("Failed to save message to the databse!", error);
+            }
+
+            // Broadcast the message to the room
             io.to(roomId).emit('chat message', {message, sender});
             console.log(`Message sent to room ${roomId}: ${message} by user ${socket.id}`);
         });
-    
+
         socket.on('disconnect', () => {
             console.log(`User ${socket.id} disconnected`);
         });
@@ -96,59 +114,19 @@ function getIO() {
     return io;
 }
 
-// Set up the MongoDB client
-const client = new MongoClient(process.env.MONGODB_URI, {
-    serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-    }
+// Set up the mongoDB client using Mongoose
+mongoose.connect(process.env.MONGODB_URI, {
+    serverApi: ServerApiVersion.v1,
 });
 
-async function initMongodb() {
-    try {
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Connected to MongoDB successfully!");
-    } catch (error) {
-        console.error("Failed to connect to MongoDB!", error);
-    } finally {
-        // Ensure that the client will close regardless if there was an error or when you finish with the db
-        client.close();
-    }
-}
+const mongodb = mongoose.connection;
 
-const mongodb = initMongodb();
+mongodb.on("error", () => {
+    console.error("Error connecting to MongoDB using Mongoose!");
+});
+mongodb.once("open", () => {
+    console.log("Connected to MongoDB successfully using Mongoose!");
+});
 
 // Export the modules to be used in other files
-module.exports = { db, auth, axiosInstance, initSocket, getIO, mongodb };
-
-
-
-/* Firebase terminology:
-   1) Collection: A collection is a group of documents. SQL equivalent of a table. The key is the collecton ID and the value is the documents.
-   2) Document: A document is a set of key-value pairs. SQL equivalent of a row.
-      - Documents cannot contain another document, but they can contain sub collections.
-*/
-
-// Testing the database
-// Creating a new collection and a new document
-// const docRef = db.collection("test").doc("students");
-// docRef.set({
-//     first: "ada",
-//     last: "LoveLace",
-//     age: 30
-// });
-
-// template to create a collection and document in firebase
-// const userRef = db.collection("AvailableOrders").doc("testOrder");
-// userRef.set({
-//     orderID: 123,
-//     orderCompleted: false,
-//     orderAccepted: true,
-//     restaurant: "McDonalds",
-//     buyerID: "buyer123",
-//     broID: "MaiBro",
-//     earnings: 2.00
-// });
+module.exports = { admin, db, auth, axiosInstance, initSocket, getIO, mongodb };

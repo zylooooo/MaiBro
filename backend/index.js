@@ -36,13 +36,13 @@ app.use("/history", require("./routers/historyRouter"));
 app.use("/order-list", require("./routers/orderListRouter"));
 app.use("/order-accepted", require("./routers/orderAcceptedRouter"));
 app.use("/order-completed", require("./routers/orderCompletedRouter"));
+app.use("/order-collected", require("./routers/orderCollectedRouter"));
 app.use("/order-menu", require("./routers/orderMenuRouter"));
 app.use("/order-status", require("./routers/orderStatusRouter"));
+app.use("/chat", require("./routers/chatRouter"));
+app.use("/notification", require("./routers/notificationRouter"));
 
 // Start the application
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}...`);
 });
-
-// Export socket.io to be used in other files
-module.exports = { app, io };

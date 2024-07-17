@@ -19,6 +19,15 @@ async function submitOrder(req, res) {
     try {
         const orderId = generateOrderId();
 
+        // Get Date
+        const now = new Date();
+
+        const dateOptions = { day: '2-digit', month: 'long', year: 'numeric' };
+        const formattedDate = now.toLocaleDateString('en-US', dateOptions).replace(',', '');
+
+        const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+        const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+
         // Create a new order in the database
         await db.collection("AvailableOrders").doc(orderId).set({ 
             broId: null,
@@ -31,7 +40,9 @@ async function submitOrder(req, res) {
             orderCompleted: orderCompleted,
             orderCollected: orderCollected,
             orderItems: orderItems,
-            restaurant: restaurant
+            restaurant: restaurant,
+            orderDate: formattedDate,
+            orderTime: formattedTime,
         });
 
         return res.status(201).json({
