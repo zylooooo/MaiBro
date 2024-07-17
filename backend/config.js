@@ -6,7 +6,7 @@ const axios = require("axios");
 const { Server } = require("socket.io");
 const { ServerApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
-const { chatRoomModel, messageSchema } = require("./models/chatRoom");
+const { chatRoomModel, Message } = require("./models/chatRoom");
 
 const serviceAccountKeyPath = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_PATH;
 const serviceAccount = JSON.parse(fs.readFileSync(path.resolve(serviceAccountKeyPath), "utf8")); // Read the service account key file
@@ -16,11 +16,7 @@ admin.initializeApp({
     databaseURL: process.env.databaseURL
 });
 
-/* Connect to the firebase database
-    The getFirestore() function returns a Firestore instance that is associated with the specified Firebase app.
-    The databaseURL is the URL to the Firebase Realtime Database.
-    Also included how to verify the connection to firebase database.
-*/
+// Connect to the firebase database
 const db = admin.firestore();
 db.settings({ ignoreUndefinedProperties: true });
 
@@ -81,11 +77,12 @@ function initSocket(server) {
             // Save the message to the database
             try {
                 // Get or create the chat room model for the specific roomId
-                const chatRoom = chatRoomModel(roomId);
+                const ChatRoom = chatRoomModel(roomId);
+                const chatRoom = await ChatRoom.findOne({ _id: roomId });
 
                 if (chatRoom) {
-                    const newMessage = new messageSchema({
-                        sender: sender,
+                    const newMessage = new Message({
+                        _id: sender,
                         message: message,
                     });
 

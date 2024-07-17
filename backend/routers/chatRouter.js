@@ -1,5 +1,5 @@
 const express = require("express");
-const { createChat } = require("../controllers/chatController");
+const { createChat, getAllMessages, updateChatRoomMessages } = require("../controllers/chatController");
 
 const chatRouter = express.Router();
 
@@ -8,6 +8,8 @@ chatRouter.get("/health", async (req, res) => {
         message: "Chat route hit!",
     });
 });
+chatRouter.get("/messages", getAllMessages);
 chatRouter.post("/", createChat);
+chatRouter.put("/update", updateChatRoomMessages);
 
 module.exports = chatRouter;
