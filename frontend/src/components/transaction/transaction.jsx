@@ -50,11 +50,10 @@ export function Transaction() {
         
     </div>
     <div className="historyList">
-    {data.map(function(individualdata) {
+    {data.map(function(individualdata, index) {
       var completedOrPending;
       if(individualdata.orderAccepted == false || individualdata.orderCollected == false || individualdata.orderCompleted == false ){
         completedOrPending = <div style={{ color: 'blue' }}>Pending</div>
-        
       }else{
         completedOrPending = <div style={{ color: 'green' }}>Completed</div>
       }
@@ -66,25 +65,16 @@ export function Transaction() {
         icon = <TwoWheelerIcon fontSize="large" style={{marginRight:"10px"}}/>;
       }
       
-
-      
-
-
-      
       return (
-        <div className="indivData">
+        <div key={individualdata.id || index} className="indivData">
           <div className="leftgroup">
 
-            <div className= "image">{icon}
-
-            </div>
+            <div className= "image">{icon}</div>
 
             <div className="leftdata">
               <div className = "restName">{individualdata.restaurant} </div> 
               <div className = "completedOrPending">{completedOrPending} </div> 
-            </div>
-
-            
+            </div>     
           </div>
 
           <div className="rightgroup">
@@ -93,16 +83,12 @@ export function Transaction() {
             {/* <div className = "earnings">{individualdata.bro? "$"+ Number(data.earnings).toFixed(2): ""}</div>
             <div className = "expenditure">{individualdata.orderer? "$"+  Number(data.expenditure).toFixed(2): ""}</div> */}
           </div>
-        
-
         </div>
         
       )
     })}
          <div>
-
         <BottomTab value="Transaction"></BottomTab>
-
          </div>
     </div>
     </>
