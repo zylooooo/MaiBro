@@ -99,20 +99,23 @@ export default function Chat() {
 
     //Client Message
     const messageRef = useRef(null);
-    const handleChatChange = (event) => {
-        setMessage(event.target.value);
-    }
-    const handleSend = async (e) => {
-        e.preventDefault();
-        const message = messageRef.current.value;
-        
-        console.log("Sender", sender)
-        socket.emit('chat message', {roomId, message, sender});
-        console.log("Message sent: ", message);
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const message = messageRef.current.value;
+        console.log("Sender", sender)
+        console.log("Message sent: ", message);
+        socket.emit('chat message', {roomId, message, sender});
         // Send Notification to the other user
         // await sendNotification({userName: otherName, msg: message});
+        messageRef.current.value = ''; // Clear the input field
       };
+
+    const handleSend = (event) => {
+    event.preventDefault(); // Prevent default behavior of button click
+    handleSubmit(event);
+    };
+
     
     return (
         <>
@@ -124,14 +127,16 @@ export default function Chat() {
         <ChatDisplay roomId={roomId}/>
         </div>
         <form onSubmit={handleSubmit}>
-        <div className="chatDiv">
-            <div className="chatBox">
-            <TextField fullWidth id="outlined-basic" color="grey" variant="outlined" ref={messageRef} onChange={handleChatChange} placeholder="Send Message"
-                    InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter", height:"45px"
-                    }}} focused/>
-            <SendIcon type="submit" style={{paddingLeft:"20px"}} onClick={handleSend}/>
+            <div className="chatDiv">
+                <div className="chatBox">
+                <TextField fullWidth id="outlined-basic" color="grey" variant="outlined" inputRef={messageRef} placeholder="Send Message"
+                        InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter", height:"45px"
+                        }}} focused/>
+                <button type="submit" style={{background:"transparent", border:"0px"}} onClick={handleSend}>
+                <SendIcon style={{paddingLeft:"20px"}}/>
+                </button>
+                </div>
             </div>
-        </div>
         </form>
         <div>
             <BottomTab value="Delivery"></BottomTab>
