@@ -38,7 +38,6 @@ async function getHistory(req, res) {
         };
 
         const sortedOrders = history.sort((a, b) => {
-            console.log(a.orderDate, a.orderTime);
             const dateA = new Date(`${convertDate(a.orderDate).toISOString().split('T')[0]}T${convertTime12to24(a.orderTime)}:00`);
             const dateB = new Date(`${convertDate(b.orderDate).toISOString().split('T')[0]}T${convertTime12to24(b.orderTime)}:00`);
             return dateB - dateA;
