@@ -6,7 +6,6 @@ export async function requestNotificationPermissionAndGetToken() {
     const permission = await Notification.requestPermission();
     if (permission === 'granted') {
       const token = await getToken(firebaseMessaging, { vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY });
-      console.log("FCM Token: ", token);
       sessionStorage.setItem("fcmToken", token);
     } else {
       console.error("Permission not granted for notifications");
