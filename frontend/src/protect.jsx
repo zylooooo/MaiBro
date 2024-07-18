@@ -1,13 +1,19 @@
 import { firebaseAuth } from "./service/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 function Protect({ children }) {
   const navigate = useNavigate();
-  firebaseAuth.onAuthStateChanged((user) => {
-    if (!user) {
-      navigate("/login");
-    }
-  });
+
+  useEffect(() => {
+    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+      if (!user) {
+        navigate('/login');
+      }
+    });
+
+    return unsubscribe; // Cleanup function to unsubscribe from the auth state listener
+  }, [navigate]);
 
   return children;
 }
