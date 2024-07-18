@@ -1,4 +1,4 @@
-import {React, useState, useEffect, useRef} from "react";
+import {React, useState, useEffect, useRef, useLayoutEffect} from "react";
 import { ProfileTopBar, StandardHeader} from "../common/topTab/topTab";
 import BottomTab from "../common/bottomTab/bottomTab";
 import {Button,TextField, InputAdornment} from '@mui/material';
@@ -17,6 +17,8 @@ const ChatDisplay = ({roomId}) => {
     const [messages, setMessages] = useState([]);
     const sender = sessionStorage.getItem("userName");
     const socket = io('http://localhost:8000');
+
+    const messagesEndRef = useRef(null);
 
     // Create/Check mongoDB for messages
     useEffect(() => {
@@ -64,6 +66,14 @@ const ChatDisplay = ({roomId}) => {
           socket.off('chat message');
         };
       }, [socket, roomId]);
+
+    const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useLayoutEffect(() => {
+    scrollToBottom();
+    }, [messages]);
       
     return (
         <div id="messages">
@@ -83,6 +93,7 @@ const ChatDisplay = ({roomId}) => {
                 }
             }
             )}
+            <div ref={messagesEndRef} />
         </div>
     )
 }
