@@ -69,6 +69,17 @@ function BroFound({delivery}) {
         navigate('/chat', {state: {delivery: delivery}});
     }
 
+    const handleCompletedClick = async () => {
+        // Call the axios function to update the order status to completed
+        const status = await orderCompleted({orderId: delivery.docId});
+        if (status.status === 200) {
+            navigate('/home');
+
+        } else {
+            alert("Error updating order status");
+        }
+    }
+
     return(
         <div className="searchingForBros">
             <div className="searchingForBrosHeader">
@@ -110,6 +121,7 @@ function BroFound({delivery}) {
                 <div className='cancel-button'>
                     <Button disableRipple fullWidth variant='contained' className='confirm-button'
                     style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
+                    onClick={handleCompletedClick}
                     >
                     Complete Order
                     </Button>
@@ -157,7 +169,16 @@ export default function BroUpdate() {
             });
         }
         getStatus(docId);
-    },[])
+
+        // Set up interval to refresh every 2 minutes
+        const intervalId = setInterval(() => {
+            getStatus(docId);
+        }, 2 * 60 * 1000); // 2 minutes in milliseconds
+
+        // Clean up interval on component unmount
+        return () => clearInterval(intervalId);
+
+    },[docId]);
 
     return (
         <>
