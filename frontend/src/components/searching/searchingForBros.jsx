@@ -87,7 +87,7 @@ function BroFound({delivery}) {
             </div>
             <div className="searchingForBrosBody">
                 <div className="searchingForBrosBodyText">
-                    <h2 className="searchingForBrosBodyTitle">Your Order</h2>
+                    <div className="searchingForBrosBodyTitle">Your Order</div>
                     <div className='confirmation'>
                         <div className='confirmation-location'>
                         <RoomServiceOutlinedIcon></RoomServiceOutlinedIcon>
@@ -110,7 +110,7 @@ function BroFound({delivery}) {
                 <div className='cancel-button'>
                     <Button disableRipple fullWidth variant='contained' className='confirm-button'
                     style={{borderRadius: "25px", fontSize:"0.8em",backgroundColor:"#C6252E",height:"3.5em",textTransform:"none",fontWeight:"1000"}}
-                    onClick={{}}>
+                    >
                     Complete Order
                     </Button>
                 </div>
