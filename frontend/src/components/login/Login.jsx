@@ -1,10 +1,8 @@
-import './Login.css'
 import {Button,TextField, InputAdornment, Container} from '@mui/material';
 import {React, useState } from 'react';
 import { RecaptchaVerifier, signInWithPhoneNumber, setPersistence, browserSessionPersistence} from "firebase/auth";
 import {firebaseAuth} from "../../service/firebaseConfig";
 import { useNavigate } from 'react-router-dom';
-import { requestNotificationPermissionAndGetToken } from '../../utils/firebaseMessaging';
 import { submitLogin } from '../../service/axiosService';
 
 async function checkToken(userId, token) {
@@ -107,9 +105,10 @@ function Login() {
           const fcmToken = sessionStorage.getItem('fcmToken');
           //Check and refresh token
           checkToken(userName, fcmToken);
+
+          sessionStorage.removeItem('fcmToken');
           //Navigate to home page
           navigate('/home');
-          
         }
 
     }).catch((error) => {
@@ -131,10 +130,10 @@ function Login() {
             </div>
             
             <div className='loginField'>
-                <TextField fullWidth id="outlined-basic" placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined"  
+                <TextField fullWidth placeholder="Phone Number" value={phone} onChange={handlePhoneChange} color="grey" variant="outlined"  
                 InputProps={{startAdornment:<InputAdornment position='start'>+65</InputAdornment>,endAdornment:<InputAdornment position="end"><div onClick={getAuth}>Get OTP</div></InputAdornment>, style: {borderRadius: "25px",backgroundColor: '#D3D3D3', marginBottom:"7.5px",fontFamily:"Inter",
                 }}} focused/>
-                <TextField fullWidth id="outlined-basic" placeholder="OTP" value={otp} onChange={handleOtpChange} color="grey" type="password" variant="outlined" 
+                <TextField fullWidth placeholder="OTP" value={otp} onChange={handleOtpChange} color="grey" type="password" variant="outlined" 
                 InputProps={{style: {borderRadius: "25px",backgroundColor: '#D3D3D3',fontFamily:"Inter"}}} focused/>
             </div>
 
