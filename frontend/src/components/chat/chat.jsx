@@ -100,15 +100,15 @@ export default function Chat() {
     //Client Message
     const messageRef = useRef(null);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const message = messageRef.current.value;
         console.log("Sender", sender)
         console.log("Message sent: ", message);
         socket.emit('chat message', {roomId, message, sender});
         // Send Notification to the other user
-        // await sendNotification({userName: otherName, msg: message});
         messageRef.current.value = ''; // Clear the input field
+        await sendNotification({userName: otherName, msg: message});
       };
 
     const handleSend = (event) => {
