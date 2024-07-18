@@ -8,6 +8,7 @@ async function sendNotification(req, res) {
     const token = user.data().token;
 
     if (token == null) {
+        console.log('No notification sent');
         return res.status(400).json({
             message: "Token not found",
         });
