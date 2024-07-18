@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { useLocation } from 'react-router-dom'
 import Restaurant from "./home_components/restaurantDetails"
 import BottomTab from "../common/bottomTab/bottomTab"
@@ -11,17 +11,39 @@ import {RouterProvider, useNavigate } from "react-router-dom";
 import browserRouter from "../../navigation";
 import OrderStatus from "./orderStatusBar";
 import { getMessaging, onMessage } from "firebase/messaging";
-import { requestNotificationPermissionAndGetToken } from "../../utils/firebaseMessaging";
 
+export function Notification() {
+  const [notification, setNotification] = useState(null);
+  const messaging = getMessaging();
+
+  useEffect(() => {
+    onMessage(messaging, (payload) => {
+      setNotification(payload.notification);
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+    });
+  }, []);
+  
+
+  return (
+    <>
+    <div>
+      {notification && (
+        <div className="notification">
+          <strong>{notification.title}</strong>
+          <div>{notification.body}</div>
+        </div>
+      )}
+    </div>
+    </>
+  );
+}
 // App Initialization
 // Starts the router for routing
 export function App() {
 
-  const messaging = getMessaging();
-  onMessage(messaging, (payload) => {
-    console.log('Message received foreground', payload);
-    // ...
-  });
+
 
   return (
     <>
