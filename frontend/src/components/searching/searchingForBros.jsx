@@ -2,7 +2,7 @@ import { React, useEffect, useLayoutEffect, useState } from "react";
 import "./searchingForBros.css";
 import "../common/topTab/topTab.css";
 import {Button,TextField, InputAdornment} from '@mui/material';
-import { buyerOrderStatus } from "../../service/axiosService";
+import { buyerOrderStatus, orderCompleted } from "../../service/axiosService";
 import BottomTab from "../common/bottomTab/bottomTab";
 import RoomServiceOutlinedIcon from '@mui/icons-material/RoomServiceOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';

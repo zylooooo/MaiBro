@@ -37,13 +37,8 @@ const LocationSearch = () => {
   // Initialise Map Instnace
   const map = useMap();
   // Initialise places service
-  useEffect(() => {
-    if(map) {
-      const service = new google.maps.places.PlacesService(map);
-    } else {
-      console.log("Map not loaded")
-    }
-  }, [map])
+  const service = new google.maps.places.PlacesService(map);
+    
 
   
   //Lat (SET DEFAULT STATE)
