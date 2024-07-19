@@ -1,0 +1,39 @@
+.settingsArea{
+    font-family: "Poppins", sans-serif;
+    background-color: #E2E2E2;
+    height: 100%;
+    width: 100%;
+}
+
+.profile{
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.profilePicImg{
+    width: 80px;
+    margin-left: 20px;
+}
+
+.socialScore{
+    margin-top: 0px;
+    font-size: 13px
+}
+
+.name{
+    font-size: 40px;
+}
+
+.settingsOptions{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 20px auto;
+}
+
+.bottom_icons{
+    width: 10px;
+}

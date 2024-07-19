@@ -1,0 +1,30 @@
+.confirmation-title, .delivery-title, .order-details{
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.confirmation-location, .delivery-location, .order{
+    display: flex;
+    align-items: center;
+}
+
+.confirmation-title, .delivery-title,.order-list{
+    padding-left: 4px;
+    margin-top: 0.8%
+}
+
+.order-list{
+    margin-bottom: 3%
+}
+
+.bottomTab{
+    display: flex;
+    justify-content: space-between;
+    margin: 5%;
+}
+
+.bottomTab{
+    display: flex;
+    justify-content: space-between;
+    margin: 5%;
+}

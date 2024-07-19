@@ -1,0 +1,7 @@
+put all components in this folder
+
+not sure if u wan the different URL to be in their own subfolders too + their respective CSS
+
+so /login one folder
+/signup one folder etc
+/home one folder etc

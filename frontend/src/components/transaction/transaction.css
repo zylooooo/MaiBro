@@ -1,0 +1,30 @@
+.indivData{
+    background-color: rgb(209, 209, 209);
+    display: flex;
+    justify-content:space-between;
+    margin-top: 5px;
+}
+
+.restName{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.historyList{
+    margin-top: 20px;
+    margin-bottom: 70px;
+}
+
+.leftgroup{
+    display: flex;
+    align-items: center;
+}
+
+
+.expenditure{
+    color:red;
+}
+
+.earnings{
+    color: rgb(119, 181, 25);
+}

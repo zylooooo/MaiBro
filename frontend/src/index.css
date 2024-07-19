@@ -1,0 +1,35 @@
+:root {
+  font-family: Inter, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #153448;
+  background-color: #e1e1e1;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 0px;;
+}
+
+/* Header */
+.header {
+ font-family: "Poppins";
+}
+
+/* Font Classes (Default is Inter) */
+.inter {
+  font-family: Inter, sans-serif;
+}
+
+.lato {
+  font-family: Lato, sans-serif;
+}
+
+
+body {
+  margin-left: 4%;
+  margin-right: 4%;
+}

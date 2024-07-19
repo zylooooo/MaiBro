@@ -1,0 +1,53 @@
+
+  
+  h1 {
+    font-size: 2.2em;
+    line-height: 1.1;
+    margin: auto;
+  }
+  
+  .logo{
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logoImg{
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+  }
+  
+  .signupHeader {
+    text-align: left;
+    display: flex;
+    margin-bottom: 1vh;
+    margin-left: 1%;
+    justify-content: space-between;
+  }
+
+  h1{
+    margin: 0px;
+    font-size: 2em;
+  }
+
+
+  .signupArea {
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  
+  .signupField{
+    padding-bottom: 3%;
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+  
+  .signupButtonDiv{
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+
+ 

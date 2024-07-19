@@ -1,0 +1,46 @@
+{
+  "name": "maibro",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "phone": "vite --host",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.svg"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
+    "@react-google-maps/api": "^2.19.3",
+    "@vis.gl/react-google-maps": "^1.0.2",
+    "axios": "^1.7.2",
+    "firebase": "^10.12.2",
+    "google-map-react": "^2.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-geocode": "^1.0.0-alpha.1",
+    "react-google-autocomplete": "^2.7.3",
+    "react-router-dom": "^6.23.1",
+    "socket.io-client": "^4.7.5",
+    "stream-chat": "^8.36.0",
+    "use-places-autocomplete": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vite-pwa/assets-generator": "^0.2.4",
+    "@vitejs/plugin-react": "^4.3.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "vite": "^5.2.0",
+    "vite-plugin-mkcert": "^1.17.5",
+    "vite-plugin-pwa": "^0.20.0"
+  }
+}

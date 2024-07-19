@@ -1,0 +1,60 @@
+.main{
+    margin-top: 20px;
+    margin-bottom: 30vh;
+}
+
+.restaurantTitle{
+    display: flex;
+    font-weight: Bold;
+    font-size: 1.1em;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.restaurantName {
+    margin-left: 10px;
+}
+
+.userLocation {
+    position: fixed;
+    bottom: 40px;
+    left:0;
+    right:0;
+    padding-left: 5%;
+    padding-right: 5%;
+    height: 150px;
+}
+
+.menuDetails{
+    margin: 5%;
+    height: 35vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scrollbar-color: rgb(201, 201, 201) #e1e1e1;
+}
+
+.menuItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1%;
+
+}
+
+.itemQuantity{
+    height: 100%;
+    justify-content: center;
+}
+
+.confirmOrder{
+    padding-left: 5%;
+    padding-right: 5%
+}
+
+
+.customOrderDetails{
+    height: fit-content;
+    scrollbar-color: rgb(201, 201, 201) #e1e1e1;
+}
+

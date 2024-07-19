@@ -1,0 +1,20 @@
+.customOrder {
+    display: flex;
+    padding: 5rem;
+    justify-content: space-evenly;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+  }
+  
+  .map-container {
+    height: 300px;
+    width: 100%;
+  }
+
+.app{
+    display: flex;
+    justify-content: center;
+}
+
+.delivery-location{
+    margin-top: 15px;
+}
