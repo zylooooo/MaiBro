@@ -14,4 +14,15 @@ HEAP 2024 is an intensive summer program designed to foster the growth of aspiri
   [Figma](https://www.figma.com/design/BoCmY8tX6G4rdmOAPiAeLs/MAIBRO?node-id=0-1&t=AIKo3BwdDjZVeX2Z-1)</li>
 </ul>
 
-## Week 5
+## Week 5 - 10
+<ul>
+  <li>Worked on the front end with vite.js and implementing the various features in the application.</li>
+  <li>Worked on the backend with express.js and with a Model-View-Controller (MCV) architecture. Also used Firestore and MongoDB for the storage of application data and resources.</li>
+</ul>
+
+## Week 11 - 12
+<ul>
+  <li>Explored different deployment services and ways to deploy our application to the internet.</li>
+  <li>Deployed our application using Docker. Our web application can be accessed via this website.
+  **[MAIBRO]**(*insert app link here*)</li>
+</ul>
