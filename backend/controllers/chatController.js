@@ -34,11 +34,11 @@ async function createChat(req, res) {
 
 // Function to get all of the chat messages that is sent in the chat room
 async function getAllMessages(req, res) {
-    const roomId = req.query.roomId; // Assuming roomId is passed as a query parameter
+    const roomId = req.query.roomId;
 
     try {
-        const ChatRoom = chatRoomModel(roomId); // Get the model for the specific roomId
-        const chatRoom = await ChatRoom.findOne({ _id: roomId }); // Query for the chat room
+        const ChatRoom = chatRoomModel(roomId);
+        const chatRoom = await ChatRoom.findOne({ _id: roomId });
 
         if (!chatRoom) {
             return res.status(404).json({
@@ -65,8 +65,8 @@ async function updateChatRoomMessages(req, res) {
     const { roomId, message, sender } = req.body;
 
     try {
-        const ChatRoom = chatRoomModel(roomId); // Get the model for the specific roomId
-        const chatRoom = await ChatRoom.findOne({ _id: roomId }); // Query for the chat room
+        const ChatRoom = chatRoomModel(roomId);
+        const chatRoom = await ChatRoom.findOne({ _id: roomId });
 
         if (!chatRoom) {
             return res.status(404).json({

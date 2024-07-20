@@ -1,5 +1,11 @@
 const { db } = require("../config");
 
+/**
+ * Get all of the open restaurants based on our database at the time of request.
+ * @param {Object} req - The request object. 
+ * @param {*} res - The response object used to send back the HTTP response.
+ * @returns - Returns the response object with the status of the request and the list of restaurant that are still open at the time of request in an array of JSON objects.
+ */
 async function restaurantList(req, res) {
     // Get the current day and convert into a string
     const currentDateTime = new Date();
@@ -8,22 +14,16 @@ async function restaurantList(req, res) {
     let currentDay = days[currentDayNum];
 
     try {
-        // Get a reference to all of the restaurants in the "Restaurants" collection
         const restaurantsCollectionRef = db.collection("Restaurants");
-        // Get all of the restaurants in the collection
         const restaurantsCollection = await restaurantsCollectionRef.get();
-        // Initialize an array to store all of the open restaurants
         const openRestaurantsPromises = restaurantsCollection.docs.map(async (doc) => {
-            // Access the nested collection "operatingHours" in each of the documents in the "Restaurants" collection and get the document for the current day
             const operatingHoursDocRef = doc.ref.collection("operatingHours").doc(currentDay);
-            // Get the open and close time of the restaurant on the current day
             const operatingHoursDoc = await operatingHoursDocRef.get();
             const operatingHoursData = operatingHoursDoc.data();
 
-            // Helper function to check if the restaurant is open
+            // Helper function to check if the restaurant is open. Rewturns the a boolean value if the restaurant is open or not
             function isOpen(operatingHoursData, currentDateTime) {
                 if (operatingHoursData.openTime === "closed") {
-                    console.error("Error: Restaurant is closed for the day:", doc.id);
                     return false;
                 }
 
@@ -31,11 +31,9 @@ async function restaurantList(req, res) {
                 let closeTime = operatingHoursData.closeTime;
 
                 if (!openTime || !closeTime) {
-                    console.error("Error: Missing operating hours data for restaurant:", doc.id);
                     return false;
                 }
 
-                // Convert times to minutes since the start of the day for easier comparison
                 const toMinutes = (time) => {
                     const [hours, minutes] = time.split(':').map(Number);
                     return hours * 60 + minutes;
@@ -45,17 +43,12 @@ async function restaurantList(req, res) {
                 const closeMinutes = toMinutes(closeTime);
                 const currentMinutes = currentDateTime.getHours() * 60 + currentDateTime.getMinutes();
 
-                // Handle the case where the restaurant closes after midnight
                 if (closeMinutes < openMinutes) {
-                    // If current time is after midnight but before opening time, it's closed
                     if (currentMinutes < openMinutes && currentMinutes > closeMinutes) {
-                        console.error("Error: Restaurant is closed for the day:", doc.id);
                         return false;
                     }
                 } else {
-                    // Standard case: open and close on the same day
                     if (currentMinutes < openMinutes || currentMinutes > closeMinutes) {
-                        console.error("Error: Restaurant is closed for the day:", doc.id);
                         return false;
                     }
                 }
@@ -63,23 +56,19 @@ async function restaurantList(req, res) {
                 return true;
             }
             
-            // Add the restaurant to the list of open restaurants if it is open
+            // Return a promise of the restaurant data if the restaurant is open else return null
             if (operatingHoursData && isOpen(operatingHoursData, currentDateTime)) {
                 return {
-                    // Add the restaurant ID to the restaurant object
                     id: doc.id,
                     ...doc.data()
                 };
             }
-            // Otherwise add a null object to the list of open restaurants
             return null;
-        });
-        // Filter out the null object from the list of open restaurants and return the list of open restaurants
+        })
+
         const openRestaurants = (await Promise.all(openRestaurantsPromises)).filter(restaurant => restaurant !== null);
-        // Return the list as a JSON object
         return res.status(200).json(openRestaurants);
     } catch (error) {
-        console.error("Error getting list of restaurants:", error);
         return res.status(500).json({
             error: "Error getting list of restuarants from firestore."
         });

@@ -1,6 +1,12 @@
 const { db } = require("../config");
 const crypto = require("crypto");
 
+/**
+ * Create an instance of the order in the database with all of the relevant order details.
+ * @param {Object} req - The request object containing all of the order details.
+ * @param {*} res - The response object used to send back HTTP requests.
+ * @returns - A response object containing the oerder ID and the server response. 
+ */
 async function submitOrder(req, res) {
     const {
         buyerId,
@@ -15,11 +21,9 @@ async function submitOrder(req, res) {
         deliveryLocation
     } = req.body;
     
-    // Update the database with the order details
     try {
         const orderId = generateOrderId();
 
-        // Get Date
         const now = new Date();
 
         const dateOptions = { day: '2-digit', month: 'long', year: 'numeric' };
@@ -28,7 +32,6 @@ async function submitOrder(req, res) {
         const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
         const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
 
-        // Create a new order in the database
         await db.collection("AvailableOrders").doc(orderId).set({ 
             broId: null,
             buyerId: buyerId,
@@ -59,8 +62,10 @@ async function submitOrder(req, res) {
 
 module.exports = { submitOrder };
 
-// Helper function to generate a random order ID. Returns a 32 character long string
-// This function will create 2^128 possible orderIds so it is not impossible but the chances of duplicates is very low
+/**
+ * Helper function to randomly generate a 16 character long orderid
+ * @returns A randomly generated order ID.
+ */
 function generateOrderId() {
     return crypto.randomBytes(16).toString("hex");
 }

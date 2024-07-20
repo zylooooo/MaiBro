@@ -1,32 +1,22 @@
-const { auth } = require("../config");
 const { db } = require("../config");
 
-// Function to create user
+/**
+ * Create new users in the database with their login details if the user does not already exist.
+ * @param {Object} req  - The request object that contains the phoneNumber, userId and token of the user.
+ * @param {Object} res  - The response object used to send back the HTTP response.
+ * @returns - Return the response object with the status of the request.
+ */
 const createNewUser = async (req, res) => {
     const { phoneNumber, userId, token} = req.body;
-
-        // // Check if user already exists, have already signed up before
-        // try {
-        //     const existingUser = await auth.getUserByPhoneNumber(phoneNumber);
-        //     console.log("User already exists:", existingUser);
-        //     return res.status(400).json({
-        //         message: "User already exists!"
-        //     });
-        // } catch (userNotFoundError) {
-        //     console.log("Creating new user...");
-        // }
-
         // Check if the userId already exists in firestore
         const userDoc = await db.collection("Users").doc(userId).get();
         if (userDoc.exists) {
-            console.log("Username already exists in Firestore:", userDoc.data());
             return res.status(400).json({
                 message: "Username is already taken, please choose another username!"
             });
         }
 
     try{
-        // Create a record in Firestore for the new user
         await db.collection("Users").doc(userId).set({
             phoneNumber: phoneNumber,
             userId: userId,
@@ -37,7 +27,6 @@ const createNewUser = async (req, res) => {
             message: "Successfully created a new user!"
         });
     } catch (error) {
-        console.error("Error creating new user:", error);
         return res.status(400).json({
             message: "Error creating new user!"
         });

@@ -1,14 +1,18 @@
 const { db } = require("../config");
 
+/**
+ * Gets a list of available orders for the deliverer's to choose from.
+ * @param {Object} req - The request Object. 
+ * @param {Object} res - The response object used to send back the HTTP response.
+ * @returns 
+ */
 async function getOrderList(req, res) {
-    // Look through the database and find the orders that are not accepted
     try {
         const availableOrdersRef = db.collection("AvailableOrders");
         const availableOrdersCollection = await availableOrdersRef.get();
         const availableOrdersPromises = availableOrdersCollection.docs.map(async doc => {
             const availableOrderData = doc.data();
             if (availableOrderData && availableOrderData.orderAccepted === false && availableOrderData.orderCompleted === false) {
-                // include documentId here
                 return {
                     docId: doc.id,
                     ...availableOrderData
