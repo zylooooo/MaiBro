@@ -58,7 +58,6 @@ const ChatDisplay = ({roomId}) => {
                 message: message,
             }
             setMessages((prevMessages) => [...prevMessages, body]);
-            console.log("Messages: ", messages);
         });
         
         // Clean up the socket connection when the component unmounts
@@ -114,8 +113,6 @@ export default function Chat() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         const message = messageRef.current.value;
-        console.log("Sender", sender)
-        console.log("Message sent: ", message);
         socket.emit('chat message', {roomId, message, sender});
         // Send Notification to the other user
         messageRef.current.value = ''; // Clear the input field
