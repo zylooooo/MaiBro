@@ -20,7 +20,6 @@ const CustomMap = ({lati,longt}) => {
     lng: Number(longt),
   });
   
-
   return (
     // shows map with marker on chosen location
     <div className="map-container">
@@ -55,8 +54,6 @@ const Info = () => {
       );
 }
 
-
-
 //initializing the confirmation page
 export default function Confirmation() {
   const navigate = useNavigate();
@@ -66,7 +63,6 @@ export default function Confirmation() {
   let restaurantName = localStorage.getItem('restaurantName')
   let delivery = localStorage.getItem('deliveryLocation')
   let order = localStorage.getItem('order')
-  console.log(restaurantName)
 
   //getting data from local storage that was inputted in customOrderInput
   let address = localStorage.getItem('address')
@@ -90,9 +86,7 @@ export default function Confirmation() {
       orderItems: order,
       restaurant: restaurantName,
     }
-
-    console.log(orderData)
-
+    
     //Send the data to the backend
     const response = await submitOrder(orderData)
 
