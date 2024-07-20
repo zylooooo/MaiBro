@@ -1,5 +1,11 @@
 const { db } = require("../config");
 
+/**
+ * Determine if there an ongoing order for the user.
+ * @param {Object} req - Request object that contains the userName in the query. 
+ * @param {Object} res - Response object used to send back the HTTP response.
+ * @returns - Returns the response object with the status of the request and the ongoing order / delivery for the user.
+ */
 async function getBuyerStatusBar(req,res) {
     const {userName} = req.query;
     try {
@@ -20,6 +26,12 @@ async function getBuyerStatusBar(req,res) {
     }
 }
 
+/**
+ * Get the available orders of the buyer.
+ * @param {Object} req - Request object that contains the docId in the query.
+ * @param {Object} res - Response object used to send back the HTTP response.
+ * @returns - The response object with the status of the request and the order details of the available orders by the buyer.
+ */
 async function getBuyerOrder(req, res) {
     // Look through the database and find the orders that are not accepted
     const { docId } = req.query;
@@ -36,15 +48,19 @@ async function getBuyerOrder(req, res) {
             return null;
         };
     } catch (error) {
-        console.error("Error getting available orders:", error);
         return res.status(500).json({
             error: "Error getting available orders from firestore!"
         });
     }
 }
 
+/**
+ * Get the available deliveries by the bro
+ * @param {Object} req - Request object that contains the username in the query.
+ * @param {Object} res - Response object used to send back the HTTP response.
+ * @returns - The response object with the status of the request and the order details of the available deliveries by the bro.
+ */
 async function getBroOrder(req, res) {
-    // Look through the database and find the orders that are not accepted
     const {userName} = req.query;
     try {
         const availableOrdersRef = db.collection("AvailableOrders");
@@ -64,7 +80,6 @@ async function getBroOrder(req, res) {
         const availableOrders = (await Promise.all(availableOrdersPromises)).filter(order => order !== null);
         return res.status(200).json(availableOrders);
     } catch (error) {
-        console.error("Error getting available orders:", error);
         return res.status(500).json({
             error: "Error getting available orders from firestore!"
         });
