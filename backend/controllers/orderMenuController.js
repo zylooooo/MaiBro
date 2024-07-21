@@ -14,6 +14,7 @@ async function getOrderMenu(req, res) {
         const restaurantRef = db.collection("Restaurants").doc(restaurantId);
         const restaurantDoc = await restaurantRef.get();
         if (!restaurantDoc.exists) {
+            console.error("Restaurant not found!");
             return res.status(404).json({
                 error: "Restaurant not found!"
             });
@@ -22,7 +23,10 @@ async function getOrderMenu(req, res) {
         const menuRef = restaurantRef.collection("menu");
         const menuItems = await menuRef.get();
         if (menuItems.empty) {
-            return res.status(404).json({ error: "No menu found!" });
+            console.error("No menu found!");
+            return res.status(404).json({ 
+                error: "No menu found!" 
+            });
         }
 
         let menuItemsArray = [];
