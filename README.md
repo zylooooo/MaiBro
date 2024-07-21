@@ -11,7 +11,7 @@ HEAP 2024 is an intensive summer program designed to foster the growth of aspiri
 
 - Worked on the low fidelidty prototype to identify the basic user flows and features of our application
 - Completed the high fidelidty prototype and finalised the features and functionalities of MaiBro which can be found here.
-[Figma](https://www.figma.com/design/BoCmY8tX6G4rdmOAPiAeLs/MAIBRO?node-id=0-1&t=AIKo3BwdDjZVeX2Z-1)
+[High fidelity prototype for MaiBro](https://www.figma.com/design/BoCmY8tX6G4rdmOAPiAeLs/MAIBRO?node-id=0-1&t=AIKo3BwdDjZVeX2Z-1)
 
 ## Week 5 - 10
 
