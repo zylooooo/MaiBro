@@ -8,7 +8,6 @@ async function sendNotification(req, res) {
     const token = user.data().token;
 
     if (token == null) {
-        console.log('No notification sent');
         return res.status(400).json({
             message: "Token not found",
         });
@@ -26,13 +25,11 @@ async function sendNotification(req, res) {
     admin.messaging().send(message)
         .then((response) => {
             // Response is a message ID string
-            console.log('Successfully sent message:', response);
             return res.status(200).json({
                 message: "Notification sent successfully",
             });
         })
         .catch((error) => {
-            console.log('Error sending message:', error);
             return res.status(500).json({
                 message: "Error sending notification",
             });

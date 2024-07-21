@@ -5,25 +5,24 @@ import Button from '@mui/material/Button';
 import BackButton, { ProfileTopBar } from "../common/topTab/topTab.jsx";
 import BottomTab from "../common/bottomTab/bottomTab";
 
-
+// Define the styled component for the settings button
+const SettingsButton = styled(Button)({
+    boxShadow: 'none',
+    textTransform: 'none',
+    fontSize: 16,
+    padding: '6px 30px',
+    border: '1px solid',
+    lineHeight: 1.5,
+    color: '#000000',
+    textAlign: 'left', // Corrected typo: 'textalign' to 'textAlign'
+    backgroundColor: '#F4F4F4',
+    borderColor: '#000000',
+    fontFamily: [
+        'Poppins', 'sans-serif'
+    ],
+});
 
 export default function Settings() {
-    const SettingsButton = styled(Button)({
-        boxShadow: 'none',
-        textTransform: 'none',
-        fontSize: 16,
-        padding: '6px 30px',
-        border: '1px solid',
-        lineHeight: 1.5,
-        color: '#000000',
-        textalign: 'left',
-        backgroundColor: '#F4F4F4',
-        borderColor: '#000000',
-        fontFamily: [
-          'Poppins', 'sans-serif'
-        ],
-      });
-
     return (
         <div className="settingsArea">
             <div className="settingsHeader">
@@ -35,7 +34,7 @@ export default function Settings() {
                     <h3 className='socialScore'>Social Score - 100 (insert link to social score page)</h3>
                 </div>
                 <div className="profilePic">
-                    <img src='/src/assets/profile_pic.png' className='profilePicImg'/>
+                    <img src='/src/assets/profile_pic.png' className='profilePicImg' alt='Profile Picture'/>
                 </div>
             </div>
             <div className='settingsOptions'>
@@ -50,8 +49,5 @@ export default function Settings() {
                 <BottomTab></BottomTab>
             </div>
         </div>
-       
-        
     );
-    }
-
+}
