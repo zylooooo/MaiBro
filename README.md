@@ -21,3 +21,21 @@ HEAP 2024 is an intensive summer program designed to foster the growth of aspiri
 ## Week 11 - 12
 
 - Explored different deployment services and ways to deploy our application to the internet.
+
+## Setting up the env files
+
+- Please move the frontend's .env file into the frontend folder.
+- Run the frontend server by typing the following commands in the terminal:
+
+```sh
+npm install
+npm run dev
+```
+
+- Please move the backend's .env file and serviceAccountKey.json file into the backend folder.
+- Run the backend server by typing the following commands in the terminal.
+
+```sh
+npm install
+npm run devStart
+```
