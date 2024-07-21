@@ -22,7 +22,7 @@ async function getOrderMenu(req, res) {
         const menuRef = restaurantRef.collection("menu");
         const menuItems = await menuRef.get();
         if (menuItems.empty) {
-            return res.status(204).json({ 
+            return res.status(200).json({ 
                 error: "No menu found!" 
             });
         }
